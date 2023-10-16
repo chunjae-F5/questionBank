@@ -13,6 +13,10 @@ public class Grade extends BaseTimeEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int idx;
 
+    @ManyToOne
+    @JoinColumn(name = "subject_idx")
+    private Subject subjectIdx;
+
     @Column(name = "name", nullable = false)
     @Comment(value = "ex) 고1")
     private String name;
