@@ -1,21 +1,27 @@
 package com.example.f5.temporary.entity;
 
 import com.example.f5.util.BaseTimeEntity;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
+import jakarta.validation.constraints.Max;
 import lombok.Getter;
 
 @Entity
 @Getter
 public class SimilarQuestion extends BaseTimeEntity {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long idx;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int idx;
 
-    private short number;
-    private String level;
+    @Column(name = "number", nullable = false)
+    @Max(value = 50)
+    private int number;
+
+    @Column(name = "form", nullable = false, length = 50)
     private String form;
+
+    @Column(name = "level", nullable = false, length = 10)
+    private String level;
+
+    @Column(name = "question_file", nullable = false)
     private String questionFile;
 }

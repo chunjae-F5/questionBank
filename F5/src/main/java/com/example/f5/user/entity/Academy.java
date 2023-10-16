@@ -12,8 +12,8 @@ import lombok.Getter;
 public class Academy extends BaseTimeEntity {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long idx;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int idx;
 
     private String name;
     private String location;
