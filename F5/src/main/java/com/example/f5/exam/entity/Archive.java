@@ -11,8 +11,8 @@ import lombok.Getter;
 @Getter
 public class Archive extends BaseTimeEntity {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long idx;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int idx;
 
     private String category;
     private String grade;

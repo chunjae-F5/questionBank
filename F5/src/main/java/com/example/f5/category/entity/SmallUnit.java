@@ -1,19 +1,19 @@
 package com.example.f5.category.entity;
 
 import com.example.f5.util.BaseTimeEntity;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.Getter;
+import org.hibernate.annotations.Comment;
 
 @Entity
 @Getter
 public class SmallUnit extends BaseTimeEntity {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long idx;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int idx;
 
+    @Column(name = "name", nullable = false)
+    @Comment(value = "ex) 1. 소수와 합성수")
     private String name;
 }

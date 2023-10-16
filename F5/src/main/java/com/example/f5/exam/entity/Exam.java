@@ -12,8 +12,8 @@ import lombok.Getter;
 public class Exam extends BaseTimeEntity {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long idx;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int idx;
 
     private String highest;
     private String high;
