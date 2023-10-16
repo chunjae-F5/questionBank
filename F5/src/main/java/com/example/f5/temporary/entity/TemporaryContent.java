@@ -7,7 +7,7 @@ import org.hibernate.annotations.Comment;
 
 @Entity
 @Getter
-public class Content extends BaseTimeEntity {
+public class TemporaryContent extends BaseTimeEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

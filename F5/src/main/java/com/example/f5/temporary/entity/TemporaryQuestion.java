@@ -8,11 +8,16 @@ import org.hibernate.annotations.Comment;
 
 @Entity
 @Getter
-public class Question extends BaseTimeEntity {
+public class TemporaryQuestion extends BaseTimeEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int idx;
+
+    @ManyToOne
+    @JoinColumn(name = "content_idx")
+    @Comment(value = "지문")
+    private TemporaryContent temporaryContentIdx;
 
     @Column(name = "number", nullable = false)
     @Max(value = 50)

@@ -13,6 +13,10 @@ public class MiddleUnit extends BaseTimeEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int idx;
 
+    @ManyToOne
+    @JoinColumn(name = "small_unit_idx")
+    private SmallUnit smallUnitIdx;
+
     @Column(name = "name", nullable = false)
     @Comment(value = "ex) 1. 소수와 합성수")
     private String name;

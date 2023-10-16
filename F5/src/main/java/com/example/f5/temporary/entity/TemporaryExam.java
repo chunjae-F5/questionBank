@@ -8,12 +8,16 @@ import org.hibernate.annotations.Comment;
 
 @Entity
 @Getter
-public class Exam extends BaseTimeEntity {
+public class TemporaryExam extends BaseTimeEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(nullable = false)
     private int idx;
+
+    @ManyToOne
+    @JoinColumn(name = "question_idx")
+    private TemporaryContent questionIdx;
 
     @Column(name = "highest", nullable = false)
     @Max(value = 50)
