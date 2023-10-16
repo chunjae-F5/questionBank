@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="ed50effd-95e9-4c06-99d5-744fb66f33ea" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/questionbank/src/main/resources/templates/html/coding_list.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/questionbank/src/main/resources/templates/html/error.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/questionbank/src/main/resources/templates/html/loading.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/questionbank/src/main/resources/templates/html/sub01.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/questionbank/src/main/resources/templates/html/sub02.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/questionbank/src/main/resources/templates/html/sub03_01.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/questionbank/src/main/resources/templates/html/sub03_01_01.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/questionbank/src/main/resources/templates/html/sub03_02_01.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/questionbank/src/main/resources/templates/html/sub03_02_02.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/questionbank/src/main/resources/templates/html/sub03_03.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/questionbank/src/main/resources/templates/html/sub04_01.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/questionbank/src/main/resources/templates/html/sub04_02.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/questionbank/src/main/resources/templates/html/test.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/questionbank/src/main/resources/templates/images/common/error.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/questionbank/src/main/resources/templates/images/common/ico_acc_close.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/questionbank/src/main/resources/templates/images/common/ico_acc_open.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/questionbank/src/main/resources/templates/images/common/ico_add_doc.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/questionbank/src/main/resources/templates/images/common/ico_add_file.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/questionbank/src/main/resources/templates/images/common/ico_add_folder.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/questionbank/src/main/resources/templates/images/common/ico_arrow_next.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/questionbank/src/main/resources/templates/images/common/ico_arrow_prev.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/questionbank/src/main/resources/templates/images/common/ico_arrow_tooltip_type01.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/questionbank/src/main/resources/templates/images/common/ico_btn_del.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/questionbank/src/main/resources/templates/images/common/ico_btn_error.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/questionbank/src/main/resources/templates/images/common/ico_btn_file.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/questionbank/src/main/resources/templates/images/common/ico_btn_tip.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/questionbank/src/main/resources/templates/images/common/ico_btn_tip_hover.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/questionbank/src/main/resources/templates/images/common/ico_down.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/questionbank/src/main/resources/templates/images/common/ico_edit.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/questionbank/src/main/resources/templates/images/common/ico_edit_type02.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/questionbank/src/main/resources/templates/images/common/ico_folder.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/questionbank/src/main/resources/templates/images/common/ico_full_pop_close.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/questionbank/src/main/resources/templates/images/common/ico_move_type01.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/questionbank/src/main/resources/templates/images/common/ico_move_type02.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/questionbank/src/main/resources/templates/images/common/ico_nodata.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/questionbank/src/main/resources/templates/images/common/ico_pop_close.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/questionbank/src/main/resources/templates/images/common/ico_preview.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/questionbank/src/main/resources/templates/images/common/ico_research.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/questionbank/src/main/resources/templates/images/common/ico_setting.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/questionbank/src/main/resources/templates/images/common/ico_step_active.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/questionbank/src/main/resources/templates/images/common/ico_title.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/questionbank/src/main/resources/templates/images/common/input_checkbox.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/questionbank/src/main/resources/templates/images/common/input_checkbox_check.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/questionbank/src/main/resources/templates/images/common/loading_icon.gif" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/questionbank/src/main/resources/templates/images/common/sample_prev.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/questionbank/src/main/resources/templates/images/common/sampling-question-1.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/questionbank/src/main/resources/templates/images/common/sampling-question.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/questionbank/src/main/resources/templates/images/common/sampling-question2.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/questionbank/src/main/resources/templates/images/common/save.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/questionbank/src/main/resources/templates/images/common/select_arrow.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/questionbank/src/main/resources/templates/inc/css/common.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/questionbank/src/main/resources/templates/inc/css/font.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/questionbank/src/main/resources/templates/inc/css/reset.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/questionbank/src/main/resources/templates/inc/js/common.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/questionbank/src/main/resources/templates/inc/js/jquery-ui.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/questionbank/src/main/resources/templates/inc/scss/_mixin.scss" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/questionbank/src/main/resources/templates/inc/scss/_setting.scss" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/questionbank/src/main/resources/templates/inc/scss/common.scss" beforeDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="MarkdownSettingsMigration">
+    <option name="stateVersion" value="1" />
+  </component>
+  <component name="ProjectId" id="2WpEfDa8pFsUfuVLuweq2ihylaR" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "WebServerToolWindowFactoryState": "false",
+    "vue.rearranger.settings.migration": "true"
+  }
+}]]></component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="ed50effd-95e9-4c06-99d5-744fb66f33ea" name="Changes" comment="" />
+      <created>1697421223138</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1697421223138</updated>
+      <workItem from="1697421224738" duration="79000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+</project>
