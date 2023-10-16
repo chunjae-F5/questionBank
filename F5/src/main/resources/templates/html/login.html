@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>로그인</title>
+
+    <style>
+        #box {
+            text-align: center;
+            display: flex;
+            justify-content: center; /* 수평 중앙 정렬 */
+            align-items: center; /* 수직 중앙 정렬 */
+            height: 100vh; /* 화면 높이의 100%로 설정하여 화면 중앙에 오도록 합니다. */
+        }
+
+        .form-container {
+            display: inline-flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .form-container span,
+        .form-container input,
+        .form-container button {
+            margin: 5px;
+        }
+
+        .form-container button {
+            width: 21rem;
+        }
+    </style>
+</head>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@8/swiper-bundle.min.css"/>
+<link rel="stylesheet" href="https://code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css">
+<link rel="stylesheet" href="../inc/css/font.css">
+<link rel="stylesheet" href="../inc/css/reset.css">
+<link rel="stylesheet" href="../inc/css/common.css">
+<body>
+<div id="wrap" class="full-pop-que">
+    <div class="full-pop-wrap">
+        <div class="pop-content">
+            <div class="view-box">
+                <div class="view-bottom">
+                    <div class="view-box-wrap">
+                        <div class="unit-box-wrap">
+                            <div class="unit-box">
+                                <div class="unit-cnt scroll-inner">
+                                    <div class="title-top scroll-inner" id="box">
+                                        <div class="type-box form-container">
+                                            <form method="post">
+                                                <div>
+                                                <span>아이디:</span>
+                                                </div>
+                                                <input type="text">
+                                                <span>비밀번호:</span>
+                                                <input type="password" id="password">
+                                                <button type="submit" class="btn-step next asdasdpop-btn" style="width: 100%">
+                                                    로그인
+                                                </button>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>
