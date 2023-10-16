@@ -15,5 +15,5 @@ public class Content extends BaseTimeEntity {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long idx;
 
-    private String content;
+    private String contentFile;
 }

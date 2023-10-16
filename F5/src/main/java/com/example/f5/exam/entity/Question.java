@@ -19,5 +19,5 @@ public class Question extends BaseTimeEntity {
     private String category;
     private String form;
     private String difficulty;
-    private String question;
+    private String questionFile;
 }

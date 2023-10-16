@@ -17,5 +17,5 @@ public class DeletedQuestion extends BaseTimeEntity {
     private short number;
     private String level;
     private String form;
-    private String question;
+    private String questionFile;
 }
