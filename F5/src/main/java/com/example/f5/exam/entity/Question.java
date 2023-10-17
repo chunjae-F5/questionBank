@@ -2,7 +2,6 @@ package com.example.f5.exam.entity;
 
 import com.example.f5.util.BaseTimeEntity;
 import jakarta.persistence.*;
-import jakarta.validation.constraints.Max;
 import lombok.Getter;
 import org.hibernate.annotations.Comment;
 
@@ -20,7 +19,6 @@ public class Question extends BaseTimeEntity {
     private Content contentIdx;
 
     @Column(name = "number", nullable = false)
-    @Max(value = 50)
     @Comment(value = "문제번호")
     private int number;   //문제번호
 

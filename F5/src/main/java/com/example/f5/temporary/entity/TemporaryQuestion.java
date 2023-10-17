@@ -2,7 +2,6 @@ package com.example.f5.temporary.entity;
 
 import com.example.f5.util.BaseTimeEntity;
 import jakarta.persistence.*;
-import jakarta.validation.constraints.Max;
 import lombok.Getter;
 import org.hibernate.annotations.Comment;
 
@@ -20,7 +19,6 @@ public class TemporaryQuestion extends BaseTimeEntity {
     private TemporaryContent temporaryContentIdx;
 
     @Column(name = "number", nullable = false)
-    @Max(value = 50)
     @Comment(value = "문제번호")
     private int number;   //문제번호
 
@@ -36,7 +34,15 @@ public class TemporaryQuestion extends BaseTimeEntity {
     @Comment(value = "ex) 상 (중, 하)")
     private String level;
 
-    @Column(name = "question_file", nullable = false)
-    @Comment(value = "문제 사진 경로 url")
-    private String questionFile;
+    @Column(name = "question_html", nullable = false, length = 100000)
+    @Comment(value = "문제 HTML")
+    private String questionHtml;
+
+    @Column(name = "answer_html", nullable = false, length = 100000)
+    @Comment(value = "정답 HTML")
+    private String answerHtml;
+
+    @Column(name = "explain_html", nullable = false, length = 100000)
+    @Comment(value = "해설 HTML")
+    private String explainHtml;
 }
