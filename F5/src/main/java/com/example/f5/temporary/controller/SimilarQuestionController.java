@@ -1,6 +1,5 @@
 package com.example.f5.temporary.controller;
 
-import com.example.f5.temporary.DTO.SimilarQuestionDTO;
 import com.example.f5.temporary.service.TemporaryService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -18,7 +17,7 @@ public class SimilarQuestionController {
     }
 
     @GetMapping("")
-    public String exam() {
+    public String exam(Model model) {
 
         return "html/sub03_02_01";
     }

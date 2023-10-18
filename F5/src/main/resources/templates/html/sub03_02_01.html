@@ -16,19 +16,6 @@
 	<script src="https://code.jquery.com/ui/1.13.1/jquery-ui.js"></script>
 	<script src="https://cdn.jsdelivr.net/npm/swiper@8/swiper-bundle.min.js"></script>
 	<script th:src="@{/js/common.js}"></script>
-
-	<!-- API 요청 -->
-	<script>
-		async function JasonData(url = "https://doctor.item-factory.com/items/item/item-list", data = {}){
-			const response = await fetch(url, {
-				method: "post",
-				body: {
-					problemCodeArr: 100
-				}
-			});
-			return response.json()
-		}
-	</script>
 </head>
 
 <body>

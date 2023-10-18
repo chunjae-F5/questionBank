@@ -23,5 +23,4 @@ public class SimilarQuestion extends BaseTimeEntity {
     private String level;
 
     @Column(name = "question_file", nullable = false)
-    private String questionFile;
-}
+    private String questionFile;}
