@@ -7,13 +7,13 @@ import lombok.Getter;
 
 @Entity
 @Getter
+@Table(name = "similar_question")
 public class SimilarQuestion extends BaseTimeEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int idx;
 
     @Column(name = "number", nullable = false)
-    @Max(value = 50)
     private int number;
 
     @Column(name = "form", nullable = false, length = 50)

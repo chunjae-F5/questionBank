@@ -20,7 +20,6 @@ public class Question extends BaseTimeEntity {
     private Content contentIdx;
 
     @Column(name = "number", nullable = false)
-    @Max(value = 50)
     @Comment(value = "문제번호")
     private int number;   //문제번호
 
