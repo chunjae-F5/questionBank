@@ -60,4 +60,8 @@ public class TemporaryQuestion extends BaseTimeEntity {
     public TemporaryQuestion() {
 
     }
+
+    public void updateNumber(int newNumber) {
+        this.number = newNumber;
+    }
 }
