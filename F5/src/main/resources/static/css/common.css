@@ -17,7 +17,7 @@
 	* 100% 보다 더 크게 적용 하고 싶으면 return 부분을 수정하면됨.
 	* 참고사이트 http://sassbreak.com/viewport-relative-headings-with-sass/
 	*/
-@import url(../css/font.css);
+@import url(font.css);
 #q-preview {
   width: 1200px;
 }

@@ -1,7 +1,7 @@
 @charset "UTF-8";
-@import "_mixin.scss";
-@import "_setting.scss";
-@import url(../css/font.css);
+@import "mixin";
+@import "setting";
+@import url(font.css);
 
 // common
 html {
