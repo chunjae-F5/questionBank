@@ -65,4 +65,26 @@ public class TemporaryQuestionService {
 
         tqRepository.saveAll(itemList);
     }
+
+    public List<TemporaryQuestionDto.SaveDataDto> getAllQuestions() {
+        List<TemporaryQuestion> questions = tqRepository.findAll();
+        List<TemporaryQuestionDto.SaveDataDto> questionDtos = new ArrayList<>();
+
+        for (TemporaryQuestion question : questions) {
+            TemporaryQuestionDto.SaveDataDto dto = new TemporaryQuestionDto.SaveDataDto(
+                    question.getTemporaryContentIdx(),
+                    question.getNumber(),
+                    question.getType(),
+                    question.getForm(),
+                    question.getLevel(),
+                    question.getQuestionHtml(),
+                    question.getAnswerHtml(),
+                    question.getExplainHtml()
+            );
+            questionDtos.add(dto);
+        }
+
+        return questionDtos;
+    }
+
 }
