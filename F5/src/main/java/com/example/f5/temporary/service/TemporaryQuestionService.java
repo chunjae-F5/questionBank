@@ -25,7 +25,7 @@ public class TemporaryQuestionService {
     @SneakyThrows
     public void saveQuestionService() {
         List<Integer> problemCodeList = Arrays.asList(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20);
-        String apiUrl = "https://doctor.item-factory.com/items/item/item-list";
+        String apiUrl = "https://tsherpa.item-factory.com/chapter/chapter-list";
 
         // HttpClient 객체 생성
         HttpClient httpClient = HttpClient.newHttpClient();

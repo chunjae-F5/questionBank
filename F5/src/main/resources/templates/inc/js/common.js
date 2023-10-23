@@ -56,98 +56,33 @@ $(function () {
 
     tabBtn.on("click", tabUI);
 
-/*    // table drag
-    $("#table-1").sortable({
-        handle: ".dragHandle",
-    });
-    $("#table-1").disableSelection();
-    // table drag
-    $("#table-1").sortable({
-        handle: ".dragHandle",
-    });
-    $("#table-1").disableSelection();
+    function updateNumbers() {
+        $(".sort-group").each(function (index) {
+            // 각 .sort-group 요소를 순회하며 숫자를 업데이트
+            var numElement = $(this).find(".num");
+            numElement.text(index + 1);
+        });
+    }
 
     $(function () {
-        $(".depth-01")
-            .sortable({
-                items: ".col",
-                handle: ".drag-type01",
-                cancel: ".drag-type02",
-            })
-            .disableSelection();
-
-        $(".drag-type01")
-            .sortable({
-                items: ".col",
-                handle: ".drag-type02",
-                connectWith: ".drag-type01",
-                cancel: "",
-            })
-            .disableSelection();
-    });*/
-/*    $(function () {
-        // 문제 부분의 정렬
-        $(".sort-group").sortable();
-
-        // 문제 요약 부분의 정렬
-        $(".sortable").sortable({
-            connectWith: ".sortable",
+        $(".ui-sortable").sortable({
+            handle: ".dragHandle",
             update: function (event, ui) {
-                syncDivs();
+                const summaryId = $(ui.item).data("summary-id");
+                const problemItem = $(".view-que-list").find(".sort-group[data-summary-id='" + summaryId + "']");
+                const index = ui.item.index();
+                var problemItems = $(".view-que-list .sort-group");
+                // 아이템을 위로 올릴 때
+                console.log(ui.position.top + " < curent origin > " + ui.originalPosition.top + " index>" + index)
+                if (ui.position.top > ui.originalPosition.top) {
+                    problemItem.insertAfter(problemItems.eq(index));
+                    updateNumbers();
+                } else {
+                    problemItem.insertBefore(problemItems.eq(index));
+                    updateNumbers();
+                }
             }
         });
-
-        // div 동기화 함수
-        function syncDivs() {
-            // 문제 부분과 문제 요약 부분의 순서를 동기화합니다.
-            var $questions = $(".sort-group .view-que-box");
-            var $summaries = $(".scroll-inner .col.sortable");
-
-            // 문제 부분의 순서에 따라 요약 부분도 업데이트
-            $questions.each(function (index, question) {
-                var summaryId = $(question).data("summary-id");
-                var matchingSummary = $summaries.filter(function () {
-                    return $(this).data("summary-id") === summaryId;
-                });
-                var summaryIndex = $summaries.index(matchingSummary);
-                if (summaryIndex !== -1) {
-                    $summaries.eq(summaryIndex).insertBefore($summaries.eq(index));
-                }
-            });
-        }
-    });*/
-    $(function () {
-        // 문제 요약 부분의 개별 드래그 설정
-        $(".scroll-inner .col").sortable({
-            connectWith: ".scroll-inner .col",
-            placeholder: "ui-state-highlight",  // 드래그 중에 표시되는 플레이스홀더 스타일
-            start: function (e, ui) {
-                ui.placeholder.height(ui.helper.outerHeight());  // 드래그 중에 플레이스홀더의 높이 설정
-            },
-            stop: function (event, ui) {
-                var $sortedSummaries = $(this).closest('.test').find(".col");
-                syncDivs($sortedSummaries);
-            }
-        });
-
-        // div 동기화 함수
-        function syncDivs($sortedSummaries) {
-            // 문제 부분과 문제 요약 부분의 순서를 동기화합니다.
-            var $questions = $(".sort-group .view-que-box");
-            var $summaries = $sortedSummaries;
-
-            // 문제 부분의 순서에 따라 요약 부분도 업데이트
-            $questions.each(function (index, question) {
-                var summaryId = $(question).data("summary-id");
-                var matchingSummary = $summaries.filter(function () {
-                    return $(this).data("summary-id") === summaryId;
-                });
-                var summaryIndex = $summaries.index(matchingSummary);
-                if (summaryIndex !== -1) {
-                    $summaries.eq(summaryIndex).insertBefore($sortedSummaries.eq(index));
-                }
-            });
-        }
     });
 
     // paging
