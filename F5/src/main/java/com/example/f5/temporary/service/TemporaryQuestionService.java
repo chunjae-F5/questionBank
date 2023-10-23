@@ -1,9 +1,11 @@
 package com.example.f5.temporary.service;
 
-import com.example.f5.temporary.dto.TemporaryQuestionDto;
 import com.example.f5.temporary.entity.TemporaryQuestion;
 import com.example.f5.temporary.repository.TemporaryQuestionRepository;
-import com.google.gson.*;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 import org.springframework.stereotype.Service;
@@ -39,10 +41,6 @@ public class TemporaryQuestionService {
 
         // 요청 보내기
         HttpResponse<String> response = httpClient.send(request, HttpResponse.BodyHandlers.ofString());
-
-        // 응답 출력
-//        System.out.println("Response Code: " + response.statusCode());
-//        System.out.println("Response Body: " + response.body());
 
         String responseBody = response.body();
         JsonArray itemArray = JsonParser.parseString(responseBody).getAsJsonObject().getAsJsonArray("items");

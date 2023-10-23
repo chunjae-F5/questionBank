@@ -56,4 +56,8 @@ public class TemporaryQuestion extends BaseTimeEntity {
         this.answerHtml = answerHtml;
         this.explainHtml = explainHtml;
     }
+
+    public TemporaryQuestion() {
+
+    }
 }
