@@ -39,4 +39,22 @@ public class ExamDto {
         private String answerUrl;
         private String explainUrl;
     }
+
+    @Getter
+    @Setter
+    public static class CategoryResponse {
+        private String curriculumCode;
+        private String curriculumName;
+        private int subjectId;
+        private String subjectName;
+        private int largeChapterId;
+        private String largeChapterName;
+        private int mediumChapterId;
+        private String mediumChapterName;
+        private int smallChapterId;
+        private String smallChapterName;
+        private int topicChapterId;
+        private String topicChapterName;
+    }
+
 }

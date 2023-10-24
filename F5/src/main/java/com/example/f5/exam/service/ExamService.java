@@ -11,36 +11,14 @@ import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
 
 @Service
 @RequiredArgsConstructor
 public class ExamService {
 
-    @SneakyThrows
     public List<ExamDto.itemInfoResponse> getItemList(ExamDto.itemInfoRequest requestDto) {
-        String apiUrl = "https://tsherpa.item-factory.com/item-img/chapters/item-list";
-
-        Gson gson = new Gson();
-
-        String jsonString = gson.toJson(requestDto);
-
-
-        // HttpClient 객체 생성
-        HttpClient httpClient = HttpClient.newHttpClient();
-
-        // POST 요청 준비
-        HttpRequest request = HttpRequest.newBuilder()
-                .uri(URI.create(apiUrl))
-                .header("Accept", "application/json")
-                .header("Content-Type", "application/json")
-                .POST(HttpRequest.BodyPublishers.ofString(jsonString))
-                .build();
-
-        // 요청 보내기
-        HttpResponse<String> response = httpClient.send(request, HttpResponse.BodyHandlers.ofString());
+        HttpResponse<String> response = apiPostRequest("https://tsherpa.item-factory.com/item-img/chapters/item-list", requestDto);
 
         String responseBody = response.body();
         JsonArray itemArray = JsonParser.parseString(responseBody).getAsJsonObject().getAsJsonArray("itemList");
@@ -62,5 +40,58 @@ public class ExamService {
             itemList.add(responseDto);
         }
         return itemList;
+    }
+
+    public List<ExamDto.CategoryResponse> getCategory(int itemId) {
+        Map<String, Object> jsonMap = new HashMap<>();
+        jsonMap.put("subjectId", itemId);
+
+        HttpResponse<String> response = apiPostRequest("https://tsherpa.item-factory.com/chapter/chapter-list", jsonMap);
+        String responseBody = response.body();
+        JsonArray itemArray = JsonParser.parseString(responseBody).getAsJsonObject().getAsJsonArray("chapterList");
+
+        List<ExamDto.CategoryResponse> itemList = new ArrayList<>();
+
+        for (JsonElement itemElement : itemArray) {
+            JsonObject itemObject = itemElement.getAsJsonObject();
+            ExamDto.CategoryResponse responseDto = new ExamDto.CategoryResponse();
+
+            responseDto.setCurriculumCode(itemObject.get("curriculumCode").getAsString());
+            responseDto.setCurriculumName(itemObject.get("curriculumName").getAsString());
+            responseDto.setSubjectId(itemObject.get("subjectId").getAsInt());
+            responseDto.setSubjectName(itemObject.get("subjectName").getAsString());
+            responseDto.setLargeChapterId(itemObject.get("largeChapterId").getAsInt());
+            responseDto.setLargeChapterName(itemObject.get("largeChapterName").getAsString());
+            responseDto.setMediumChapterId(itemObject.get("mediumChapterId").getAsInt());
+            responseDto.setMediumChapterName(itemObject.get("mediumChapterName").getAsString());
+            responseDto.setSmallChapterId(itemObject.get("smallChapterId").getAsInt());
+            responseDto.setSmallChapterName(itemObject.get("smallChapterName").getAsString());
+            responseDto.setTopicChapterId(itemObject.get("topicChapterId").getAsInt());
+            responseDto.setTopicChapterName(itemObject.get("topicChapterName").getAsString());
+
+            itemList.add(responseDto);
+        }
+        return itemList;
+    }
+
+    @SneakyThrows
+    private HttpResponse<String> apiPostRequest(String apiUrl, Object body) {
+        Gson gson = new Gson();
+        String jsonString = gson.toJson(body);
+
+        // HttpClient 객체 생성
+        HttpClient httpClient = HttpClient.newHttpClient();
+
+        // POST 요청 준비
+        HttpRequest request = HttpRequest.newBuilder()
+                .uri(URI.create(apiUrl))
+                .header("Accept", "application/json")
+                .header("Content-Type", "application/json")
+                .POST(HttpRequest.BodyPublishers.ofString(jsonString))
+                .build();
+
+        // 요청 보내기
+        HttpResponse<String> response = httpClient.send(request, HttpResponse.BodyHandlers.ofString());
+        return response;
     }
 }
