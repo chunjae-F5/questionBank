@@ -156,7 +156,7 @@
                                         </div>
                                         <div class="input-area">
                                             <span class="num">총 <input type="text" value="30"
-                                                                       id="questionCount"> 문제</span>
+                                                                       id="questionCount" onchange="changeCount()"> 문제</span>
                                             <div class="txt warn5">*5의 배수로 입력해주세요.</div>
                                         </div>
                                     </div>
@@ -208,15 +208,20 @@
                                         <span class="tit-text">난이도 구성</span>
                                     </div>
                                     <div class="step-wrap">
-                                        <button type="button" class="btn-line type02 color01" data-step="step1" onclick="divide(this)">최하
+                                        <button type="button" class="btn-line type02 color01" data-step="step1"
+                                                onclick="divide(this)">최하
                                         </button>
-                                        <button type="button" class="btn-line type02 color02 active" data-step="step2" onclick="divide(this)">하
+                                        <button type="button" class="btn-line type02 color02 active" data-step="step2"
+                                                onclick="divide(this)">하
                                         </button>
-                                        <button type="button" class="btn-line type02 color03 active" data-step="step3" onclick="divide(this)">중
+                                        <button type="button" class="btn-line type02 color03 active" data-step="step3"
+                                                onclick="divide(this)">중
                                         </button>
-                                        <button type="button" class="btn-line type02 color04 active" data-step="step4" onclick="divide(this)">상
+                                        <button type="button" class="btn-line type02 color04 active" data-step="step4"
+                                                onclick="divide(this)">상
                                         </button>
-                                        <button type="button" class="btn-line type02 color05" data-step="step5" onclick="divide(this)">최상
+                                        <button type="button" class="btn-line type02 color05" data-step="step5"
+                                                onclick="divide(this)">최상
                                         </button>
                                     </div>
                                 </div>
@@ -230,9 +235,9 @@
                                     </div>
                                     <div class="range-wrap">
                                         <span class="range color01" data-step="step1">최하(n)</span>
-                                        <span class="range color02" data-step="step2">하(10)</span>
-                                        <span class="range color03" data-step="step3">중(10)</span>
-                                        <span class="range color04" data-step="step4">상(10)</span>
+                                        <span class="range color02" data-step="step2">하(n)</span>
+                                        <span class="range color03" data-step="step3">중(n)</span>
+                                        <span class="range color04" data-step="step4">상(n)</span>
                                         <span class="range color05" data-step="step5">최상(n)</span>
                                     </div>
                                 </div>
@@ -265,27 +270,27 @@
                 <span class="txt">문제 수를 입력하여<br> 난이도별 문제 수를 조정하세요.</span>
                 <div class="range-wrap">
                     <!-- S: 문제 수 맞지 않을 시 .fail 클래스 추가 -->
-                    <div class="range color01 fail">
+                    <div class="range color01 fail count" data-step="step1" style="display:none;">
                         <span class="color01">최하</span>
-                        <input type="number">
+                        <input type="number" class="num">
                     </div>
-                    <div class="range color02">
+                    <div class="range color02 count" data-step="step2" style="display:none;">
                         <span class="color02">하</span>
-                        <input type="number">
+                        <input type="number" class="num">
                     </div>
-                    <div class="range color03">
+                    <div class="range color03 count" data-step="step3" style="display:none;">
                         <span class="color03">중</span>
-                        <input type="number">
+                        <input type="number" class="num">
                     </div>
-                    <div class="range color04">
+                    <div class="range color04 count" data-step="step4" style="display:none;">
                         <span class="color04">상</span>
-                        <input type="number">
+                        <input type="number" class="num">
                     </div>
-                    <div class="range color05">
+                    <div class="range color05 count" data-step="step5" style="display:none;">
                         <span class="color05">최상</span>
-                        <input type="number">
+                        <input type="number" class="num">
                     </div>
-                    <div class="range total fail">
+                    <div class="range total">
                         <span>합계</span>
                         <span class="num">20</span>
                     </div>
@@ -345,46 +350,45 @@
 </div>
 </body>
 
-<!-- 프론트 API요청 스크립트-->
-<script>
-    const watchJson = document.getElementById("watchJson");
-
-    watchJson.addEventListener("click", function () {
-        fetch("http://ec2-3-38-211-148.ap-northeast-2.compute.amazonaws.com:8002/chapter/chapter-list", {
-            method: "POST",
-            credentials: "include",
-            mode: 'cors',
-            headers: {
-                "content-type": "application/json",
-            },
-            data: JSON.stringify({
-                subjectId: 1136,
-            }),
-        }).then((response) => response.json())
-            .then((data) => console(data))
-    })
-</script>
-
 <!-- 기능구현 -->
 <script>
 
     // 1. 체크박스 전체 선택 되는 기능
     $(document).ready(function () {
-
         $('#chk01_00').change(function () {
 
             let isChecked = $(this).prop('checked');
 
             $('input[type="checkbox"]').prop('checked', isChecked);
         });
+        changeCount();
     });
 
-    // 2. 문제 항목 수 관련 버튼
     let questionCountInput = document.getElementById("questionCount");
     let txtElement = document.querySelector(".warn5");
     let btns = document.querySelectorAll(".total-questions");
     const popup = document.querySelector('.pop-wrap.range-type02');
     const totalNumSpan = document.getElementById("total-count");
+    let count = 0;
+    const buttons = document.querySelectorAll('.step-wrap button');
+
+    buttons.forEach(function (button) {
+        if (button.classList.contains('active')) {
+            count++;
+        }
+    });
+
+    function divide(button) {
+        if ($(button).hasClass('active')) {
+            count--;
+        } else {
+            count++;
+        }
+        console.log(count);
+
+    }
+
+    // console.log('초기 카운트: ' + count);
 
     btns.forEach(function (btn) {
         btn.addEventListener("click", function () {
@@ -397,10 +401,6 @@
 
     questionCountInput.addEventListener("input", function () {
         updateStyles();
-        syncButtonWithInput();
-        const inputValue = parseInt(questionCountInput.value);
-        updateTotalNumDisplay(inputValue);
-        updatePopupDisplay(inputValue);
     });
 
     function updateStyles() {
@@ -426,24 +426,98 @@
                 updatePopupDisplay(inputValue);
             }
         }
+        syncButtonWithInput(inputValue);
     }
 
-    function syncButtonWithInput() {
-        let inputValue = parseInt(questionCountInput.value);
+    function syncButtonWithInput(inputValue) {
 
         btns.forEach(function (btn) {
             btn.classList.remove("active");
-        });
-
-        btns.forEach(function (btn) {
             if (btn.getAttribute("data-value") == inputValue) {
                 btn.classList.add("active");
             }
         });
     }
 
+    function changeCount() {
+        let totalCount = totalNumSpan.textContent;
+        let lastTotalCount = parseInt(totalCount.toString());
+
+        let divideCount = Math.trunc(lastTotalCount / count);
+        let restCount = lastTotalCount % count;
+
+        const rangeWrap = document.querySelector('.range-wrap');
+        let flexSpans = rangeWrap.querySelectorAll("span[style*='display: flex;']");
+
+        flexSpans.forEach(function (span, index) {
+            if (span.textContent.includes("(")) {
+                const matches = span.textContent.match(/\(([^)]+)\)/);
+                if (matches) {
+                    const contentInsideParentheses = matches[1];
+                    let replacement;
+
+                    if (index === 0) {
+                        replacement = `${divideCount + restCount}`;
+                    } else {
+                        replacement = `${divideCount}`;
+                    }
+
+                    span.textContent = span.textContent.replace(`(${contentInsideParentheses})`, `(${replacement})`);
+                }
+            }
+        });
+
+        setTimeout(changeCount, 0);
+
+
+        // 팝업창에 있는 총 문제도 변경해주기
+        // "총 문제 수"를 변경할 값을 정의
+        const newTotalCount = lastTotalCount; // 원하는 값으로 대체
+
+        // "총 문제 수" 엘리먼트를 선택하고 내용을 변경
+        const totalNumElement = document.querySelector('.pop-wrap .range.total .num');
+        totalNumElement.textContent = newTotalCount;
+
+    }
+
+    function updatePopWrapDividedCount(){
+        const popWrap = document.querySelector('.pop-wrap .range-type')
+        let flexInputs =popWrap.querySelectorAll("input[class*='range']")
+
+        flexInputs.forEach(function (input, index){
+            if (index === 0) {
+                input.textContent = `${divideCount + restCount}`;
+            } else {
+                input.textContent = `${divideCount}`;
+            }
+        });
+    }
+
     function updateTotalNumDisplay(value) {
         totalNumSpan.textContent = value;
+        let divideCount = Math.trunc(value / count);
+        let restCount = value % count;
+
+        const rangeWrap = document.querySelector('.range-wrap');
+        let flexSpans = rangeWrap.querySelectorAll("span[style*='display: flex;']");
+
+        flexSpans.forEach(function (span, index) {
+            if (span.textContent.includes("(")) {
+                const matches = span.textContent.match(/\(([^)]+)\)/);
+                if (matches) {
+                    const contentInsideParentheses = matches[1];
+                    let replacement;
+
+                    if (index === 0) {
+                        replacement = `${divideCount + restCount}`;
+                    } else {
+                        replacement = `${divideCount}`;
+                    }
+
+                    span.textContent = span.textContent.replace(`(${contentInsideParentheses})`, `(${replacement})`);
+                }
+            }
+        });
     }
 
     function updatePopupDisplay(inputValue) {
@@ -455,13 +529,9 @@
         }
     }
 
-    updateStyles();
-    syncButtonWithInput();
-    updatePopupDisplay(parseInt(questionCountInput.value));
-
     const step2Button = document.querySelector('.btn-step.next');
 
-    step2Button.addEventListener('click', function () {
+    step2Button.addEventListener('click', function ()  {
         const inputValue = parseInt(questionCountInput.value);
 
         if (inputValue % 5 !== 0) {
@@ -470,45 +540,7 @@
         }
     });
 
-    // 3. 체크되면 오른쪽 버튼활성화 기능
-    function revive() {
-    }
-
-    // 4. 챕터 7-8번: 난이도별 문항 분배
-
-    // 일단 클릭하면 카운트 1씩 올리기
-    let count = 0;
-    const divide = (button) => {
-        // 만약 active가 실행되면 count에 +1
-        // active가 없어지면 count에 -1
-        // 총 count에  문제수/count 하고 만약 문제수 % count !== 0 이면 나머지 값 제일 처음 난이도에 더해주기
-
-        if ($(button).hasClass('active')) {
-            count--;
-        } else {
-            count++;
-        }
-        console.log(count);
-    };
-
-    // HTML 요소에서 버튼 요소들을 가져옵니다.
-    let buttons = document.querySelectorAll('.step-wrap button');
-
-    // 각 버튼 요소를 순회하면서 "active" 클래스가 있는지 확인하고 count를 증가시킵니다.
-    buttons.forEach(function(button) {
-        if (button.classList.contains('active')) {
-            count++;
-        }
-    });
-
-    console.log('초기 카운트: ' + count);  // 초기 카운트 수 확인
-
-    // 이제 분배를 해보자
-
-
-
-
-	// 기존 코드
+    // 기존 코드
     $(function () {
         // depth
         let depBtn = $('.dep-btn');
@@ -529,7 +561,6 @@
         }
 
         depBtn.on('click', depFunc);
-
 
         // que-checkbox
         let queChkAll = $('.que-allCheck');
@@ -571,6 +602,7 @@
 
             if (_this.hasClass('active')) {
                 $(".range[data-step='" + stepData + "']").show();
+
             } else {
                 $(".range[data-step='" + stepData + "']").hide();
             }
@@ -579,16 +611,19 @@
         stepBtn.on('click', stepFunc);
     });
 
-    $(document).ready(function() {
+    $(document).ready(function () {
         let stepBtn = $('.step-wrap .btn-line.active');
 
-        stepBtn.each(function() {
+        stepBtn.each(function () {
             let _this = $(this);
             let stepData = _this.data('step');
             _this.addClass('active');
             $(".range[data-step='" + stepData + "']").show();
         });
     });
+
+
+
 
 </script>
 </html>
