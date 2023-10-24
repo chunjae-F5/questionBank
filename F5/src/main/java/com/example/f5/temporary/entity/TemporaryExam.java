@@ -1,4 +1,4 @@
-package com.example.f5.exam.entity;
+package com.example.f5.temporary.entity;
 
 import com.example.f5.util.BaseTimeEntity;
 import jakarta.persistence.*;
@@ -7,31 +7,36 @@ import org.hibernate.annotations.Comment;
 
 @Entity
 @Getter
-public class Exam extends BaseTimeEntity {
+public class TemporaryExam extends BaseTimeEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(nullable = false)
     private int idx;
+
+    @ManyToOne
+    @JoinColumn(name = "question_idx")
+    private TemporaryContent questionIdx;
 
     @Column(name = "highest", nullable = false)
     @Comment(value = "최상 난이도 개수")
-    private String highest;
+    private int highest;
 
     @Column(name = "high", nullable = false)
     @Comment(value = "상 난이도 개수")
-    private String high;
+    private int high;
 
     @Column(name = "medium", nullable = false)
     @Comment(value = "중 난이도 개수")
-    private String medium;
+    private int medium;
 
     @Column(name = "low", nullable = false)
     @Comment(value = "하 난이도 개수")
-    private String low;
+    private int low;
 
     @Column(name = "total", nullable = false)
     @Comment(value = "총 문제 개수")
-    private String total;
+    private int total;
 
     @Column(name = "choice_answer", nullable = false)
     @Comment(value = "객관식 문제 개수")
@@ -44,4 +49,8 @@ public class Exam extends BaseTimeEntity {
     @Column(name = "long_answer", nullable = false)
     @Comment(value = "서술형 문제 개수")
     private int longAnswer;
+
+    @Column(name = "user_id", nullable = false, length = 50)
+    @Comment(value = "유저명")
+    private String userId;
 }

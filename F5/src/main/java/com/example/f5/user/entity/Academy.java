@@ -1,22 +1,31 @@
 package com.example.f5.user.entity;
 
 import com.example.f5.util.BaseTimeEntity;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.Getter;
+import org.hibernate.annotations.Comment;
 
 @Entity
 @Getter
 public class Academy extends BaseTimeEntity {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long idx;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int idx;
 
+    @Column(name = "name", nullable = false)
+    @Comment(value = "학원 이름")
     private String name;
+
+    @Column(name = "location", nullable = false)
+    @Comment(value = "학원 위치")
     private String location;
+
+    @Column(name = "logo", nullable = false)
+    @Comment(value = "학원 로고 이미지")
     private String logo;
+
+    @Column(name = "deleted_yn", nullable = false)
+    @Comment(value = "탈퇴여부")
     private boolean deletedYN;
 }

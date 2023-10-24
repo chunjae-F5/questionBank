@@ -1,22 +1,34 @@
 package com.example.f5.user.entity;
 
 import com.example.f5.util.BaseTimeEntity;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.Getter;
+import org.hibernate.annotations.Comment;
 
 @Entity
 @Getter
 public class User extends BaseTimeEntity {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long idx;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int idx;
 
+    @Column(name = "id", nullable = false)
+    @Comment(value = "아이디")
     private String id;
+
+    @Column(name = "password", nullable = false)
+    @Comment(value = "비밀번호")
     private String password;
+
+    @Column(name = "name", nullable = false)
+    @Comment(value = "이름")
     private String name;
+
+    @Column(name = "email", nullable = false)
+    @Comment(value = "이메일 주소")
     private String email;
+
+    @Column(name = "delete_yn", nullable = false)
+    @Comment(value = "탈퇴여부")
     private boolean deletedYN;
 }

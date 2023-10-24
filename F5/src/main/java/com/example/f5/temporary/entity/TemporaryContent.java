@@ -1,4 +1,4 @@
-package com.example.f5.exam.entity;
+package com.example.f5.temporary.entity;
 
 import com.example.f5.util.BaseTimeEntity;
 import jakarta.persistence.*;
@@ -7,10 +7,11 @@ import org.hibernate.annotations.Comment;
 
 @Entity
 @Getter
-public class Content extends BaseTimeEntity {
+public class TemporaryContent extends BaseTimeEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "content_idx", nullable = false)
     private int idx;
 
     @Column(name = "content", nullable = false)
