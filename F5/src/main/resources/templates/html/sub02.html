@@ -17,6 +17,26 @@
     <script src="https://code.jquery.com/ui/1.13.1/jquery-ui.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/swiper@8/swiper-bundle.min.js"></script>
     <script th:src="@{/js/common.js}"></script>
+    <script>
+        fetch(`/category/select?itemId=${itemId}`, {
+            method: 'GET'
+        })
+            .then(response => {
+                if (response.ok) {
+                    return response.json(); // JSON 데이터를 파싱하고 Promise를 반환
+                }
+                throw new Error('Network response was not ok.');
+            })
+            .then(data => {
+                // JSON 데이터를 사용하는 코드를 여기에 작성
+                console.log(data); // 데이터를 콘솔에 출력하거나 다른 작업을 수행할 수 있음
+            })
+            .catch(error => {
+                // 오류 처리
+                console.error('There was a problem with the fetch operation:', error);
+            });
+    </script>
+
 </head>
 
 <body>
@@ -34,8 +54,7 @@
             <div class="view-box">
                 <div class="view-top">
                     <div class="paper-info">
-                        <span>국어 1-1</span>
-                        노미숙(2015)
+                        <span th:text="${itemList.get(0).getSubjectName()}"></span>
                     </div>
                 </div>
                 <div class="view-bottom">
@@ -49,82 +68,37 @@
                                         <label for="chk01_00">전체선택</label>
                                     </div>
                                     <ul>
-                                        <li>
-                                            <div class="check-group title">
-                                                <div class="title-chk">
-                                                    <input type="checkbox" id="chk01_01" class="que-allCheck depth01">
-                                                    <label for="chk01_01">
-                                                        <button type="button" class="dep-btn active">1. 새로운 시작</button>
-                                                    </label>
-                                                </div>
+                                        <li th:each="item, iterStat : ${itemList}" th:id="'item-' + ${iterStat.count}">
+                                            <!-- Large Chapter -->
+                                            <div class="check-group title" th:if="${iterStat.first or item.largeChapterName != itemList[__${iterStat.index - 1}__].largeChapterName}">
+                                                <input th:id="'chk' + ${iterStat.count} + '_01'" class="que-allCheck depth01" type="checkbox">
+                                                <label th:for="'chk' + ${iterStat.count} + '_01'">
+                                                    <button type="button" class="dep-btn active" th:text="${item.largeChapterName}"></button>
+                                                </label>
                                             </div>
-                                            <div class="depth02">
-                                                <div class="check-group">
-                                                    <input type="checkbox" id="chk01_02" class="que-allCheck depth01">
-                                                    <label for="chk01_02">
-                                                        <button type="button" class="dep-btn active">(1) 시의 아름다움
-                                                        </button>
-                                                    </label>
-                                                </div>
-                                                <div class="depth03">
-                                                    <div class="check-group">
-                                                        <input type="checkbox" id="chk01_03"
-                                                               class="que-allCheck depth01">
-                                                        <label for="chk01_03">
-                                                            <button type="button" class="dep-btn active">[1] 소주제
-                                                            </button>
-                                                        </label>
-                                                    </div>
-                                                    <div class="depth04">
-                                                        <div class="check-group">
-                                                            <input type="checkbox" id="chk01_04"
-                                                                   class="que-allCheck depth01">
-                                                            <label for="chk01_04">
-                                                                <button type="button" class="dep-btn active">거듭제곱
-                                                                </button>
-                                                            </label>
-                                                        </div>
-                                                        <div class="depth05">
-                                                            <div class="check-group">
-                                                                <input type="checkbox" id="chk01_05">
-                                                                <label for="chk01_05" class="active">
-                                                                    <span>거듭제곱으로 표현</span>
-                                                                </label>
-                                                            </div>
-                                                        </div>
-                                                        <div class="check-group">
-                                                            <input type="checkbox" id="chk01_06">
-                                                            <label for="chk01_06">
-                                                                <span>소수와 합성수</span>
-                                                            </label>
-                                                        </div>
 
-                                                        <div class="check-group">
-                                                            <input type="checkbox" id="chk01_07">
-                                                            <label for="chk01_07">
-                                                                <span>소인수분해</span>
-                                                            </label>
-                                                        </div>
-                                                        <div class="check-group">
-                                                            <input type="checkbox" id="chk01_08">
-                                                            <label for="chk01_08">
-                                                                <span>소인수분해를 이용하여 약수 구하기</span>
-                                                            </label>
-                                                        </div>
-                                                        <div class="check-group">
-                                                            <input type="checkbox" id="chk01_09">
-                                                            <label for="chk01_09">
-                                                                <span>최대공약수와 최소공배수</span>
-                                                            </label>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="check-group">
-                                                    <input type="checkbox" id="chk01_10">
-                                                    <label for="chk01_10">
-                                                        <span>(2) 산문의 향기</span>
-                                                    </label>
-                                                </div>
+                                            <!-- Medium Chapter -->
+                                            <div class="depth02" th:if="${iterStat.first or item.mediumChapterName != itemList[__${iterStat.index - 1}__].mediumChapterName}">
+                                                <input th:id="'chk' + ${iterStat.count} + '_02'" class="que-allCheck depth02" type="checkbox">
+                                                <label th:for="'chk' + ${iterStat.count} + '_02'">
+                                                    <button type="button" class="dep-btn active" th:text="${item.mediumChapterName}"></button>
+                                                </label>
+                                            </div>
+
+                                            <!-- Small Chapter -->
+                                            <div class="depth03" th:if="${iterStat.first or item.smallChapterName != itemList[__${iterStat.index - 1}__].smallChapterName}">
+                                                <input th:id="'chk' + ${iterStat.count} + '_03'" class="que-allCheck depth03" type="checkbox">
+                                                <label th:for="'chk' + ${iterStat.count} + '_03'">
+                                                    <button type="button" class="dep-btn active" th:text="${item.smallChapterName}"></button>
+                                                </label>
+                                            </div>
+
+                                            <!-- Topic Chapter -->
+                                            <div class="depth04" th:if="${iterStat.first or item.topicChapterName != itemList[__${iterStat.index - 1}__].topicChapterName}">
+                                                <input th:id="'chk' + ${iterStat.count} + '_04'" class="que-allCheck depth04" type="checkbox">
+                                                <label th:for="'chk' + ${iterStat.count} + '_04'">
+                                                    <button type="button" class="dep-btn active" th:text="${item.topicChapterName}"></button>
+                                                </label>
                                             </div>
                                         </li>
                                     </ul>
@@ -156,7 +130,8 @@
                                         </div>
                                         <div class="input-area">
                                             <span class="num">총 <input type="text" value="30"
-                                                                       id="questionCount" onchange="changeCount()"> 문제</span>
+                                                                       id="questionCount"
+                                                                       onchange="changeCount()"> 문제</span>
                                             <div class="txt warn5">*5의 배수로 입력해주세요.</div>
                                         </div>
                                     </div>
@@ -467,7 +442,7 @@
             }
         });
 
-        setTimeout(changeCount, 0);
+        // setTimeout(changeCount, 0);
 
 
         // 팝업창에 있는 총 문제도 변경해주기
@@ -480,11 +455,11 @@
 
     }
 
-    function updatePopWrapDividedCount(){
+    function updatePopWrapDividedCount() {
         const popWrap = document.querySelector('.pop-wrap .range-type')
-        let flexInputs =popWrap.querySelectorAll("input[class*='range']")
+        let flexInputs = popWrap.querySelectorAll("input[class*='range']")
 
-        flexInputs.forEach(function (input, index){
+        flexInputs.forEach(function (input, index) {
             if (index === 0) {
                 input.textContent = `${divideCount + restCount}`;
             } else {
@@ -531,7 +506,7 @@
 
     const step2Button = document.querySelector('.btn-step.next');
 
-    step2Button.addEventListener('click', function ()  {
+    step2Button.addEventListener('click', function () {
         const inputValue = parseInt(questionCountInput.value);
 
         if (inputValue % 5 !== 0) {
@@ -621,9 +596,6 @@
             $(".range[data-step='" + stepData + "']").show();
         });
     });
-
-
-
 
 </script>
 </html>

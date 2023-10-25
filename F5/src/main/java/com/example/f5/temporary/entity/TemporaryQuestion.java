@@ -45,4 +45,19 @@ public class TemporaryQuestion extends BaseTimeEntity {
     @Column(name = "explain_html", nullable = false, length = 100000)
     @Comment(value = "해설 HTML")
     private String explainHtml;
+
+    public TemporaryQuestion(TemporaryContent temporaryContentIdx, int number, String type, String form, String level, String questionHtml, String answerHtml, String explainHtml) {
+        this.temporaryContentIdx = temporaryContentIdx;
+        this.number = number;
+        this.type = type;
+        this.form = form;
+        this.level = level;
+        this.questionHtml = questionHtml;
+        this.answerHtml = answerHtml;
+        this.explainHtml = explainHtml;
+    }
+
+    public TemporaryQuestion() {
+
+    }
 }
