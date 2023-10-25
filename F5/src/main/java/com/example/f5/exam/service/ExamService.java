@@ -52,7 +52,6 @@ public class ExamService {
         String responseBody = response.body();
         JsonArray itemArray = JsonParser.parseString(responseBody).getAsJsonObject().getAsJsonArray("chapterList");
 
-//        return itemList;
         return transformJson(String.valueOf(itemArray));
     }
 
@@ -162,5 +161,22 @@ public class ExamService {
                 .flatMap(mc -> mc.getSmallChapters().stream())
                 .filter(sc -> Objects.equals(sc.getSmallChapterId(), id))
                 .findFirst();
+    }
+
+    public List<String> getEvaluation(int itemId) throws JsonProcessingException {
+        Map<String, Object> jsonMap = new HashMap<>();
+        jsonMap.put("subjectId", itemId);
+
+        HttpResponse<String> response = apiPostRequest("https://tsherpa.item-factory.com/chapter/evaluation-list", jsonMap);
+        String responseBody = response.body();
+        JsonArray itemArray = JsonParser.parseString(responseBody).getAsJsonObject().getAsJsonArray("evaluationList");
+
+        List<String> result = new ArrayList<>();
+        for (JsonElement jsonElement : itemArray) {
+            JsonObject jsonObject = jsonElement.getAsJsonObject();
+            result.add(jsonObject.get("domainName").getAsString());
+        }
+
+        return result;
     }
 }

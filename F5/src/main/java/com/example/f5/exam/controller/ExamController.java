@@ -27,14 +27,10 @@ public class ExamController {
     @GetMapping("/category/select")
     public String createExamForm(@RequestParam int itemId, Model model) throws JsonProcessingException {
         ExamDto.Curriculum itemList = examService.getCategory(itemId);
+        List<String> evaluationList = examService.getEvaluation(itemId);
         model.addAttribute("itemList", itemList);
+        model.addAttribute("evaluationList", evaluationList);
         return "html/sub02";
     }
-
-//    @GetMapping("/category/select")
-//    public @ResponseBody List<ExamDto.CategoryResponse> createExamForm(@RequestParam int itemId) {
-//        List<ExamDto.CategoryResponse> itemList = examService.getCategory(itemId);
-//        return itemList;
-//    }
 }
 
