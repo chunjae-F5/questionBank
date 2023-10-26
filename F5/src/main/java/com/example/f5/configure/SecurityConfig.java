@@ -4,7 +4,6 @@ import com.example.f5.user.member.Role;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
-import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpStatus;
@@ -16,7 +15,6 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.AuthenticationEntryPoint;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.access.AccessDeniedHandler;
-import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 import java.io.PrintWriter;
 
@@ -37,9 +35,9 @@ public class SecurityConfig {
                 )
                 .authorizeHttpRequests((authorizeRequests) ->
                         authorizeRequests
-                                .requestMatchers("/resister").permitAll()
+                                .requestMatchers("/register").permitAll()
                                 .requestMatchers("/", "/login/**").permitAll()
-                                .requestMatchers( "/login").permitAll()
+                                .requestMatchers("/login").permitAll()
                                 .requestMatchers("/post/**", "/api/v1/posts/**").hasRole(Role.USER.name())
                                 .requestMatchers("/admins/**", "/api/v1/admins/**").hasRole(Role.ADMIN.name())
 
@@ -47,6 +45,16 @@ public class SecurityConfig {
                 )
                 .exceptionHandling((exceptionConfig) ->
                         exceptionConfig.authenticationEntryPoint(unauthorizedEntryPoint).accessDeniedHandler(accessDeniedHandler)
+                ).formLogin((formLogin) ->
+                        formLogin
+                                .loginPage("/login/login")
+                                .usernameParameter("username")
+                                .passwordParameter("password")
+                                .loginProcessingUrl("/login/login-proc")
+                                .defaultSuccessUrl("/", true)
+                )
+                .logout((logoutConfig) ->
+                        logoutConfig.logoutSuccessUrl("/")
                 );
         return http.build();
     }
@@ -85,49 +93,4 @@ public class SecurityConfig {
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
-/*@Bean
-public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-    http
-            .csrf((AbstractHttpConfigurer) ->
-                    AbstractHttpConfigurer.disable()
-            )
-            .authorizeHttpRequests(authorizeHttpRequests -> authorizeHttpRequests
-                    .requestMatchers(new AntPathRequestMatcher("/login")
-                            , new AntPathRequestMatcher("/aroundSchool")
-                            , new AntPathRequestMatcher("/signup")
-                            , new AntPathRequestMatcher("/")
-                            , new AntPathRequestMatcher("/school/user/**")
-                            , new AntPathRequestMatcher("/elem/**")
-                            , new AntPathRequestMatcher("/middle/**")
-                            , new AntPathRequestMatcher("/high/**"))
-                    .permitAll()
-                    .anyRequest().authenticated())
-            .formLogin((formLogin) -> formLogin
-                    .loginPage("/login")
-            )
-            .logout((logout) -> logout
-                    .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
-                    .deleteCookies("JSESSIONID")
-                    .invalidateHttpSession(true)
-                    .clearAuthentication(true)
-                    .logoutSuccessUrl("/login"))
-            .rememberMe((rememberMe) -> rememberMe
-                    .rememberMeParameter("rememberMe")
-                    .tokenValiditySeconds(3600)
-                    .alwaysRemember(false));
-
-    return http.build();
-}
-
-
-    @Bean
-    PasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder();
-    }
-
-    @Bean
-    AuthenticationManager authenticationManager(AuthenticationConfiguration authenticationConfiguration) throws Exception {
-        return authenticationConfiguration.getAuthenticationManager();
-    }*/
-
 }
