@@ -86,7 +86,7 @@
 
                                             <div class="depth02">
                                                 <!-- 중단원 -->
-                                                <div th:each="mediumItem, mediumItemStat : ${item.mediumChapters}" style="width: 300px">
+                                                <div th:each="mediumItem, mediumItemStat : ${item.mediumChapters}">
                                                     <div class="check-group on">
                                                         <!--check-group 클래스가 생성 되었을 때-->
                                                         <input type="checkbox" class="que-allCheck depth01" th:id="${'chk02_' + mediumItemStat}">
@@ -99,7 +99,7 @@
                                                     <div class="depth03">
                                                         <!--depth03클래스가 생성 되었을 때-->
                                                         <!--소단원-->
-                                                        <div th:each="smallItem, smallItemStat : ${mediumItem.smallChapters}" style="width: 300px">
+                                                        <div th:each="smallItem, smallItemStat : ${mediumItem.smallChapters}">
                                                             <div class="check-group on">
                                                                 <!--check-group 클래스가 생성 되었을 때-->
                                                                 <input type="checkbox" class="que-allCheck depth01" th:id="${'chk03_' + smallItemStat}">
@@ -113,7 +113,7 @@
                                                                 <!--depth04클래스가 생성 되었을 때-->
                                                                 <!-- 토픽 -->
                                                                 <div th:each="topicItem, topicItemStat : ${smallItem.topicChapters}"
-                                                                     class="check-group on" style="width: 300px">
+                                                                     class="check-group on">
                                                                     <input type="checkbox" th:id="${'chk04_' + topicItemStat}">
                                                                     <label th:for="${'chk04_' + topicItemStat}">
                                                                         <span th:text="${topicItem.topicChapterName}"></span>
