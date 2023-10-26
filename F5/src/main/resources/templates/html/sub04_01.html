@@ -1,449 +1,397 @@
-<!DOCTYPE html>
-<html lang="ko">
+<!DOCTYPE>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
 
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>T셀파 문제은행</title>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@8/swiper-bundle.min.css"/>
-    <link rel="stylesheet" href="https://code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css">
-    <link rel="stylesheet" th:href="@{/css/font.css}">
-    <link rel="stylesheet" th:href="@{/css/reset.css}">
-    <link rel="stylesheet" th:href="@{/css/common.css}">
-    <script src="https://code.jquery.com/jquery-1.12.4.min.js"
-            integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ=" crossorigin="anonymous"></script>
-    <script src="https://code.jquery.com/ui/1.13.1/jquery-ui.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/swiper@8/swiper-bundle.min.js"></script>
-    <script th:src="@{/js/common.js}"></script>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>T셀파 문제은행</title>
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@8/swiper-bundle.min.css"/>
+	<link rel="stylesheet" href="https://code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css">
+	<link rel="stylesheet" th:href="@{/css/font.css}">
+	<link rel="stylesheet" th:href="@{/css/reset.css}">
+	<link rel="stylesheet" th:href="@{/css/common.css}">
+	<script src="https://code.jquery.com/jquery-1.12.4.min.js"
+			integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ=" crossorigin="anonymous"></script>
+	<script src="https://code.jquery.com/ui/1.13.1/jquery-ui.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/swiper@8/swiper-bundle.min.js"></script>
+	<script th:src="@{/js/common.js}"></script>
 
-    <script>
-        // 배열 초기화
-        const array = [
-            494580,
-            494581,
-            494582,
-            494583,
-            494584,
-            494585,
-            494586,
-            494587,
-            494588,
-            494589
-        ];
+	<script>
+		// 배열 초기화
+		const array = [
+			494580,
+			494581,
+			494582,
+			494583,
+			494584,
+			494585,
+			494586,
+			494587,
+			494588,
+			494589
+		];
 
-        let data = [];
+		let data = [];
 
-        let highCnt = 0;
-        let mediumCnt = 0;
-        let lowCnt = 0;
-        let choiceCnt = 0;
-        let shortCnt = 0;
+		let highCnt = 0;
+		let mediumCnt = 0;
+		let lowCnt = 0;
+		let choiceCnt = 0;
+		let shortCnt = 0;
 
-        window.onload = function () {
-            fetchData();
-        }
+		window.onload = function () {
+			fetchData();
+		}
 
-        // 데이터를 서버로부터 가져오는 함수
-        function fetchData() {
-            const requestBody = JSON.stringify({itemIdList: array});
+		// 데이터를 서버로부터 가져오는 함수
+		function fetchData() {
+			const requestBody = JSON.stringify({itemIdList: array});
 
-            return fetch(`/exam-save/list`, {
-                method: 'POST',
-                headers: {
-                    "Content-Type": "application/json"
-                },
-                body: requestBody
-            }).then(response => {
-                if (response.ok) {
-                    console.log(response)
-                    return response.json();
-                }
-                throw new Error('Failed to send the GET request.');
-            }).then(data => {
-                //받아온 데이터를 전역 변수 data에 할당
-                window.data = data;
-                //HTML에 데이터 삽입
-                insertDataIntoHTML(data, highCnt, mediumCnt, lowCnt, choiceCnt, shortCnt);
-            }).catch(error => {
-                console.error('Error: ', error);
-            });
-        }
+			return fetch(`/exam-save/list`, {
+				method: 'POST',
+				headers: {
+					"Content-Type": "application/json"
+				},
+				body: requestBody
+			}).then(response => {
+				if (response.ok) {
+					console.log(response)
+					return response.json();
+				}
+				throw new Error('Failed to send the GET request.');
+			}).then(data => {
+				//받아온 데이터를 전역 변수 data에 할당
+				window.data = data;
+				//HTML에 데이터 삽입
+				insertDataIntoHTML(data, highCnt, mediumCnt, lowCnt, choiceCnt, shortCnt);
+			}).catch(error => {
+				console.error('Error: ', error);
+			});
+		}
 
-        // HTML 요소를 동적으로 생성하여 삽입하는 함수
-        function insertDataIntoHTML(data) {
+		// HTML 요소를 동적으로 생성하여 삽입하는 함수
+		function insertDataIntoHTML(data) {
 
-            const tabList = document.querySelector(".tab-list-type01 .table .tbody .scroll-inner");
-            const leftCnt = document.querySelector(".left-wrap .que-badge-group");
-            const rightCnt = document.querySelector(".right-wrap .que-badge-group");
+			const tabList = document.querySelector(".tab-list-type01 .table .tbody .scroll-inner");
+			const leftCnt = document.querySelector(".left-wrap .que-badge-group");
+			const rightCnt = document.querySelector(".right-wrap .que-badge-group");
 
-            data.forEach(item => {
-                const div = document.createElement("div");
-                div.className = "col";
+			data.forEach(item => {
+				const div = document.createElement("div");
+				div.className = "col";
 
-                const span1 = document.createElement("span");
-                span1.textContent = item.itemNo;
+				const span1 = document.createElement("span");
+				span1.textContent = item.itemNo;
 
-                const span2 = document.createElement("span");
-                span2.className = "tit";
-                span2.textContent = `${item.largeChapterName} > ${item.mediumChapterName}`;
+				const span2 = document.createElement("span");
+				span2.className = "tit";
+				span2.textContent = `${item.largeChapterName} > ${item.mediumChapterName}`;
 
-                const span3 = document.createElement("span");
-                if (item.questionFormCode <= 50) {
-                    span3.textContent = "객관식";
-                    // choiceCnt++;
-                    choiceCnt += 1;
-                } else {
-                    span3.textContent = "주관식";
-                    shortCnt++;
-                }
+				const span3 = document.createElement("span");
+				if (item.questionFormCode <= 50) {
+					span3.textContent = "객관식";
+					// choiceCnt++;
+					choiceCnt += 1;
+				} else {
+					span3.textContent = "주관식";
+					shortCnt++;
+				}
 
-                const span4 = document.createElement("span");
-                if (item.difficultyName === "상") {
-                    highCnt++;
-                } else if (item.difficultyName === "중") {
-                    mediumCnt++;
-                } else {
-                    lowCnt++;
-                }
-                span4.textContent = item.difficultyName;
+				const span4 = document.createElement("span");
+				if (item.difficultyName === "상") {
+					highCnt++;
+				} else if (item.difficultyName === "중") {
+					mediumCnt++;
+				} else {
+					lowCnt++;
+				}
+				span4.textContent = item.difficultyName;
 
-                div.appendChild(span1);
-                div.appendChild(span2);
-                div.appendChild(span3);
-                div.appendChild(span4);
+				div.appendChild(span1);
+				div.appendChild(span2);
+				div.appendChild(span3);
+				div.appendChild(span4);
 
-                tabList.appendChild(div);
-            });
+				tabList.appendChild(div);
+			});
 
-            // span 요소에 카운트된 값을 설정
-            const num1 = leftCnt.querySelector(".num1");
-            const num2 = leftCnt.querySelector(".num2");
-            const num3 = leftCnt.querySelector(".num3");
-            const num4 = rightCnt.querySelector(".num4");
-            const num5 = rightCnt.querySelector(".num5");
+			// span 요소에 카운트된 값을 설정
+			const num1 = leftCnt.querySelector(".num1");
+			const num2 = leftCnt.querySelector(".num2");
+			const num3 = leftCnt.querySelector(".num3");
+			const num4 = rightCnt.querySelector(".num4");
+			const num5 = rightCnt.querySelector(".num5");
 
-            num1.textContent = lowCnt;
-            num2.textContent = mediumCnt;
-            num3.textContent = highCnt;
-            num4.textContent = choiceCnt;
-            num5.textContent = shortCnt;
+			num1.textContent = lowCnt;
+			num2.textContent = mediumCnt;
+			num3.textContent = highCnt;
+			num4.textContent = choiceCnt;
+			num5.textContent = shortCnt;
 
-        }
+		}
 
 
-        // 시험지 저장 함수
-        function saveExam(inputValue) {
+		// 시험지 저장 함수
+		function saveExam(inputValue) {
 
-            const examName = inputValue;
+			const examName = inputValue;
 
-            console.log(examName);
-            console.log(window.data);
+			console.log(examName);
+			console.log(window.data);
 
-            const processedData = [];
+			const processedData = [];
 
-            if(!window.data){
-                console.error('No data available.');
-                return;
-            }
+			if(!window.data){
+				console.error('No data available.');
+				return;
+			}
 
-            window.data.forEach(item => {
+			window.data.forEach(item => {
 
-                let questionFormName = "";
-                if(item.questionFormCode <= 50){
-                    questionFormName = "객관식";
-                }else{
-                    questionFormName = "주관식";
-                }
+				let questionFormName = "";
+				if(item.questionFormCode <= 50){
+					questionFormName = "객관식";
+				}else{
+					questionFormName = "주관식";
+				}
 
-                let type = item.largeChapterName + ' > ' + item.mediumChapterName;
+				let type = item.largeChapterName + ' > ' + item.mediumChapterName;
 
-                const processedItem = {
-                    idx: item.itemId,
-                    number: item.itemNo,
-                    type: type,
-                    questionFormName: questionFormName,
-                    difficultyName: item.difficultyName,
-                    questionUrl: item.questionUrl,
-                    passageUrl: item.passageUrl,
-                    passageId: item.passageId
-                };
-                processedData.push(processedItem);
-            });
+				const processedItem = {
+					idx: item.itemId,
+					number: item.itemNo,
+					type: type,
+					questionFormName: questionFormName,
+					difficultyName: item.difficultyName,
+					questionUrl: item.questionUrl,
+					passageUrl: item.passageUrl,
+					passageId: item.passageId
+				};
+				processedData.push(processedItem);
+			});
 
-            const requestBody = JSON.stringify({
-                "processedData":processedData,
-                "examName":examName,
-                "highCnt":highCnt,
-                "mediumCnt":mediumCnt,
-                "lowCnt":lowCnt,
-                "choiceCnt":choiceCnt,
-                "shortCnt":shortCnt
-            });
-            console.log(requestBody);
+			const requestBody = JSON.stringify({
+				"processedData":processedData,
+				"examName":examName,
+				"highCnt":highCnt,
+				"mediumCnt":mediumCnt,
+				"lowCnt":lowCnt,
+				"choiceCnt":choiceCnt,
+				"shortCnt":shortCnt
+			});
+			console.log(requestBody);
 
-            fetch(`/exam-save/save`, {
-                method: 'POST',
-                headers: {
-                    "Content-Type": "application/json"
-                },
-                body: requestBody
-            }).then(response => {
-                if (response.ok) {
-                    console.log(response);
-                    console.log('Exam saved successfully.');
-                    window.location.href = "/exam-save/success";
-                } else {
-                    console.log(response);
-                    throw new Error('Failed to save the exam.');
-                }
-            }).catch(error => {
-                console.error('Error: ', error);
-            });
-        }
+			fetch(`/exam-save/save`, {
+				method: 'POST',
+				headers: {
+					"Content-Type": "application/json"
+				},
+				body: requestBody
+			}).then(response => {
+				if (response.ok) {
+					console.log(response);
+					console.log('Exam saved successfully.');
+					window.location.href = "/exam-save/success";
+				} else {
+					console.log(response);
+					throw new Error('Failed to save the exam.');
+				}
+			}).catch(error => {
+				console.error('Error: ', error);
+			});
+		}
 
-        // 'DOMContentLoaded' 이벤트를 사용하여 HTML 문서가 로드되고 나서 JavaScript 코드를 실행합니다.
-        document.addEventListener('DOMContentLoaded', function() {
-            // "시험지 저장하기" 버튼을 찾아 클릭 이벤트를 추가
-            const saveExamButton = document.getElementById("saveExamButton");
-            if (saveExamButton) {
-                saveExamButton.addEventListener("click", function () {
-                    let check = confirm('시험지를 저장하시겠습니까?');
-                    let inputValue = document.getElementById('inputValue').value;
+		// 'DOMContentLoaded' 이벤트를 사용하여 HTML 문서가 로드되고 나서 JavaScript 코드를 실행합니다.
+		document.addEventListener('DOMContentLoaded', function() {
+			// "시험지 저장하기" 버튼을 찾아 클릭 이벤트를 추가
+			const saveExamButton = document.getElementById("saveExamButton");
+			if (saveExamButton) {
+				saveExamButton.addEventListener("click", function () {
+					let check = confirm('시험지를 저장하시겠습니까?');
+					let inputValue = document.getElementById('inputValue').value;
 
-                    if(check === true ){
-                        if(inputValue === ''){
-                            alert('시험지명을 입력 해 주세요.');
-                        }else{
-                            if ( window.data.length > 0) {
-                                saveExam(inputValue);
-                            } else {
-                                console.error('No data available for saving.');
-                            }
-                        }
-                    }
+					if(check === true ){
+						if(inputValue === ''){
+							alert('시험지명을 입력 해 주세요.');
+						}else{
+							if ( window.data.length > 0) {
+								saveExam(inputValue);
+							} else {
+								console.error('No data available for saving.');
+							}
+						}
+					}
 
-                });
-            }
-        });
+				});
+			}
+		});
 
-        document.addEventListener('DOMContentLoaded', function() {
-            const moveFirstPageButton = document.getElementById("moveFirstPageButton");
-            if (moveFirstPageButton) {
-                moveFirstPageButton.addEventListener("click", function () {
-                    console.log('클릭이 되는건지');
-                    let check = confirm(
-                        `
+		document.addEventListener('DOMContentLoaded', function() {
+			const moveFirstPageButton = document.getElementById("moveFirstPageButton");
+			if (moveFirstPageButton) {
+				moveFirstPageButton.addEventListener("click", function () {
+					console.log('클릭이 되는건지');
+					let check = confirm(
+							`
                         처음 화면으로 이동하시겠습니까?
                         (출제 방법 선택 화면으로 이동)
                         페이지 이동 시 변경사항이 저장되지 않습니다.
                         `
-                    );
-                });
-            }
-        });
+					);
+				});
+			}
+		});
 
-    </script>
+	</script>
 </head>
-
 <body>
-	<div id="wrap" class="full-pop-que">
-		<div class="full-pop-wrap">
-			<div class="pop-header">
-				<ul class="title">
-					<li>STEP 1 단원선택</li>
-					<li>STEP 2 문항 편집</li>
-					<li class="active">STEP 3 시험지 저장</li>
-				</ul>
-				<button type="button" class="del-btn"></button>
-			</div>
-			<div class="pop-content">
-				<div class="view-box">
-					<div class="view-top">
-						<div class="paper-info">
-							<span>수학 1</span>
-							이준열(2015)
-						</div>
-						<div class="btn-wrap">
-							<button class="btn-default"><a href="javascript:;">처음으로</a></button>
-						</div>
-					</div>
-					<div class="view-bottom type02 scroll-inner">
-						<div class="top-form">
-							<div class="left-wrap">
-								<span>시험지명</span>
-								<div class="search-wrap">
-									<div class="search-box">
-										<input type="text" placeholder="시험지명을 입력해주세요. (최대 20자)" class="search">
-									</div>
-								</div>
-							</div>
-							<!--s 230619 저장위치 영역 삭제-->
-							<!-- <div class="right-wrap">
-								<span>저장 위치</span>
-								<div class="select-wrap">
-									<button type="button" class="select-btn">
-										전체
-									</button>
-									<ul class="select-list">
-										<li>
-											<a href="javascript:;">전체</a>
-										</li>
-										<li>
-											<a href="javascript:;">저장소1</a>
-										</li>
-										<li>
-											<a href="javascript:;">저장소2</a>
-										</li>
-									</ul>
-								</div>
-								<div class="btn-wrap">
-									<button type="button" class="btn-default pop-btn" data-pop="add-folder-pop"><i
-											class="add-type01"></i>폴더 추가</button>
-								</div>
-							</div> -->
-							<!--e 230619 저장위치 영역 삭제-->
-						</div>
-						<div class="type-form">
-							<div class="left-wrap">
-								<span class="tit">난이도</span>
-								<div class="que-badge-group">
-									<div class="que-badge-wrap">
-										<span class="que-badge purple">하</span>
-										<span class="num">10</span>
-									</div>
-									<div class="que-badge-wrap">
-										<span class="que-badge green">중</span>
-										<span class="num">10</span>
-									</div>
-									<div class="que-badge-wrap">
-										<span class="que-badge yellow">상</span>
-										<span class="num">10</span>
-									</div>
-								</div>
-							</div>
-							<div class="right-wrap">
-								<span class="tit">문제 형태</span>
-								<div class="que-badge-group">
-									<div class="que-badge-wrap">
-										<span class="que-badge gray">객관식</span>
-										<span class="num">35</span>
-									</div>
-									<div class="que-badge-wrap">
-										<span class="que-badge gray">주관식</span>
-										<span class="num">35</span>
-									</div>
-								</div>
-							</div>
-						</div>
-
-						<div class="tab-list-type01">
-							<div class="table">
-								<div class="fix-head">
-									<span>번호</span>
-									<span>문제 유형</span>
-									<span>문제 형태</span>
-									<span>난이도</span>
-								</div>
-								<div class="tbody">
-									<div class="scroll-inner">
-										<div class="col">
-											<span>1</span>
-											<span class="tit">1. 새로운 시작 > (1) 시의 아름다움</span>
-											<span>주관식</span>
-											<span>하</span>
-										</div>
-										<div class="col">
-											<span>2</span>
-											<span class="tit">1. 새로운 시작 > (1) 시의 아름다움</span>
-											<span>주관식</span>
-											<span>하</span>
-										</div>
-										<div class="col">
-											<span>3</span>
-											<span class="tit">1. 새로운 시작 > (1) 시의 아름다움</span>
-											<span>주관식</span>
-											<span>하</span>
-										</div>
-										<div class="col">
-											<span>4</span>
-											<span class="tit">1. 새로운 시작 > (1) 시의 아름다움</span>
-											<span>주관식</span>
-											<span>하</span>
-										</div>
-										<div class="col">
-											<span>5</span>
-											<span class="tit">1. 새로운 시작 > (1) 시의 아름다움</span>
-											<span>주관식</span>
-											<span>하</span>
-										</div>
-										<div class="col">
-											<span>6</span>
-											<span class="tit">1. 새로운 시작 > (1) 시의 아름다움</span>
-											<span>주관식</span>
-											<span>하</span>
-										</div>
-										<div class="col">
-											<span>7</span>
-											<span class="tit">1. 새로운 시작 > (1) 시의 아름다움</span>
-											<span>주관식</span>
-											<span>하</span>
-										</div>
-										<div class="col">
-											<span>8</span>
-											<span class="tit">1. 새로운 시작 > (1) 시의 아름다움</span>
-											<span>주관식</span>
-											<span>하</span>
-										</div>
-										<div class="col">
-											<span>9</span>
-											<span class="tit">1. 새로운 시작 > (1) 시의 아름다움</span>
-											<span>주관식</span>
-											<span>하</span>
-										</div>
-										<div class="col">
-											<span>10</span>
-											<span class="tit">1. 새로운 시작 > (1) 시의 아름다움</span>
-											<span>주관식</span>
-											<span>하</span>
-										</div>
-									</div>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-			<div class="step-btn-wrap">
-				<button type="button" class="btn-step">STEP 2 문항 편집</button>
-				<button type="button" class="btn-step next done">시험지 저장하기</button>
-			</div>
-
-
+<div id="wrap" class="full-pop-que">
+	<div class="full-pop-wrap">
+		<div class="pop-header">
+			<ul class="title">
+				<li>STEP 1 단원선택</li>
+				<li>STEP 2 문항 편집</li>
+				<li class="active">STEP 3 시험지 저장</li>
+			</ul>
+			<button type="button" class="del-btn"></button>
 		</div>
-		<div class="dim"></div>
-
-		<!-- 폴더 추가 팝업 -->
-		<!-- s 230619 폴더 추가 팝업 삭제-->
-		<!-- <div class="pop-wrap input-type" data-pop="add-folder-pop">
-			<div class="pop-inner">
-				<div class="pop-header">
-					<span>폴더 추가</span>
-					<button type="button" class="pop-close"></button>
-				</div>
-				<div class="pop-content">
-					<span class="tit">폴더명 입력</span>
-					<div class="input-box">
-						<input type="text" placeholder="폴더명을 입력해주세요.(최대 10글자)">
+		<div class="pop-content">
+			<div class="view-box">
+				<div class="view-top">
+					<div class="paper-info">
+						<span>수학 1</span>
+						이준열(2015)
+					</div>
+					<div class="btn-wrap">
+						<button class="btn-default" id="moveFirstPageButton">처음으로</button>
 					</div>
 				</div>
-				<div class="pop-footer">
-					<button type="button">추가하기</button>
+				<div class="view-bottom type02 scroll-inner">
+					<div class="top-form">
+						<div class="left-wrap">
+							<span>시험지명</span>
+							<div class="search-wrap">
+								<div class="search-box">
+									<input type="text" placeholder="시험지명을 입력해주세요. (최대 20자)" maxlength="20" class="search" id="inputValue">
+								</div>
+							</div>
+						</div>
+						<!--s 230619 저장위치 영역 삭제-->
+						<!-- <div class="right-wrap">
+                            <span>저장 위치</span>
+                            <div class="select-wrap">
+                                <button type="button" class="select-btn">
+                                    전체
+                                </button>
+                                <ul class="select-list">
+                                    <li>
+                                        <a href="javascript:;">전체</a>
+                                    </li>
+                                    <li>
+                                        <a href="javascript:;">저장소1</a>
+                                    </li>
+                                    <li>
+                                        <a href="javascript:;">저장소2</a>
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="btn-wrap">
+                                <button type="button" class="btn-default pop-btn" data-pop="add-folder-pop"><i
+                                        class="add-type01"></i>폴더 추가</button>
+                            </div>
+                        </div> -->
+						<!--e 230619 저장위치 영역 삭제-->
+					</div>
+					<div class="type-form">
+						<div class="left-wrap">
+							<span class="tit">난이도</span>
+							<div class="que-badge-group">
+								<div class="que-badge-wrap">
+									<span class="que-badge purple">하</span>
+									<span class="num1"></span>
+								</div>
+								<div class="que-badge-wrap">
+									<span class="que-badge green">중</span>
+									<span class="num2"></span>
+								</div>
+								<div class="que-badge-wrap">
+									<span class="que-badge yellow">상</span>
+									<span class="num3"></span>
+								</div>
+							</div>
+						</div>
+						<div class="right-wrap">
+							<span class="tit">문제 형태</span>
+							<div class="que-badge-group">
+								<div class="que-badge-wrap">
+									<span class="que-badge gray">객관식</span>
+									<span class="num4"></span>
+								</div>
+								<div class="que-badge-wrap">
+									<span class="que-badge gray">주관식</span>
+									<span class="num5"></span>
+								</div>
+							</div>
+						</div>
+					</div>
+
+					<div class="tab-list-type01">
+						<div class="table">
+							<div class="fix-head">
+								<span>번호</span>
+								<span>문제 유형</span>
+								<span>문제 형태</span>
+								<span>난이도</span>
+							</div>
+							<div class="tbody">
+								<div class="scroll-inner">
+									<div class="col">
+										<span></span>
+										<span class="tit"></span>
+										<span></span>
+										<span></span>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+
 				</div>
 			</div>
-		</div> -->
-		<!-- e 230619 폴더 추가 팝업 삭제-->
-</body>
+		</div>
+		<div class="step-btn-wrap">
+			<button type="button" class="btn-step">STEP 2 문항 편집</button>
+			<button type="button" class="btn-step next done" id="saveExamButton">시험지 저장하기</button>
+		</div>
 
+
+	</div>
+	<div class="dim"></div>
+
+	<!-- 폴더 추가 팝업 -->
+	<!-- s 230619 폴더 추가 팝업 삭제-->
+	<!-- <div class="pop-wrap input-type" data-pop="add-folder-pop">
+        <div class="pop-inner">
+            <div class="pop-header">
+                <span>폴더 추가</span>
+                <button type="button" class="pop-close"></button>
+            </div>
+            <div class="pop-content">
+                <span class="tit">폴더명 입력</span>
+                <div class="input-box">
+                    <input type="text" placeholder="폴더명을 입력해주세요.(최대 10글자)">
+                </div>
+            </div>
+            <div class="pop-footer">
+                <button type="button">추가하기</button>
+            </div>
+        </div>
+    </div> -->
+	<!-- e 230619 폴더 추가 팝업 삭제-->
+</div>
+
+
+</body>
 
 </html>

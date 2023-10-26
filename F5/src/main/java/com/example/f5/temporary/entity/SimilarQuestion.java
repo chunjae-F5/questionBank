@@ -1,6 +1,6 @@
 package com.example.f5.temporary.entity;
 
-import com.example.f5.exam.entity.Content;
+//import com.example.f5.exam.entity.Content;
 import com.example.f5.util.BaseTimeEntity;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Max;
@@ -16,10 +16,10 @@ public class SimilarQuestion extends BaseTimeEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int idx;
 
-    @ManyToOne
-    @JoinColumn(name = "content_idx")
-    @Comment(value = "지문")
-    private Content contentIdx;
+//    @ManyToOne
+//    @JoinColumn(name = "content_idx")
+//    @Comment(value = "지문")
+//    private Content contentIdx;
 
     @Column(name = "number", nullable = false)
     @Comment(value = "문제번호")
