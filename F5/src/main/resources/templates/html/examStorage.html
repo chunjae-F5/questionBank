@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>T셀파 메인페이지</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@8/swiper-bundle.min.css"/>
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css">
+    <script src="https://code.jquery.com/jquery-1.12.4.min.js"
+            integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ=" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/ui/1.13.1/jquery-ui.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/swiper@8/swiper-bundle.min.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+</head>
+<style>
+    #nav-list div {
+        display: inline-block;
+        width: 247px;
+        height: 50px;
+        background: #9c9c9c;
+    }
+
+    img {
+        margin: auto;
+    }
+
+    .row, .card {
+        margin: auto;
+        border: transparent;
+    }
+
+    .card-title {
+        font-weight: bold;
+    }
+
+    .btn.btn-primary {
+        color: black;
+        background-color: transparent !important;
+        border: transparent;
+    }
+
+    .btn.btn-primary:hover {
+        color: #3DB7CC;
+    }
+
+    #header-row {
+        height: 30px;
+        margin-bottom: 50px;
+        background-color: transparent;
+        font-weight: bolder;
+    }
+
+    #header-row > .col:hover {
+        color: #3DB7CC;
+    }
+</style>
+
+<body class="p-3 m-0 border-0 bd-example m-0 border-0 bd-example-row">
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
+        crossorigin="anonymous"></script>
+<div class="container text-center">
+    <div class="row" id="header-row">
+        <div class="col">초등</div>
+        <div class="col">중등</div>
+        <div class="col">고등</div>
+        <div class="col">시험지 보관함</div>
+    </div>
+    <!--card example-->
+
+    <div style="border: solid">
+        <h2>문제지 보관함</h2>
+    </div>
+    <div>
+        <table>
+            <tr>
+                <td>번호</td>
+                <td>생성날짜</td>
+                <td>문제지명</td>
+                <td>문제수</td>
+                <td>미리보기</td>
+                <td>다운로드</td>
+            </tr>
+            <tr>
+                <td>1</td>
+                <td>2023.10.26</td>
+                <td>하늘이의 수포자로 가는길</td>
+                <td>200문제</td>
+                <td><img th:src="@{}"></td>
+                <td>이미지</td>
+            </tr>
+        </table>
+    </div>
+</div>
+<script>
+    function submitItemId(element) {
+        var itemId = element.getAttribute('data-itemId');
+        window.location.href = `/category/select?itemId=${itemId}`;
+    }
+</script>
+</body>
+</html>

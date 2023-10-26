@@ -1034,9 +1034,6 @@ $.fn.position = function( options ) {
 				} );
 			}
 		} );
-
-
-
 		elem.offset( $.extend( position, { using: using } ) );
 	} );
 };
