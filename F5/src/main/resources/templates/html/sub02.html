@@ -17,7 +17,6 @@
     <script src="https://code.jquery.com/ui/1.13.1/jquery-ui.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/swiper@8/swiper-bundle.min.js"></script>
     <script th:src="@{/js/common.js}"></script>
-
 </head>
 
 <body>
@@ -56,14 +55,13 @@
                                                 <div class="title-chk"><input type="checkbox"
                                                                               class="que-allCheck depth01 largeChapterId"
                                                                               th:id="${'chk01_' + itemStat}"
-                                                                              th:value="${item.largeChpaterId}">
+                                                                              th:value="${item.largeChapterId}">
                                                     <label th:for="${'chk01_' + itemStat}">
                                                         <button type="button" class="dep-btn active"
                                                                 th:text="${item.largeChapterName}"></button>
                                                     </label>
                                                 </div>
                                             </div>
-
                                             <div class="depth02">
                                                 <!-- 중단원 -->
                                                 <div th:each="mediumItem, mediumItemStat : ${item.mediumChapters}">
@@ -421,6 +419,7 @@
         });
     }
 
+
     function changeCount() {
         let totalCount = totalNumSpan.textContent;
         let lastTotalCount = parseInt(totalCount.toString());
@@ -451,6 +450,8 @@
                 }
             }
         });
+
+
 
         // setTimeout(changeCount, 0);
 
@@ -506,6 +507,8 @@
                 }
             }
         });
+
+
     }
 
     function updatePopupDisplay(inputValue) {
@@ -611,7 +614,7 @@
     });
 
 
-    document.getElementById('watchJson').addEventListener('click', function () {
+    document.getElementById('watchJson').addEventListener('click', function() {
         // 각 체크박스의 값을 JavaScript 변수에 할당
         let subjectId = document.getElementById('subjectId').textContent;
         let largeChapterId = document.querySelector('.largeChapterId:checked').value;
