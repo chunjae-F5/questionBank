@@ -46,4 +46,11 @@ public class QuestionController {
     public String deleteQue(@RequestBody DeletedQuestion request) {
         return questionService.deleteQuestion(request);
     }
+
+    @GetMapping("/upDown")
+    public String upDown() {
+        return "html/sub03_01";
+    }
 }
+
+
