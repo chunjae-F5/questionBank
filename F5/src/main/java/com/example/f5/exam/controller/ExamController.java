@@ -23,7 +23,6 @@ public class ExamController {
     public String getItemList(@RequestBody ExamDto.itemInfoRequest requestDto, Model model) {
         List<ExamDto.itemInfoResponse> itemList = examService.getItemList(requestDto);
         model.addAttribute("itemList", itemList);
-
         return "html/sub03_01";
     }
 
