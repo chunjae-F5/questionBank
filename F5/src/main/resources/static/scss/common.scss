@@ -126,11 +126,11 @@ body {
 	padding-left: 10px;
 	font-size: 15px;
 	color: #666;
-	background: #fff url(../images/common/ico_arrow_prev.png) no-repeat left 20px center;
+	background: #fff url(../common/ico_arrow_prev.png) no-repeat left 20px center;
 	background-size: 7px 12px;
 
 	&.next {
-		background: $color-main-blue url(../images/common/ico_arrow_next.png) no-repeat right 20px center;
+		background: $color-main-blue url(../common/ico_arrow_next.png) no-repeat right 20px center;
 		color: #fff;
 		padding-left: 0;
 		padding-right: 5px;
@@ -215,61 +215,61 @@ body {
 }
 
 .download {
-	background: url(../images/common/ico_down.png);
+	background: url(../common/ico_down.png);
 	background-size: 14px !important;
 	background-size: contain;
 }
 
 .edit {
-	background: url(../images/common/ico_edit.png);
+	background: url(../common/ico_edit.png);
 	background-size: 14px 16px !important;
 	background-size: contain;
 }
 
 .newpaper {
-	background: url(../images/common/ico_add_file.png);
+	background: url(../common/ico_add_file.png);
 	background-size: 13px 15px !important;
 	background-size: contain;
 }
 
 .preview {
-	background: url(../images/common/ico_preview.png);
+	background: url(../common/ico_preview.png);
 	background-size: 22px !important;
 	background-size: contain;
 }
 
 .setting {
-	background: url(../images/common/ico_setting.png);
+	background: url(../common/ico_setting.png);
 	background-size: 14px 16px !important;
 	background-size: contain;
 }
 
 .research {
-	background: url(../images/common/ico_research.png);
+	background: url(../common/ico_research.png);
 	background-size: 16px !important;
 	background-size: contain;
 }
 
 .similar {
-	background: url(../images/common/ico_btn_file.png);
+	background: url(../common/ico_btn_file.png);
 	background-size: 16px !important;
 	background-size: contain;
 }
 
 .add-type01 {
-	background: url(../images/common/ico_add_folder.png);
+	background: url(../common/ico_add_folder.png);
 	background-size: 16px 14px !important;
 	background-size: contain;
 }
 
 .add-type02 {
-	background: url(../images/common/ico_add_doc.png);
+	background: url(../common/ico_add_doc.png);
 	background-size: 13px 15px !important;
 	background-size: contain;
 }
 
 .replace {
-	background: url(../images/common/ico_btn_file.png);
+	background: url(../common/ico_btn_file.png);
 	background-size: 16px !important;
 	background-size: contain;
 }
@@ -568,7 +568,7 @@ body {
 			right: 20px;
 			width: 16px;
 			height: 16px;
-			background: url(../images/common/ico_pop_close.png) no-repeat;
+			background: url(../common/ico_pop_close.png) no-repeat;
 		}
 	}
 
@@ -762,14 +762,14 @@ input[type="checkbox"] {
 			height: 20px;
 			margin-top: -9px;
 			border-radius: 3px;
-			background: url(../images/common/input_checkbox.png) no-repeat;
+			background: url(../common/input_checkbox.png) no-repeat;
 			background-size: contain;
 		}
 	}
 
 	&:checked+label {
 		&::before {
-			background: url(../images/common/input_checkbox_check.png) no-repeat;
+			background: url(../common/input_checkbox_check.png) no-repeat;
 			background-size: contain;
 		}
 	}
@@ -803,7 +803,7 @@ input[type="checkbox"] {
 			width: 13px;
 			height: 7px;
 			margin-top: -4px;
-			background: url(../images/common/select_arrow.png) no-repeat;
+			background: url(../common/select_arrow.png) no-repeat;
 			background-size: contain;
 		}
 
@@ -1026,7 +1026,7 @@ input[type="checkbox"] {
 			margin-top: -8px;
 			width: 14px;
 			height: 14px;
-			background: url(../images/common/ico_acc_open.png) no-repeat;
+			background: url(../common/ico_acc_open.png) no-repeat;
 			background-size: contain;
 		}
 
@@ -1035,7 +1035,7 @@ input[type="checkbox"] {
 				width: 14px;
 				height: 2px;
 				margin-top: -2px;
-				background: url(../images/common/ico_acc_close.png) no-repeat;
+				background: url(../common/ico_acc_close.png) no-repeat;
 				background-size: contain;
 			}
 		}
@@ -1092,7 +1092,7 @@ input[type="checkbox"] {
 						left: 0;
 						width: 16px;
 						height: 8px;
-						background: url("../images/common/select_arrow.png") no-repeat;
+						background: url("../common/select_arrow.png") no-repeat;
 						transform: rotate(-90deg);
 					}
 
@@ -1137,7 +1137,7 @@ input[type="checkbox"] {
 							height: 20px;
 							margin-top: -9px;
 							border-radius: 3px;
-							background: url(../images/common/input_checkbox.png) no-repeat;
+							background: url(../common/input_checkbox.png) no-repeat;
 							background-size: contain;
 						}
 
@@ -1153,7 +1153,7 @@ input[type="checkbox"] {
 						}
 
 						&::before {
-							background: url(../images/common/input_checkbox_check.png) no-repeat;
+							background: url(../common/input_checkbox_check.png) no-repeat;
 							background-size: contain;
 						}
 					}
@@ -1419,7 +1419,7 @@ input[type="checkbox"] {
 						right: -19px;
 						width: 7px;
 						height: 10px;
-						background: url(../images/common/ico_title.png) no-repeat;
+						background: url(../common/ico_title.png) no-repeat;
 					}
 
 					&.active {
@@ -1442,7 +1442,7 @@ input[type="checkbox"] {
 			.del-btn {
 				width: 16px;
 				height: 16px;
-				background: url(../images/common/ico_full_pop_close.png) no-repeat;
+				background: url(../common/ico_full_pop_close.png) no-repeat;
 			}
 		}
 
@@ -1767,7 +1767,7 @@ input[type="checkbox"] {
 								display: inline-block;
 								width: 104px;
 								height: 36px;
-								background: url(../images/common/ico_nodata.png) no-repeat center;
+								background: url(../common/ico_nodata.png) no-repeat center;
 								background-size: contain;
 								padding: 0 10px;
 							}
@@ -1816,14 +1816,14 @@ input[type="checkbox"] {
 								.btn-error {
 									width: 23px;
 									height: 23px;
-									background: url(../images/common/ico_btn_error.png) no-repeat;
+									background: url(../common/ico_btn_error.png) no-repeat;
 									background-size: contain;
 								}
 
 								.btn-delete {
 									width: 16px;
 									height: 16px;
-									background: url(../images/common/ico_btn_del.png) no-repeat;
+									background: url(../common/ico_btn_del.png) no-repeat;
 									background-size: contain;
 
 								}
