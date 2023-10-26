@@ -1,7 +1,6 @@
 package com.example.f5.exam.service;
 
 import com.example.f5.exam.dto.ExamDto;
-import com.example.f5.temporary.entity.TemporaryQuestion;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.gson.*;

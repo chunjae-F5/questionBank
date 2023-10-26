@@ -3,7 +3,6 @@ package com.example.f5.temporary.service;
 import com.example.f5.temporary.dto.TemporaryQuestionDto;
 import com.example.f5.temporary.entity.TemporaryQuestion;
 import com.example.f5.temporary.repository.TemporaryQuestionRepository;
-import jakarta.persistence.EntityNotFoundException;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
@@ -85,19 +84,5 @@ public class TemporaryQuestionService {
         }
 
         return questionDtos;
-    }
-
-    public void updateQuestionOrder(List<TemporaryQuestionDto.SaveDataDto> updatedQuestions) {
-        List<TemporaryQuestion> updatedQuestionEntities = new ArrayList<>();
-
-        for (TemporaryQuestionDto.SaveDataDto updatedQuestionDto : updatedQuestions) {
-            TemporaryQuestion question = tqRepository.findById(updatedQuestionDto.getTemporaryContentIdx().getIdx())
-                    .orElseThrow(() -> new EntityNotFoundException("Question not found"));
-
-            question.updateNumber(updatedQuestionDto.getNumber());
-            updatedQuestionEntities.add(question);
-        }
-
-        tqRepository.saveAll(updatedQuestionEntities);
     }
 }

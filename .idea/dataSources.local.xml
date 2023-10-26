@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
-  <component name="dataSourceStorageLocal" created-in="IU-232.8660.185">
+  <component name="dataSourceStorageLocal" created-in="IU-231.9161.38">
     <data-source name="@db-team-f5.c1oby0nabaqs.ap-northeast-2.rds.amazonaws.com" uuid="f1dddb1d-22d7-4d5b-974f-353ee511ba42">
       <database-info product="MariaDB" version="10.6.10-MariaDB-log" jdbc-version="4.2" driver-name="MariaDB Connector/J" driver-version="3.0.7" dbms="MARIADB" exact-version="10.6.10" exact-driver-version="3.0">
         <extra-name-characters>#@</extra-name-characters>
