@@ -2,20 +2,248 @@
 <html lang="ko">
 
 <head>
-	<meta charset="UTF-8">
-	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>T셀파 문제은행</title>
-	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@8/swiper-bundle.min.css" />
-	<link rel="stylesheet" href="https://code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css">
-	<link rel="stylesheet" href="../../static/css/font.css">
-	<link rel="stylesheet" href="../../static/css/reset.css">
-	<link rel="stylesheet" href="../../static/css/common.css">
-	<script src="https://code.jquery.com/jquery-1.12.4.min.js"
-		integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ=" crossorigin="anonymous"></script>
-	<script src="https://code.jquery.com/ui/1.13.1/jquery-ui.js"></script>
-	<script src="https://cdn.jsdelivr.net/npm/swiper@8/swiper-bundle.min.js"></script>
-	<script src="../../static/js/common.js"></script>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>T셀파 문제은행</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@8/swiper-bundle.min.css"/>
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css">
+    <link rel="stylesheet" th:href="@{/css/font.css}">
+    <link rel="stylesheet" th:href="@{/css/reset.css}">
+    <link rel="stylesheet" th:href="@{/css/common.css}">
+    <script src="https://code.jquery.com/jquery-1.12.4.min.js"
+            integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ=" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/ui/1.13.1/jquery-ui.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/swiper@8/swiper-bundle.min.js"></script>
+    <script th:src="@{/js/common.js}"></script>
+
+    <script>
+        // 배열 초기화
+        const array = [
+            494580,
+            494581,
+            494582,
+            494583,
+            494584,
+            494585,
+            494586,
+            494587,
+            494588,
+            494589
+        ];
+
+        let data = [];
+
+        let highCnt = 0;
+        let mediumCnt = 0;
+        let lowCnt = 0;
+        let choiceCnt = 0;
+        let shortCnt = 0;
+
+        window.onload = function () {
+            fetchData();
+        }
+
+            // 데이터를 서버로부터 가져오는 함수
+            function fetchData() {
+                const requestBody = JSON.stringify({itemIdList: array});
+
+                return fetch(`/exam-save/list`, {
+                    method: 'POST',
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: requestBody
+                }).then(response => {
+                    if (response.ok) {
+                        console.log(response)
+                        return response.json();
+                    }
+                    throw new Error('Failed to send the GET request.');
+                }).then(data => {
+                    //받아온 데이터를 전역 변수 data에 할당
+                    window.data = data;
+                    //HTML에 데이터 삽입
+                    insertDataIntoHTML(data, highCnt, mediumCnt, lowCnt, choiceCnt, shortCnt);
+                }).catch(error => {
+                    console.error('Error: ', error);
+                });
+            }
+
+            // HTML 요소를 동적으로 생성하여 삽입하는 함수
+            function insertDataIntoHTML(data) {
+
+                const tabList = document.querySelector(".tab-list-type01 .table .tbody .scroll-inner");
+                const leftCnt = document.querySelector(".left-wrap .que-badge-group");
+                const rightCnt = document.querySelector(".right-wrap .que-badge-group");
+
+                data.forEach(item => {
+                    const div = document.createElement("div");
+                    div.className = "col";
+
+                    const span1 = document.createElement("span");
+                    span1.textContent = item.itemNo;
+
+                    const span2 = document.createElement("span");
+                    span2.className = "tit";
+                    span2.textContent = `${item.largeChapterName} > ${item.mediumChapterName}`;
+
+                    const span3 = document.createElement("span");
+                    if (item.questionFormCode <= 50) {
+                        span3.textContent = "객관식";
+                        // choiceCnt++;
+                        choiceCnt += 1;
+                    } else {
+                        span3.textContent = "주관식";
+                        shortCnt++;
+                    }
+
+                    const span4 = document.createElement("span");
+                    if (item.difficultyName === "상") {
+                        highCnt++;
+                    } else if (item.difficultyName === "중") {
+                        mediumCnt++;
+                    } else {
+                        lowCnt++;
+                    }
+                    span4.textContent = item.difficultyName;
+
+                    div.appendChild(span1);
+                    div.appendChild(span2);
+                    div.appendChild(span3);
+                    div.appendChild(span4);
+
+                    tabList.appendChild(div);
+                });
+
+                // span 요소에 카운트된 값을 설정
+                const num1 = leftCnt.querySelector(".num1");
+                const num2 = leftCnt.querySelector(".num2");
+                const num3 = leftCnt.querySelector(".num3");
+                const num4 = rightCnt.querySelector(".num4");
+                const num5 = rightCnt.querySelector(".num5");
+
+                num1.textContent = lowCnt;
+                num2.textContent = mediumCnt;
+                num3.textContent = highCnt;
+                num4.textContent = choiceCnt;
+                num5.textContent = shortCnt;
+
+            }
+
+
+        // 시험지 저장 함수
+        function saveExam(inputValue) {
+
+            const examName = inputValue;
+
+            console.log(examName);
+            console.log(window.data);
+
+            const processedData = [];
+
+            if(!window.data){
+                console.error('No data available.');
+                return;
+            }
+
+            window.data.forEach(item => {
+
+                let questionFormName = "";
+                if(item.questionFormCode <= 50){
+                    questionFormName = "객관식";
+                }else{
+                    questionFormName = "주관식";
+                }
+
+                let type = item.largeChapterName + ' > ' + item.mediumChapterName;
+
+               const processedItem = {
+                   idx: item.itemId,
+                   number: item.itemNo,
+                   type: type,
+                   questionFormName: questionFormName,
+                   difficultyName: item.difficultyName,
+                   questionUrl: item.questionUrl,
+                   passageUrl: item.passageUrl,
+                   passageId: item.passageId
+               };
+               processedData.push(processedItem);
+            });
+
+            const requestBody = JSON.stringify({
+                "processedData":processedData,
+                "examName":examName,
+                "highCnt":highCnt,
+                "mediumCnt":mediumCnt,
+                "lowCnt":lowCnt,
+                "choiceCnt":choiceCnt,
+                "shortCnt":shortCnt
+            });
+            console.log(requestBody);
+
+            fetch(`/exam-save/save`, {
+                method: 'POST',
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: requestBody
+            }).then(response => {
+                if (response.ok) {
+                    console.log(response);
+                    console.log('Exam saved successfully.');
+                    window.location.href = "/exam-save/success";
+                } else {
+                    console.log(response);
+                    throw new Error('Failed to save the exam.');
+                }
+            }).catch(error => {
+                console.error('Error: ', error);
+            });
+        }
+
+        // 'DOMContentLoaded' 이벤트를 사용하여 HTML 문서가 로드되고 나서 JavaScript 코드를 실행합니다.
+        document.addEventListener('DOMContentLoaded', function() {
+            // "시험지 저장하기" 버튼을 찾아 클릭 이벤트를 추가
+            const saveExamButton = document.getElementById("saveExamButton");
+            if (saveExamButton) {
+                saveExamButton.addEventListener("click", function () {
+                    let check = confirm('시험지를 저장하시겠습니까?');
+                    let inputValue = document.getElementById('inputValue').value;
+
+                    if(check === true ){
+                        if(inputValue === ''){
+                            alert('시험지명을 입력 해 주세요.');
+                        }else{
+                            if ( window.data.length > 0) {
+                                saveExam(inputValue);
+                            } else {
+                                console.error('No data available for saving.');
+                            }
+                        }
+                    }
+
+                });
+            }
+        });
+
+        document.addEventListener('DOMContentLoaded', function() {
+            const moveFirstPageButton = document.getElementById("moveFirstPageButton");
+            if (moveFirstPageButton) {
+                moveFirstPageButton.addEventListener("click", function () {
+                    console.log('클릭이 되는건지');
+                    let check = confirm(
+                        `
+                        처음 화면으로 이동하시겠습니까?
+                        (출제 방법 선택 화면으로 이동)
+                        페이지 이동 시 변경사항이 저장되지 않습니다.
+                        `
+                    );
+                });
+            }
+        });
+
+    </script>
 </head>
 
 <body>
