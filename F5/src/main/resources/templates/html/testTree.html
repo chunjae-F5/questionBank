@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<style>
+
+    .tree{
+        color:#393939;
+    }
+    .tree, .tree ul{
+        list-style: none;
+        padding-left:17px;
+    }
+    .tree *:before{
+        width:17px;
+
+        height:17px;
+        display:inline-block;
+    }
+    .tree label:before{
+        content:'\f256';
+        font-family: fontello;
+    }
+    .tree a{
+        text-decoration: none;
+        color:#393939;
+    }
+    .tree a:before{
+        content:'\e800';
+        font-family: fontello;
+    }
+    .tree input[type="checkbox"] {
+        display: none;
+    }
+    .tree input[type="checkbox"]:checked~ul {
+        display: none;
+    }
+</style>
+<body>
+<ul class="tree">
+    <li>
+        <input type="checkbox" id="root">
+        <label for="root">ROOT</label>
+        <ul>
+            <li><p>node1</p></li>
+            <li><p>node2</p></li>
+            <li>
+                <input type="checkbox" id="node3">
+                <label for="node3">node3</label>
+                <ul>
+                    <li><p>node31</p></li>
+                    <li><p>node32</p></li>
+                    <li><p>node33</p></li>
+                </ul>
+            </li>
+        </ul>
+    </li>
+</ul>
+</body>
+<script>
+
+</script>
+</html>
