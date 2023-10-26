@@ -1,65 +1,76 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
   <component name="ChangeListManager">
     <list default="true" id="ed50effd-95e9-4c06-99d5-744fb66f33ea" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/questionbank/src/main/resources/templates/html/coding_list.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/questionbank/src/main/resources/templates/html/error.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/questionbank/src/main/resources/templates/html/loading.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/questionbank/src/main/resources/templates/html/sub01.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/questionbank/src/main/resources/templates/html/sub02.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/questionbank/src/main/resources/templates/html/sub03_01.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/questionbank/src/main/resources/templates/html/sub03_01_01.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/questionbank/src/main/resources/templates/html/sub03_02_01.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/questionbank/src/main/resources/templates/html/sub03_02_02.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/questionbank/src/main/resources/templates/html/sub03_03.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/questionbank/src/main/resources/templates/html/sub04_01.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/questionbank/src/main/resources/templates/html/sub04_02.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/questionbank/src/main/resources/templates/html/test.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/questionbank/src/main/resources/templates/images/common/error.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/questionbank/src/main/resources/templates/images/common/ico_acc_close.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/questionbank/src/main/resources/templates/images/common/ico_acc_open.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/questionbank/src/main/resources/templates/images/common/ico_add_doc.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/questionbank/src/main/resources/templates/images/common/ico_add_file.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/questionbank/src/main/resources/templates/images/common/ico_add_folder.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/questionbank/src/main/resources/templates/images/common/ico_arrow_next.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/questionbank/src/main/resources/templates/images/common/ico_arrow_prev.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/questionbank/src/main/resources/templates/images/common/ico_arrow_tooltip_type01.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/questionbank/src/main/resources/templates/images/common/ico_btn_del.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/questionbank/src/main/resources/templates/images/common/ico_btn_error.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/questionbank/src/main/resources/templates/images/common/ico_btn_file.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/questionbank/src/main/resources/templates/images/common/ico_btn_tip.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/questionbank/src/main/resources/templates/images/common/ico_btn_tip_hover.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/questionbank/src/main/resources/templates/images/common/ico_down.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/questionbank/src/main/resources/templates/images/common/ico_edit.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/questionbank/src/main/resources/templates/images/common/ico_edit_type02.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/questionbank/src/main/resources/templates/images/common/ico_folder.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/questionbank/src/main/resources/templates/images/common/ico_full_pop_close.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/questionbank/src/main/resources/templates/images/common/ico_move_type01.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/questionbank/src/main/resources/templates/images/common/ico_move_type02.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/questionbank/src/main/resources/templates/images/common/ico_nodata.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/questionbank/src/main/resources/templates/images/common/ico_pop_close.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/questionbank/src/main/resources/templates/images/common/ico_preview.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/questionbank/src/main/resources/templates/images/common/ico_research.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/questionbank/src/main/resources/templates/images/common/ico_setting.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/questionbank/src/main/resources/templates/images/common/ico_step_active.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/questionbank/src/main/resources/templates/images/common/ico_title.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/questionbank/src/main/resources/templates/images/common/input_checkbox.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/questionbank/src/main/resources/templates/images/common/input_checkbox_check.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/questionbank/src/main/resources/templates/images/common/loading_icon.gif" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/questionbank/src/main/resources/templates/images/common/sample_prev.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/questionbank/src/main/resources/templates/images/common/sampling-question-1.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/questionbank/src/main/resources/templates/images/common/sampling-question.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/questionbank/src/main/resources/templates/images/common/sampling-question2.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/questionbank/src/main/resources/templates/images/common/save.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/questionbank/src/main/resources/templates/images/common/select_arrow.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/questionbank/src/main/resources/templates/inc/css/common.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/questionbank/src/main/resources/templates/inc/css/font.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/questionbank/src/main/resources/templates/inc/css/reset.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/questionbank/src/main/resources/templates/inc/js/common.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/questionbank/src/main/resources/templates/inc/js/jquery-ui.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/questionbank/src/main/resources/templates/inc/scss/_mixin.scss" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/questionbank/src/main/resources/templates/inc/scss/_setting.scss" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/questionbank/src/main/resources/templates/inc/scss/common.scss" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/F5/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/F5/build.gradle" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/F5/src/main/java/com/example/f5/F5Application.java" beforeDir="false" afterPath="$PROJECT_DIR$/F5/src/main/java/com/example/f5/F5Application.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/F5/src/main/java/com/example/f5/temporary/entity/DeletedQuestion.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/F5/src/main/java/com/example/f5/temporary/entity/SimilarQuestion.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/F5/src/main/java/com/example/f5/temporary/entity/TemporaryContent.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/F5/src/main/java/com/example/f5/temporary/entity/TemporaryExam.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/F5/src/main/java/com/example/f5/temporary/entity/TemporaryQuestion.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/F5/src/main/resources/templates/html/coding_list.html" beforeDir="false" afterPath="$PROJECT_DIR$/F5/src/main/resources/templates/html/coding_list.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/F5/src/main/resources/templates/html/error.html" beforeDir="false" afterPath="$PROJECT_DIR$/F5/src/main/resources/templates/html/error.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/F5/src/main/resources/templates/html/loading.html" beforeDir="false" afterPath="$PROJECT_DIR$/F5/src/main/resources/templates/html/loading.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/F5/src/main/resources/templates/html/sub01.html" beforeDir="false" afterPath="$PROJECT_DIR$/F5/src/main/resources/templates/html/sub01.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/F5/src/main/resources/templates/html/sub02.html" beforeDir="false" afterPath="$PROJECT_DIR$/F5/src/main/resources/templates/html/sub02.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/F5/src/main/resources/templates/html/sub03_01.html" beforeDir="false" afterPath="$PROJECT_DIR$/F5/src/main/resources/templates/html/sub03_01.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/F5/src/main/resources/templates/html/sub03_01_01.html" beforeDir="false" afterPath="$PROJECT_DIR$/F5/src/main/resources/templates/html/sub03_01_01.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/F5/src/main/resources/templates/html/sub03_02_01.html" beforeDir="false" afterPath="$PROJECT_DIR$/F5/src/main/resources/templates/html/sub03_02_01.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/F5/src/main/resources/templates/html/sub03_02_02.html" beforeDir="false" afterPath="$PROJECT_DIR$/F5/src/main/resources/templates/html/sub03_02_02.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/F5/src/main/resources/templates/html/sub03_03.html" beforeDir="false" afterPath="$PROJECT_DIR$/F5/src/main/resources/templates/html/sub03_03.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/F5/src/main/resources/templates/html/sub04_01.html" beforeDir="false" afterPath="$PROJECT_DIR$/F5/src/main/resources/templates/html/sub04_01.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/F5/src/main/resources/templates/html/sub04_02.html" beforeDir="false" afterPath="$PROJECT_DIR$/F5/src/main/resources/templates/html/sub04_02.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/F5/src/main/resources/templates/html/test.html" beforeDir="false" afterPath="$PROJECT_DIR$/F5/src/main/resources/templates/html/test.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/F5/src/main/resources/templates/images/common/error.png" beforeDir="false" afterPath="$PROJECT_DIR$/F5/src/main/resources/static/images/common/error.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/F5/src/main/resources/templates/images/common/ico_acc_close.png" beforeDir="false" afterPath="$PROJECT_DIR$/F5/src/main/resources/static/images/common/ico_acc_close.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/F5/src/main/resources/templates/images/common/ico_acc_open.png" beforeDir="false" afterPath="$PROJECT_DIR$/F5/src/main/resources/static/images/common/ico_acc_open.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/F5/src/main/resources/templates/images/common/ico_add_doc.png" beforeDir="false" afterPath="$PROJECT_DIR$/F5/src/main/resources/static/images/common/ico_add_doc.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/F5/src/main/resources/templates/images/common/ico_add_file.png" beforeDir="false" afterPath="$PROJECT_DIR$/F5/src/main/resources/static/images/common/ico_add_file.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/F5/src/main/resources/templates/images/common/ico_add_folder.png" beforeDir="false" afterPath="$PROJECT_DIR$/F5/src/main/resources/static/images/common/ico_add_folder.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/F5/src/main/resources/templates/images/common/ico_arrow_next.png" beforeDir="false" afterPath="$PROJECT_DIR$/F5/src/main/resources/static/images/common/ico_arrow_next.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/F5/src/main/resources/templates/images/common/ico_arrow_prev.png" beforeDir="false" afterPath="$PROJECT_DIR$/F5/src/main/resources/static/images/common/ico_arrow_prev.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/F5/src/main/resources/templates/images/common/ico_arrow_tooltip_type01.png" beforeDir="false" afterPath="$PROJECT_DIR$/F5/src/main/resources/static/images/common/ico_arrow_tooltip_type01.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/F5/src/main/resources/templates/images/common/ico_btn_del.png" beforeDir="false" afterPath="$PROJECT_DIR$/F5/src/main/resources/static/images/common/ico_btn_del.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/F5/src/main/resources/templates/images/common/ico_btn_error.png" beforeDir="false" afterPath="$PROJECT_DIR$/F5/src/main/resources/static/images/common/ico_btn_error.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/F5/src/main/resources/templates/images/common/ico_btn_file.png" beforeDir="false" afterPath="$PROJECT_DIR$/F5/src/main/resources/static/images/common/ico_btn_file.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/F5/src/main/resources/templates/images/common/ico_btn_tip.png" beforeDir="false" afterPath="$PROJECT_DIR$/F5/src/main/resources/static/images/common/ico_btn_tip.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/F5/src/main/resources/templates/images/common/ico_btn_tip_hover.png" beforeDir="false" afterPath="$PROJECT_DIR$/F5/src/main/resources/static/images/common/ico_btn_tip_hover.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/F5/src/main/resources/templates/images/common/ico_down.png" beforeDir="false" afterPath="$PROJECT_DIR$/F5/src/main/resources/static/images/common/ico_down.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/F5/src/main/resources/templates/images/common/ico_edit.png" beforeDir="false" afterPath="$PROJECT_DIR$/F5/src/main/resources/static/images/common/ico_edit.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/F5/src/main/resources/templates/images/common/ico_edit_type02.png" beforeDir="false" afterPath="$PROJECT_DIR$/F5/src/main/resources/static/images/common/ico_edit_type02.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/F5/src/main/resources/templates/images/common/ico_folder.png" beforeDir="false" afterPath="$PROJECT_DIR$/F5/src/main/resources/static/images/common/ico_folder.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/F5/src/main/resources/templates/images/common/ico_full_pop_close.png" beforeDir="false" afterPath="$PROJECT_DIR$/F5/src/main/resources/static/images/common/ico_full_pop_close.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/F5/src/main/resources/templates/images/common/ico_move_type01.png" beforeDir="false" afterPath="$PROJECT_DIR$/F5/src/main/resources/static/images/common/ico_move_type01.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/F5/src/main/resources/templates/images/common/ico_move_type02.png" beforeDir="false" afterPath="$PROJECT_DIR$/F5/src/main/resources/static/images/common/ico_move_type02.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/F5/src/main/resources/templates/images/common/ico_nodata.png" beforeDir="false" afterPath="$PROJECT_DIR$/F5/src/main/resources/static/images/common/ico_nodata.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/F5/src/main/resources/templates/images/common/ico_pop_close.png" beforeDir="false" afterPath="$PROJECT_DIR$/F5/src/main/resources/static/images/common/ico_pop_close.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/F5/src/main/resources/templates/images/common/ico_preview.png" beforeDir="false" afterPath="$PROJECT_DIR$/F5/src/main/resources/static/images/common/ico_preview.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/F5/src/main/resources/templates/images/common/ico_research.png" beforeDir="false" afterPath="$PROJECT_DIR$/F5/src/main/resources/static/images/common/ico_research.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/F5/src/main/resources/templates/images/common/ico_setting.png" beforeDir="false" afterPath="$PROJECT_DIR$/F5/src/main/resources/static/images/common/ico_setting.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/F5/src/main/resources/templates/images/common/ico_step_active.png" beforeDir="false" afterPath="$PROJECT_DIR$/F5/src/main/resources/static/images/common/ico_step_active.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/F5/src/main/resources/templates/images/common/ico_title.png" beforeDir="false" afterPath="$PROJECT_DIR$/F5/src/main/resources/static/images/common/ico_title.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/F5/src/main/resources/templates/images/common/input_checkbox.png" beforeDir="false" afterPath="$PROJECT_DIR$/F5/src/main/resources/static/images/common/input_checkbox.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/F5/src/main/resources/templates/images/common/input_checkbox_check.png" beforeDir="false" afterPath="$PROJECT_DIR$/F5/src/main/resources/static/images/common/input_checkbox_check.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/F5/src/main/resources/templates/images/common/loading_icon.gif" beforeDir="false" afterPath="$PROJECT_DIR$/F5/src/main/resources/static/images/common/loading_icon.gif" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/F5/src/main/resources/templates/images/common/sample_prev.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/F5/src/main/resources/static/images/common/sample_prev.jpg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/F5/src/main/resources/templates/images/common/sampling-question-1.png" beforeDir="false" afterPath="$PROJECT_DIR$/F5/src/main/resources/static/images/common/sampling-question-1.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/F5/src/main/resources/templates/images/common/sampling-question.png" beforeDir="false" afterPath="$PROJECT_DIR$/F5/src/main/resources/static/images/common/sampling-question.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/F5/src/main/resources/templates/images/common/sampling-question2.png" beforeDir="false" afterPath="$PROJECT_DIR$/F5/src/main/resources/static/images/common/sampling-question2.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/F5/src/main/resources/templates/images/common/save.png" beforeDir="false" afterPath="$PROJECT_DIR$/F5/src/main/resources/static/images/common/save.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/F5/src/main/resources/templates/images/common/select_arrow.png" beforeDir="false" afterPath="$PROJECT_DIR$/F5/src/main/resources/static/images/common/select_arrow.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/F5/src/main/resources/templates/inc/css/common.css" beforeDir="false" afterPath="$PROJECT_DIR$/F5/src/main/resources/static/css/common.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/F5/src/main/resources/templates/inc/css/font.css" beforeDir="false" afterPath="$PROJECT_DIR$/F5/src/main/resources/static/css/font.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/F5/src/main/resources/templates/inc/css/reset.css" beforeDir="false" afterPath="$PROJECT_DIR$/F5/src/main/resources/static/css/reset.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/F5/src/main/resources/templates/inc/js/common.js" beforeDir="false" afterPath="$PROJECT_DIR$/F5/src/main/resources/static/js/common.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/F5/src/main/resources/templates/inc/js/jquery-ui.js" beforeDir="false" afterPath="$PROJECT_DIR$/F5/src/main/resources/static/js/jquery-ui.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/F5/src/main/resources/templates/inc/scss/_mixin.scss" beforeDir="false" afterPath="$PROJECT_DIR$/F5/src/main/resources/static/scss/_mixin.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/F5/src/main/resources/templates/inc/scss/_setting.scss" beforeDir="false" afterPath="$PROJECT_DIR$/F5/src/main/resources/static/scss/_setting.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/F5/src/main/resources/templates/inc/scss/common.scss" beforeDir="false" afterPath="$PROJECT_DIR$/F5/src/main/resources/static/scss/common.scss" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -82,9 +93,91 @@
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "WebServerToolWindowFactoryState": "false",
+    "last_opened_file_path": "D:/questionBank/F5",
+    "settings.editor.selected.configurable": "reference.settingsdialog.project.gradle",
     "vue.rearranger.settings.migration": "true"
   }
 }]]></component>
+  <component name="RunManager">
+    <configuration name="Tomcat 9.0.62" type="#com.intellij.j2ee.web.tomcat.TomcatRunConfigurationFactory" factoryName="Local" APPLICATION_SERVER_NAME="Tomcat 9.0.62" ALTERNATIVE_JRE_ENABLED="false" nameIsGenerated="true">
+      <option name="UPDATING_POLICY" value="restart-server" />
+      <deployment />
+      <server-settings>
+        <option name="BASE_DIRECTORY_NAME" value="1fdca3f9-4d7e-4768-a793-e3435d2d1dd4" />
+      </server-settings>
+      <predefined_log_file enabled="true" id="Tomcat" />
+      <predefined_log_file enabled="true" id="Tomcat Catalina" />
+      <predefined_log_file id="Tomcat Manager" />
+      <predefined_log_file id="Tomcat Host Manager" />
+      <predefined_log_file id="Tomcat Localhost Access" />
+      <RunnerSettings RunnerId="Debug">
+        <option name="DEBUG_PORT" value="64923" />
+      </RunnerSettings>
+      <ConfigurationWrapper VM_VAR="JAVA_OPTS" RunnerId="Cover">
+        <option name="USE_ENV_VARIABLES" value="true" />
+        <STARTUP>
+          <option name="USE_DEFAULT" value="true" />
+          <option name="SCRIPT" value="" />
+          <option name="VM_PARAMETERS" value="" />
+          <option name="PROGRAM_PARAMETERS" value="" />
+        </STARTUP>
+        <SHUTDOWN>
+          <option name="USE_DEFAULT" value="true" />
+          <option name="SCRIPT" value="" />
+          <option name="VM_PARAMETERS" value="" />
+          <option name="PROGRAM_PARAMETERS" value="" />
+        </SHUTDOWN>
+      </ConfigurationWrapper>
+      <ConfigurationWrapper VM_VAR="JAVA_OPTS" RunnerId="Debug">
+        <option name="USE_ENV_VARIABLES" value="true" />
+        <STARTUP>
+          <option name="USE_DEFAULT" value="true" />
+          <option name="SCRIPT" value="" />
+          <option name="VM_PARAMETERS" value="" />
+          <option name="PROGRAM_PARAMETERS" value="" />
+        </STARTUP>
+        <SHUTDOWN>
+          <option name="USE_DEFAULT" value="true" />
+          <option name="SCRIPT" value="" />
+          <option name="VM_PARAMETERS" value="" />
+          <option name="PROGRAM_PARAMETERS" value="" />
+        </SHUTDOWN>
+      </ConfigurationWrapper>
+      <ConfigurationWrapper VM_VAR="JAVA_OPTS" RunnerId="Profile">
+        <option name="USE_ENV_VARIABLES" value="true" />
+        <STARTUP>
+          <option name="USE_DEFAULT" value="true" />
+          <option name="SCRIPT" value="" />
+          <option name="VM_PARAMETERS" value="" />
+          <option name="PROGRAM_PARAMETERS" value="" />
+        </STARTUP>
+        <SHUTDOWN>
+          <option name="USE_DEFAULT" value="true" />
+          <option name="SCRIPT" value="" />
+          <option name="VM_PARAMETERS" value="" />
+          <option name="PROGRAM_PARAMETERS" value="" />
+        </SHUTDOWN>
+      </ConfigurationWrapper>
+      <ConfigurationWrapper VM_VAR="JAVA_OPTS" RunnerId="Run">
+        <option name="USE_ENV_VARIABLES" value="true" />
+        <STARTUP>
+          <option name="USE_DEFAULT" value="true" />
+          <option name="SCRIPT" value="" />
+          <option name="VM_PARAMETERS" value="" />
+          <option name="PROGRAM_PARAMETERS" value="" />
+        </STARTUP>
+        <SHUTDOWN>
+          <option name="USE_DEFAULT" value="true" />
+          <option name="SCRIPT" value="" />
+          <option name="VM_PARAMETERS" value="" />
+          <option name="PROGRAM_PARAMETERS" value="" />
+        </SHUTDOWN>
+      </ConfigurationWrapper>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+  </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
@@ -94,6 +187,9 @@
       <option name="presentableId" value="Default" />
       <updated>1697421223138</updated>
       <workItem from="1697421224738" duration="79000" />
+      <workItem from="1698040016685" duration="143000" />
+      <workItem from="1698040202296" duration="85000" />
+      <workItem from="1698040357390" duration="99000" />
     </task>
     <servers />
   </component>
