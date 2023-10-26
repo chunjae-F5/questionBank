@@ -1,16 +1,16 @@
 <!DOCTYPE html>
-<html lang="ko">
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
 
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>T셀파 문제은행</title>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@8/swiper-bundle.min.css" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@8/swiper-bundle.min.css"/>
     <link rel="stylesheet" href="https://code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css">
-    <link rel="stylesheet" href="../inc/css/font.css">
-    <link rel="stylesheet" href="../inc/css/reset.css">
-    <link rel="stylesheet" href="../inc/css/common.css">
+    <link rel="stylesheet" href="../../static/css/font.css">
+    <link rel="stylesheet" href="../../static/css/reset.css">
+    <link rel="stylesheet" href="../../static/css/common.css">
 
     <!-- S 230808 순서 변경-->
     <script src="https://code.jquery.com/jquery-1.12.4.min.js"
@@ -19,8 +19,7 @@
     <script src="https://code.jquery.com/ui/1.13.1/jquery-ui.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/swiper@8/swiper-bundle.min.js"></script>
     <!-- E 230808 순서 변경-->
-
-    <script src="../inc/js/common.js"></script>
+    <script src="../../static/js/common.js"></script>
 </head>
 
 <body>
@@ -79,7 +78,8 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="view-que-list scroll-inner" style="display: -webkit-box;-webkit-box-orient:vertical">
+                        <div class="view-que-list scroll-inner"
+                             style="display: -webkit-box;-webkit-box-orient:vertical">
                             <div class="sort-group" data-summary-id="summary-1">
                                 <div class="view-que-box">
                                     <div class="que-top">
@@ -91,13 +91,15 @@
                                             </div>
                                         </div>
                                         <div class="btn-wrap">
-                                            <button type="button" class="btn-error pop-btn" data-pop="error-report-pop"></button>
+                                            <button type="button" class="btn-error pop-btn"
+                                                    data-pop="error-report-pop"></button>
                                             <button type="button" class="btn-delete"></button>
                                         </div>
                                     </div>
                                     <div class="view-que">
                                         <div class="que-content">
-                                            <p class="txt">5×5×13×13×13×13을 거듭제곱으로 나타낼 5의 지수를 a, 13의 거듭제곱의 밑을 b라 하자. 이때 b−a의 값을 구하시오.</p>
+                                            <p class="txt">5×5×13×13×13×13을 거듭제곱으로 나타낼 5의 지수를 a, 13의 거듭제곱의 밑을 b라 하자. 이때
+                                                b−a의 값을 구하시오.</p>
                                         </div>
                                         <div class="que-bottom">
                                             <div class="data-area">
@@ -105,12 +107,16 @@
                                                     <p class="answer"><span class="label">해설</span></p>
                                                     <div class="data-answer-area">
                                                         <!-- s: 해설 데이터 영역 -->
-                                                        <div class="paragraph" style="text-align: Justify"><span class="txt">해설 텍스트가 나오는 영역입니다.해설
+                                                        <div class="paragraph" style="text-align: Justify"><span
+                                                                class="txt">해설 텍스트가 나오는 영역입니다.해설
 																	텍스트가
-																	나오는 영역입니다.해설 텍스트가 나오는 영역입니다.해설 텍스트가 나오는 영역입니다.</span></div>
-                                                        <div class="paragraph" style="text-align: Justify"><span class="txt">해설 텍스트가 나오는 영역입니다.해설
+																	나오는 영역입니다.해설 텍스트가 나오는 영역입니다.해설 텍스트가 나오는 영역입니다.</span>
+                                                        </div>
+                                                        <div class="paragraph" style="text-align: Justify"><span
+                                                                class="txt">해설 텍스트가 나오는 영역입니다.해설
 																	텍스트가
-																	나오는 영역입니다.해설 텍스트가 나오는 영역입니다.해설 텍스트가 나오는 영역입니다.</span></div>
+																	나오는 영역입니다.해설 텍스트가 나오는 영역입니다.해설 텍스트가 나오는 영역입니다.</span>
+                                                        </div>
                                                         <!-- e: 해설 데이터 영역 -->
                                                     </div>
                                                 </div>
@@ -120,13 +126,18 @@
                                                     <p class="answer"><span class="label type01">정답</span></p>
                                                     <div class="data-answer-area">
                                                         <!-- s: 정답 데이터 영역 -->
-                                                        <div class="paragraph" style="text-align: Justify"><span class="txt"> ①</span></div>
-                                                        <div class="paragraph" style="text-align: Justify"><span class="txt"> ①</span></div>
-                                                        <div class="paragraph" style="text-align: Justify"><span class="txt"> ①</span></div>
+                                                        <div class="paragraph" style="text-align: Justify"><span
+                                                                class="txt"> ①</span></div>
+                                                        <div class="paragraph" style="text-align: Justify"><span
+                                                                class="txt"> ①</span></div>
+                                                        <div class="paragraph" style="text-align: Justify"><span
+                                                                class="txt"> ①</span></div>
                                                         <!-- e: 정답 데이터 영역 -->
                                                     </div>
                                                 </div>
-                                                <button type="button" class="btn-similar-que btn-default"><i class="similar"></i> 유사 문제</button>
+                                                <button type="button" class="btn-similar-que btn-default"><i
+                                                        class="similar"></i> 유사 문제
+                                                </button>
                                             </div>
                                         </div>
 
@@ -147,7 +158,8 @@
                                             </div>
                                         </div>
                                         <div class="btn-wrap">
-                                            <button type="button" class="btn-error pop-btn" data-pop="error-report-pop"></button>
+                                            <button type="button" class="btn-error pop-btn"
+                                                    data-pop="error-report-pop"></button>
                                             <button type="button" class="btn-delete"></button>
                                         </div>
                                     </div>
@@ -168,12 +180,16 @@
                                                     <p class="answer"><span class="label">해설</span></p>
                                                     <div class="data-answer-area">
                                                         <!-- s: 해설 데이터 영역 -->
-                                                        <div class="paragraph" style="text-align: Justify"><span class="txt">해설 텍스트가 나오는 영역입니다.해설
+                                                        <div class="paragraph" style="text-align: Justify"><span
+                                                                class="txt">해설 텍스트가 나오는 영역입니다.해설
 																	텍스트가
-																	나오는 영역입니다.해설 텍스트가 나오는 영역입니다.해설 텍스트가 나오는 영역입니다.</span></div>
-                                                        <div class="paragraph" style="text-align: Justify"><span class="txt">해설 텍스트가 나오는 영역입니다.해설
+																	나오는 영역입니다.해설 텍스트가 나오는 영역입니다.해설 텍스트가 나오는 영역입니다.</span>
+                                                        </div>
+                                                        <div class="paragraph" style="text-align: Justify"><span
+                                                                class="txt">해설 텍스트가 나오는 영역입니다.해설
 																	텍스트가
-																	나오는 영역입니다.해설 텍스트가 나오는 영역입니다.해설 텍스트가 나오는 영역입니다.</span></div>
+																	나오는 영역입니다.해설 텍스트가 나오는 영역입니다.해설 텍스트가 나오는 영역입니다.</span>
+                                                        </div>
                                                         <!-- e: 해설 데이터 영역 -->
                                                     </div>
                                                 </div>
@@ -183,13 +199,18 @@
                                                     <p class="answer"><span class="label type01">정답</span></p>
                                                     <div class="data-answer-area">
                                                         <!-- s: 정답 데이터 영역 -->
-                                                        <div class="paragraph" style="text-align: Justify"><span class="txt"> ①</span></div>
-                                                        <div class="paragraph" style="text-align: Justify"><span class="txt"> ①</span></div>
-                                                        <div class="paragraph" style="text-align: Justify"><span class="txt"> ①</span></div>
+                                                        <div class="paragraph" style="text-align: Justify"><span
+                                                                class="txt"> ①</span></div>
+                                                        <div class="paragraph" style="text-align: Justify"><span
+                                                                class="txt"> ①</span></div>
+                                                        <div class="paragraph" style="text-align: Justify"><span
+                                                                class="txt"> ①</span></div>
                                                         <!-- e: 정답 데이터 영역 -->
                                                     </div>
                                                 </div>
-                                                <button type="button" class="btn-similar-que btn-default"><i class="similar"></i> 유사 문제</button>
+                                                <button type="button" class="btn-similar-que btn-default"><i
+                                                        class="similar"></i> 유사 문제
+                                                </button>
                                             </div>
                                         </div>
 
@@ -210,14 +231,17 @@
                                             </div>
                                         </div>
                                         <div class="btn-wrap">
-                                            <button type="button" class="btn-error pop-btn" data-pop="error-report-pop"></button>
+                                            <button type="button" class="btn-error pop-btn"
+                                                    data-pop="error-report-pop"></button>
                                             <button type="button" class="btn-delete"></button>
                                         </div>
                                     </div>
                                     <div class="view-que">
                                         <div class="que-content">
-                                            <p class="txt">5×5×13×13×13×13을 거듭제곱으로 나타낼 5의 지수를 a, 13의 거듭제곱의 밑을 b라 하자. 이때 b−a의 값을 구하시오.
-                                                5×5×13×13×13×13을 거듭제곱으로 나타낼 5의 지수를 a, 13의 거듭제곱의 밑을 b라 하자. 이때 b−a의 값을 구하시오. 5×5×13×13×13×13을
+                                            <p class="txt">5×5×13×13×13×13을 거듭제곱으로 나타낼 5의 지수를 a, 13의 거듭제곱의 밑을 b라 하자. 이때
+                                                b−a의 값을 구하시오.
+                                                5×5×13×13×13×13을 거듭제곱으로 나타낼 5의 지수를 a, 13의 거듭제곱의 밑을 b라 하자. 이때 b−a의 값을
+                                                구하시오. 5×5×13×13×13×13을
                                                 거듭제곱으로
                                                 나타낼 5의 지수를 a, 13의 거듭제곱의 밑을 b라 하자. 이때 b−a의 값을 구하시오.</p>
                                             <ul>
@@ -231,7 +255,9 @@
                                             </ul>
                                         </div>
                                         <div class="que-bottom">
-                                            <button type="button" class="btn-similar-que btn-default"><i class="similar"></i> 유사 문제</button>
+                                            <button type="button" class="btn-similar-que btn-default"><i
+                                                    class="similar"></i> 유사 문제
+                                            </button>
                                         </div>
                                     </div>
                                     <div class="que-info-last">
@@ -250,13 +276,15 @@
                                             </div>
                                         </div>
                                         <div class="btn-wrap">
-                                            <button type="button" class="btn-error pop-btn" data-pop="error-report-pop"></button>
+                                            <button type="button" class="btn-error pop-btn"
+                                                    data-pop="error-report-pop"></button>
                                             <button type="button" class="btn-delete"></button>
                                         </div>
                                     </div>
                                     <div class="view-que">
                                         <div class="que-content">
-                                            <p class="txt">5×5×13×13×13×13을 거듭제곱으로 나타낼 5의 지수를 a, 13의 거듭제곱의 밑을 b라 하자. 이때 b−a의 값을 구하시오.</p>
+                                            <p class="txt">5×5×13×13×13×13을 거듭제곱으로 나타낼 5의 지수를 a, 13의 거듭제곱의 밑을 b라 하자. 이때
+                                                b−a의 값을 구하시오.</p>
                                         </div>
                                         <div class="que-bottom">
                                             <div class="data-area">
@@ -264,12 +292,16 @@
                                                     <p class="answer"><span class="label">해설</span></p>
                                                     <div class="data-answer-area">
                                                         <!-- s: 해설 데이터 영역 -->
-                                                        <div class="paragraph" style="text-align: Justify"><span class="txt">해설 텍스트가 나오는 영역입니다.해설
+                                                        <div class="paragraph" style="text-align: Justify"><span
+                                                                class="txt">해설 텍스트가 나오는 영역입니다.해설
 																	텍스트가
-																	나오는 영역입니다.해설 텍스트가 나오는 영역입니다.해설 텍스트가 나오는 영역입니다.</span></div>
-                                                        <div class="paragraph" style="text-align: Justify"><span class="txt">해설 텍스트가 나오는 영역입니다.해설
+																	나오는 영역입니다.해설 텍스트가 나오는 영역입니다.해설 텍스트가 나오는 영역입니다.</span>
+                                                        </div>
+                                                        <div class="paragraph" style="text-align: Justify"><span
+                                                                class="txt">해설 텍스트가 나오는 영역입니다.해설
 																	텍스트가
-																	나오는 영역입니다.해설 텍스트가 나오는 영역입니다.해설 텍스트가 나오는 영역입니다.</span></div>
+																	나오는 영역입니다.해설 텍스트가 나오는 영역입니다.해설 텍스트가 나오는 영역입니다.</span>
+                                                        </div>
                                                         <!-- e: 해설 데이터 영역 -->
                                                     </div>
                                                 </div>
@@ -279,13 +311,18 @@
                                                     <p class="answer"><span class="label type01">정답</span></p>
                                                     <div class="data-answer-area">
                                                         <!-- s: 정답 데이터 영역 -->
-                                                        <div class="paragraph" style="text-align: Justify"><span class="txt"> ①</span></div>
-                                                        <div class="paragraph" style="text-align: Justify"><span class="txt"> ①</span></div>
-                                                        <div class="paragraph" style="text-align: Justify"><span class="txt"> ①</span></div>
+                                                        <div class="paragraph" style="text-align: Justify"><span
+                                                                class="txt"> ①</span></div>
+                                                        <div class="paragraph" style="text-align: Justify"><span
+                                                                class="txt"> ①</span></div>
+                                                        <div class="paragraph" style="text-align: Justify"><span
+                                                                class="txt"> ①</span></div>
                                                         <!-- e: 정답 데이터 영역 -->
                                                     </div>
                                                 </div>
-                                                <button type="button" class="btn-similar-que btn-default"><i class="similar"></i> 유사 문제</button>
+                                                <button type="button" class="btn-similar-que btn-default"><i
+                                                        class="similar"></i> 유사 문제
+                                                </button>
                                             </div>
                                         </div>
                                     </div>
@@ -305,13 +342,15 @@
                                             </div>
                                         </div>
                                         <div class="btn-wrap">
-                                            <button type="button" class="btn-error pop-btn" data-pop="error-report-pop"></button>
+                                            <button type="button" class="btn-error pop-btn"
+                                                    data-pop="error-report-pop"></button>
                                             <button type="button" class="btn-delete"></button>
                                         </div>
                                     </div>
                                     <div class="view-que">
                                         <div class="que-content">
-                                            <p class="txt">5×5×13×13×13×13을 거듭제곱으로 나타낼 5의 지수를 a, 13의 거듭제곱의 밑을 b라 하자. 이때 b−a의 값을 구하시오.</p>
+                                            <p class="txt">5×5×13×13×13×13을 거듭제곱으로 나타낼 5의 지수를 a, 13의 거듭제곱의 밑을 b라 하자. 이때
+                                                b−a의 값을 구하시오.</p>
                                             <ul>
                                                 <ol><em>①</em><span>3 대 4</span></ol>
                                                 <ol><em>②</em><span>3의 4에 대한 비</span></ol>
@@ -321,7 +360,9 @@
                                             </ul>
                                         </div>
                                         <div class="que-bottom">
-                                            <button type="button" class="btn-similar-que btn-default"><i class="similar"></i> 유사 문제</button>
+                                            <button type="button" class="btn-similar-que btn-default"><i
+                                                    class="similar"></i> 유사 문제
+                                            </button>
                                         </div>
                                     </div>
                                     <div class="que-info-last">
@@ -378,7 +419,8 @@
                                                 <div class="col sortable" data-summary-id="summary-1">
                                                     <a href="javascript:;">
 															<span class="dragHandle ui-sortable-handle"><img
-                                                                    src="../images/common/ico_move_type01.png" alt=""></span>
+                                                                    src="../images/common/ico_move_type01.png"
+                                                                    alt=""></span>
                                                         <span class="num">1</span>
                                                         <!-- S 230808 tooltip-wrap 추가-->
                                                         <span class="tit">
@@ -401,7 +443,8 @@
                                                 <div class="col sortable" data-summary-id="summary-2">
                                                     <a href="javascript:;">
 															<span class="dragHandle ui-sortable-handle"><img
-                                                                    src="../images/common/ico_move_type01.png" alt=""></span>
+                                                                    src="../images/common/ico_move_type01.png"
+                                                                    alt=""></span>
                                                         <span class="num">2</span>
                                                         <!-- S 230808 tooltip-wrap 추가-->
                                                         <span class="tit">
@@ -424,7 +467,8 @@
                                                 <div class="col sortable" data-summary-id="summary-3">
                                                     <a href="javascript:;">
 															<span class="dragHandle ui-sortable-handle"><img
-                                                                    src="../images/common/ico_move_type01.png" alt=""></span>
+                                                                    src="../images/common/ico_move_type01.png"
+                                                                    alt=""></span>
                                                         <span class="num">3</span>
                                                         <!-- S 230808 tooltip-wrap 추가-->
                                                         <span class="tit">
@@ -447,7 +491,8 @@
                                                 <div class="col sortable" data-summary-id="summary-4">
                                                     <a href="javascript:;">
 															<span class="dragHandle ui-sortable-handle"><img
-                                                                    src="../images/common/ico_move_type01.png" alt=""></span>
+                                                                    src="../images/common/ico_move_type01.png"
+                                                                    alt=""></span>
                                                         <span class="num">4</span>
                                                         <!-- S 230808 tooltip-wrap 추가-->
                                                         <span class="tit">
@@ -470,7 +515,8 @@
                                                 <div class="col sortable" data-summary-id="summary-5">
                                                     <a href="javascript:;">
 															<span class="dragHandle ui-sortable-handle"><img
-                                                                    src="../images/common/ico_move_type01.png" alt=""></span>
+                                                                    src="../images/common/ico_move_type01.png"
+                                                                    alt=""></span>
                                                         <span class="num">5</span>
                                                         <!-- S 230808 tooltip-wrap 추가-->
                                                         <span class="tit">
@@ -520,7 +566,7 @@
         </div>
         <div class="step-btn-wrap">
             <button type="button" class="btn-step">STEP 1 단원 선택</button>
-            <button type="button" class="btn-step next">STEP 3 시험지 저장 </button>
+            <button type="button" class="btn-step next">STEP 3 시험지 저장</button>
         </div>
 
 
@@ -579,7 +625,8 @@
                     <tr>
                         <th>오류 내용</th>
                         <td>
-                            <textarea name="" id="" cols="30" rows="4" placeholder="오류내용을 간단히 적어주세요. (최대 50자)"></textarea>
+                            <textarea name="" id="" cols="30" rows="4"
+                                      placeholder="오류내용을 간단히 적어주세요. (최대 50자)"></textarea>
                         </td>
                     </tr>
                     </tbody>
@@ -631,68 +678,50 @@
             </div>
         </div>
     </div>
-
-    <script>
-        // // tooltip hover
-        // let tipBtns = $(".btn-tip");
-
-        // $(function () {
-        // 	tipBtns.on("mouseover", function () {
-        // 		let _this = $(this);
-        // 		let _tooltip = _this.next(".tooltip"); // 툴팁 요소를 바로 뒤에 있는 요소로 찾아옴
-        // 		let _tooltipPosition = _this.offset().top; // 버튼(_this)의 전체 문서에서의 위치값을 가져옴
-
-        // 		console.log(_tooltipPosition);
-
-        // 		if (_tooltipPosition > 490) {
-        // 			_tooltip.css("top", "-130px"); // 툴팁 위치 변경
-        // 			_tooltip.addClass("before-active"); // 클래스 추가
-        // 		}
-        // 	});
-        // });
-        $(function () {
+</div>
+<script>
+    $(function () {
 
 
+        let _leg = $('.view-que').length;
+        let arr = [];
+
+        viewListFunc();
+
+        $(".view-que-list").change(function () {
             let _leg = $('.view-que').length;
             let arr = [];
 
             viewListFunc();
-
-            $(".view-que-list").change(function () {
-                let _leg = $('.view-que').length;
-                let arr = [];
-
-                viewListFunc();
-            })
-
-            function viewListFunc() {
-                $('.col').on('click', function () {
-
-                    let _idx = $(this).index();
-
-                    for (var i = 0; i < _leg; i++) {
-                        arr.push($('.view-que').eq(i).offset().top - 280);
-                    }
-
-                    console.log(arr);
-
-                    $('.view-que-list').animate({
-                        scrollTop: arr[_idx]
-                    }, 400);
-
-                    let _this = $(this);
-                    if (!_this.hasClass('active')) {
-                        _this.parents('.test.ui-sortable').find('.col').removeClass('active');
-                        _this.addClass('active');
-                        $('.view-que-box').removeClass('active');
-                        $('.view-que-box').eq(_idx).addClass('active');
-                    };
-
-                })
-            }
         })
-    </script>
+
+        function viewListFunc() {
+            $('.col').on('click', function () {
+
+                let _idx = $(this).index();
+
+                for (var i = 0; i < _leg; i++) {
+                    arr.push($('.view-que').eq(i).offset().top - 280);
+                }
+
+                console.log(arr);
+
+                $('.view-que-list').animate({
+                    scrollTop: arr[_idx]
+                }, 400);
+
+                let _this = $(this);
+                if (!_this.hasClass('active')) {
+                    _this.parents('.test.ui-sortable').find('.col').removeClass('active');
+                    _this.addClass('active');
+                    $('.view-que-box').removeClass('active');
+                    $('.view-que-box').eq(_idx).addClass('active');
+                }
+                ;
+
+            })
+        }
+    })
+</script>
 </body>
-
-
 </html>
