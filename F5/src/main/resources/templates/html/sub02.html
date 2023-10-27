@@ -627,20 +627,28 @@
             activityCategoryList.push(button.textContent);
         });
 
-
         const questionFormButtons = document.querySelectorAll('.btn-line.active.questionForm');
 
-        const questionForm = [];
+        // const questionForm = [];
+
+        let concatenatedValues = "";
 
         questionFormButtons.forEach(function (button) {
             const buttonText = button.textContent;
 
             if (buttonText.includes("객관식")) {
-                questionForm.push("multiple");
+                if (concatenatedValues) {
+                    concatenatedValues += ", ";
+                }
+                concatenatedValues += "multiple";
             } else if (buttonText.includes("주관식")) {
-                questionForm.push("subjective");
+                if (concatenatedValues) {
+                    concatenatedValues += ", ";
+                }
+                concatenatedValues += "subjective";
             }
         });
+
 
         // 단원 id에 해당하는 value값 가져오는걸 만들어보자
 
@@ -649,33 +657,42 @@
         const selectedTopicChapters = document.querySelectorAll('.topicChapterId:checked');
 
         selectedTopicChapters.forEach(function (input) {
-            const topicChapterValue = input.value; // 이 부분을 수정
-            topicChapterLists.push(topicChapterValue);
+            const topicChapterValue = input.value;
+            topicChapterLists.push({ "topic": topicChapterValue });
         });
 
 
+
+
         const jsonData = {
-            "minorClassification": [
-                {
-                    "topic": topicChapterLists
-                }
-            ],
-
-            "levelCnt": [
-                lowest,
-                low,
-                medium,
-                high,
-                highest
-            ],
-            "questionForm": questionForm,
+            "minorClassification": topicChapterLists.map(item => ({ "topic": item.topic })),
+            "levelCnt": [lowest, low, medium, high, highest],
+            "questionForm": concatenatedValues,
             "activityCategoryList": activityCategoryList
-        }
+        };
 
-        const lastData = JSON.stringify(jsonData);
-        console.log(lastData)
         console.log(jsonData);
 
+        fetch('http://localhost:8080/item-img/chapter/item-list', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(jsonData)
+        })
+            .then(response => {
+                if (response.ok) {
+                   console.log("ok")
+                    return response.json();
+                    // window.location.href = '/html/sub03_01.html';
+                } else {
+                    throw new Error('Failed to send JSON data');
+                }
+            })
+            .then(data => {
+                // 서버에서의 응답을 처리하거나 필요한 작업을 수행
+                window.location.href=data.url;
+            })
     });
 </script>
 </html>
