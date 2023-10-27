@@ -32,7 +32,7 @@
             <div class="view-box">
                 <div class="view-top">
                     <div class="paper-info">
-                        <span th:text="${itemList.getSubjectName}"></span>
+                        <span id="subjectId" th:text="${itemList.getSubjectName}"></span>
                     </div>
                 </div>
                 <div class="view-bottom">
@@ -50,10 +50,8 @@
                                             <!-- 대단원 -->
                                             <div class="check-group title on">
                                                 <!--check-group 클래스가 생성 되었을 때-->
-                                                <div class="title-chk"><input type="checkbox"
-                                                                              class="que-allCheck depth01 largeChapterId"
-                                                                              th:id="${'chk01_' + itemStat}"
-                                                                              th:value="${item.largeChapterId}">
+                                                <div class="title-chk"><input type="checkbox" class="que-allCheck depth01 largeChapterId" th:id="${'chk01_' + itemStat}" th:value="${item.largeChapterId}">
+
                                                     <label th:for="${'chk01_' + itemStat}">
                                                         <button type="button" class="dep-btn active"
                                                                 th:text="${item.largeChapterName}"></button>
@@ -64,10 +62,8 @@
                                                 <!-- 중단원 -->
                                                 <div th:each="mediumItem, mediumItemStat : ${item.mediumChapters}">
                                                     <div class="check-group on">
-                                                        <input type="checkbox"
-                                                               class="que-allCheck depth01 mediumChapterId"
-                                                               th:id="${'chk02_' + mediumItemStat}"
-                                                               th:value="${mediumItem.mediumChapterId}">
+                                                        <input type="checkbox" class="que-allCheck depth01 mediumChapterId" th:id="${'chk02_' + mediumItemStat}" th:value="${mediumItem.mediumChapterId}">
+
                                                         <label th:for="${'chk02_' + mediumItemStat}">
                                                             <button type="button" class="dep-btn active"
                                                                     th:text="${mediumItem.mediumChapterName}"></button>
@@ -77,10 +73,8 @@
                                                         <!--소단원-->
                                                         <div th:each="smallItem, smallItemStat : ${mediumItem.smallChapters}">
                                                             <div class="check-group on">
-                                                                <input type="checkbox"
-                                                                       class="que-allCheck depth01 smallChapterId"
-                                                                       th:id="${'chk03_' + smallItemStat}"
-                                                                       th:value="${smallItem.smallChapterId}">
+                                                                <input type="checkbox" class="que-allCheck depth01 smallChapterId" th:id="${'chk03_' + smallItemStat}" th:value="${smallItem.smallChapterId}">
+
                                                                 <label th:for="${'chk03_' + smallItemStat}">
                                                                     <button type="button" class="dep-btn active"
                                                                             th:text="${smallItem.smallChapterName}"></button>
@@ -90,10 +84,7 @@
                                                                 <!-- 토픽 -->
                                                                 <div th:each="topicItem, topicItemStat : ${smallItem.topicChapters}"
                                                                      class="check-group on">
-                                                                    <input type="checkbox"
-                                                                           th:id="${'chk04_' + topicItemStat}"
-                                                                           class="topicChapterId"
-                                                                           th:value="${topicItem.topicChapterId}">
+                                                                    <input type="checkbox" th:id="${'chk04_' + topicItemStat}" class="topicChapterId" th:value="${topicItem.topicChapterId}">
                                                                     <label th:for="${'chk04_' + topicItemStat}">
                                                                         <span th:text="${topicItem.topicChapterName}"></span>
                                                                     </label>
@@ -161,13 +152,9 @@
                                         </div>
                                     </div>
                                     <div class="btn-wrap multi">
-                                        <button type="button" class="btn-line active">자료 해석</button>
-                                        <button type="button" class="btn-line active">이해</button>
-                                        <button type="button" class="btn-line active">적용</button>
-                                    </div>
-                                    <div class="btn-wrap multi">
-                                        <button type="button" class="btn-line active">지식</button>
-                                        <button type="button" class="btn-line active">결론도출</button>
+                                        <div th:each="evaluationItem : ${evaluationList}">
+                                            <button type="button" class="btn-line active evaluation" th:text="${evaluationItem}" th:value="${evaluationItem}"></button>
+                                        </div>
                                     </div>
                                 </div>
                                 <div class="box">
@@ -177,8 +164,8 @@
                                         </div>
                                     </div>
                                     <div class="btn-wrap multi">
-                                        <button type="button" class="btn-line active">객관식</button>
-                                        <button type="button" class="btn-line active">주관식</button>
+                                        <button type="button" class="btn-line active questionForm">객관식</button>
+                                        <button type="button" class="btn-line active questionForm">주관식</button>
                                     </div>
                                 </div>
                                 <div class="box">
@@ -339,8 +326,8 @@
 
             $('input[type="checkbox"]').prop('checked', isChecked);
         });
-        changeCount();
-    });
+        setTimeout(changeCount, 0);
+    })
 
     let questionCountInput = document.getElementById("questionCount");
     let txtElement = document.querySelector(".warn5");
@@ -449,9 +436,6 @@
             }
         });
 
-
-
-        // setTimeout(changeCount, 0);
 
 
         // 팝업창에 있는 총 문제도 변경해주기
@@ -611,14 +595,10 @@
         });
     });
 
+    document.getElementById('watchJson').addEventListener('click', function () {
+        // 각 체크박스의 값을 JavaScript 변수에 할당을 해보자
 
-    document.getElementById('watchJson').addEventListener('click', function() {
-        // 각 체크박스의 값을 JavaScript 변수에 할당
         let subjectId = document.getElementById('subjectId').textContent;
-        let largeChapterId = document.querySelector('.largeChapterId:checked').value;
-        let mediumChapterId = document.querySelector('.mediumChapterId:checked').value;
-        let smallChapterId = document.querySelector('.smallChapterId:checked').value;
-        let topicChapterId = document.querySelector('.topicChapterId:checked').value;
 
         let lowest = document.getElementById('lowest').getAttribute('data-step');
         let low = document.getElementById('low').getAttribute('data-step');
@@ -639,15 +619,47 @@
         high = replaceIfStepExists(high);
         highest = replaceIfStepExists(highest);
 
+        const activeButtons = document.querySelectorAll('.btn-line.active.evaluation');
+
+        const activityCategoryList = [];
+
+        activeButtons.forEach(function(button) {
+            activityCategoryList.push(button.textContent);
+        });
+
+
+        const questionFormButtons = document.querySelectorAll('.btn-line.active.questionForm');
+
+        const questionForm = [];
+
+        questionFormButtons.forEach(function (button) {
+            const buttonText = button.textContent;
+
+            if (buttonText.includes("객관식")) {
+                questionForm.push("multiple");
+            } else if (buttonText.includes("주관식")) {
+                questionForm.push("subjective");
+            }
+        });
+
+        // 단원 id에 해당하는 value값 가져오는걸 만들어보자
+
+        const topicChapterLists = [];
+
+        const selectedTopicChapters = document.querySelectorAll('.topicChapterId:checked');
+
+        selectedTopicChapters.forEach(function (input) {
+            const topicChapterValue = input.value; // 이 부분을 수정
+            topicChapterLists.push(topicChapterValue);
+        });
+
+
         const jsonData = {
             "minorClassification": [
                 {
-                    "subject": subjectId,
-                    "large": largeChapterId,
-                    "medium": mediumChapterId,
-                    "small": smallChapterId,
-                    "topic": topicChapterId
-                }],
+                    "topic": topicChapterLists
+                }
+            ],
 
             "levelCnt": [
                 lowest,
@@ -656,9 +668,14 @@
                 high,
                 highest
             ],
-            "questionForm": "multiple,subjective",
-            "activityCategoryList": [395, 397]
+            "questionForm": questionForm,
+            "activityCategoryList": activityCategoryList
         }
+
+        const lastData = JSON.stringify(jsonData);
+        console.log(lastData)
+        console.log(jsonData);
+
     });
 </script>
 </html>
