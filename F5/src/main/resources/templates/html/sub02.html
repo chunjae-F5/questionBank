@@ -342,7 +342,7 @@
 
             $('input[type="checkbox"]').prop('checked', isChecked);
         });
-        setTimeout(changeCount, 0);
+        // setTimeout(changeCount, 0);
     })
 
     let questionCountInput = document.getElementById("questionCount");
@@ -476,6 +476,7 @@
         });
     }
 
+
     function updateTotalNumDisplay(value) {
         totalNumSpan.textContent = value;
         let divideCount = Math.trunc(value / count);
@@ -577,7 +578,6 @@
         }
 
         queChkAll.on('click', queCheckFunc);
-
 
         $(".type-box .box .range").hide();
         let stepBtn = $('.step-wrap .btn-line');

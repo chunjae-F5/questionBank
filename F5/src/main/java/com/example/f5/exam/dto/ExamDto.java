@@ -35,6 +35,7 @@ public class ExamDto {
     public static class itemInfoResponse {
         private long itemId;
         private String questionFormName;
+        private String questionFormCode;
         private String difficultyName;
         private String chapterName;
         private String questionUrl;
