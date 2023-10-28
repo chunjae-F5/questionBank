@@ -5,7 +5,6 @@ import com.example.f5.exam.service.ExamService;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpRequest;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -14,7 +13,6 @@ import org.springframework.web.bind.annotation.*;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Stream;
 
 @Controller
 @RequiredArgsConstructor
@@ -27,6 +25,7 @@ public class ExamController {
     public ResponseEntity<Map<String, String>> getItemList(@RequestBody ExamDto.itemInfoRequest requestDto, Model model, HttpSession session) {
         List<ExamDto.itemInfoResponse> itemList = examService.getItemList(requestDto);
         session.setAttribute("itemList", itemList);
+        //model.addAttribute("itemList", itemList);
         Map<String, String> res = new HashMap<>();
         res.put("url", "/item-img/chapter/item-list/red");
         return ResponseEntity.ok(res);
