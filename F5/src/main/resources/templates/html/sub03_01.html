@@ -133,7 +133,7 @@
                                                             var encodedItemId = encodeURIComponent(itemId);
                                                             var encodedCount = encodeURIComponent(count);
 
-                                                            window.location.href = '/nextPage?itemId=' + encodedItemId + '&count=' + encodedCount;
+                                                            window.location.href = '/sendData?itemId=' + encodedItemId + '&count=' + encodedCount;
                                                         }
                                                     </script>
                                                 </div>
@@ -259,7 +259,7 @@
                     var itemIdsJson = JSON.stringify(itemIds);
                     var encodedItemIds = encodeURIComponent(itemIdsJson);
 
-                    window.location.href = '/nextPage?itemIds=' + encodedItemIds;
+                    window.location.href = '/sendDataForSave?itemIds=' + encodedItemIds;
                 }
             </script>
         </div>

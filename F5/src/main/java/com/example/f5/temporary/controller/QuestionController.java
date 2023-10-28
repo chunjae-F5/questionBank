@@ -56,7 +56,7 @@ public class QuestionController {
         return "html/sub03_01";
     }
 
-/*    @GetMapping("/")
+    @GetMapping("/sendData")
     public String sendData(@RequestParam("itemId") String itemId, @RequestParam("count") String count, Model model) {
         model.addAttribute("itemId", itemId);
         model.addAttribute("count", count);
@@ -64,8 +64,8 @@ public class QuestionController {
         return "html/sub03_02_02";
     }
 
-    @GetMapping("/")
-    public String sendDataTohaneul(@RequestParam("itemIds") String encodedItemIds, Model model) {
+    @GetMapping("/sendDataForSave")
+    public String sendDataForSave(@RequestParam("itemIds") String encodedItemIds, Model model) {
         String decodedItemIds = URLDecoder.decode(encodedItemIds, StandardCharsets.UTF_8);
 
         List<String> itemIds = new ArrayList<>();
@@ -78,7 +78,7 @@ public class QuestionController {
         model.addAttribute("itemIds", itemIds);
 
         return "html/sub03_03";
-    }*/
+    }
 
 }
 
