@@ -46,6 +46,7 @@ public class ExamService {
             } else {
                 responseDto.setQuestionFormName("주관식");
             }
+
             itemList.add(responseDto);
         }
         return itemList;

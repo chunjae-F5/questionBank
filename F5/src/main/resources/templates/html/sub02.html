@@ -71,11 +71,11 @@
                                                                th:value="${mediumItem.mediumChapterId}">
 
                                                         <label th:for="${'chk02_' + mediumItemStat}">
-                                                            <button type="button" class="dep-btn active"
+                                                            <button type="button" class="dep-btn"
                                                                     th:text="${mediumItem.mediumChapterName}"></button>
                                                         </label>
                                                     </div>
-                                                    <div class="depth03">
+                                                    <div class="depth03" style="display: block">
                                                         <!--소단원-->
                                                         <div th:each="smallItem, smallItemStat : ${mediumItem.smallChapters}">
                                                             <div class="check-group on">
@@ -85,11 +85,11 @@
                                                                        th:value="${smallItem.smallChapterId}">
 
                                                                 <label th:for="${'chk03_' + smallItemStat}">
-                                                                    <button type="button" class="dep-btn active"
+                                                                    <button type="button" class="dep-btn"
                                                                             th:text="${smallItem.smallChapterName}"></button>
                                                                 </label>
                                                             </div>
-                                                            <div class="depth04">
+                                                            <div class="depth04" style="display: block">
                                                                 <!-- 토픽 -->
                                                                 <div th:each="topicItem, topicItemStat : ${smallItem.topicChapters}"
                                                                      class="check-group on">
@@ -342,6 +342,7 @@
 
             $('input[type="checkbox"]').prop('checked', isChecked);
         });
+
         // setTimeout(changeCount, 0);
     })
 
@@ -383,6 +384,9 @@
     questionCountInput.addEventListener("input", function () {
         updateStyles();
     });
+
+
+    // 체크박스에 체크 되어야지 버튼이 활성화 되도록 하기
 
     function updateStyles() {
         let inputValue = parseInt(questionCountInput.value);
@@ -540,7 +544,6 @@
             if (!_this.hasClass('active')) {
                 _this.addClass('active');
                 _this.parents('.check-group').next('div').stop().slideUp('fast');
-
             } else {
                 _this.removeClass('active');
                 _this.parents('.check-group').next('div').stop().slideDown('fast');
@@ -559,8 +562,14 @@
 
             if (_this.prop('checked')) {
                 _this.parents().next('ul').find('input[type=checkbox]').prop('checked', true);
+
+                // 체크되면 depFunc 함수를 호출하여 버튼을 클릭
+                depFunc.call(_this.parents('.check-group').find('.dep-btn'));
             } else {
                 _this.parents().next('ul').find('input[type=checkbox]').prop('checked', false);
+
+                // 체크 해제되면 다시 depFunc 함수를 호출하여 버튼을 클릭
+                depFunc.call(_this.parents('.check-group').find('.dep-btn'));
             }
 
             if (_this.prop('checked') && _this.hasClass('depth01')) {
@@ -577,7 +586,7 @@
 
         }
 
-        queChkAll.on('click', queCheckFunc);
+        queChkAll.on('change', queCheckFunc);
 
         $(".type-box .box .range").hide();
         let stepBtn = $('.step-wrap .btn-line');
@@ -590,7 +599,6 @@
 
             if (_this.hasClass('active')) {
                 $(".range[data-step='" + stepData + "']").show();
-
             } else {
                 $(".range[data-step='" + stepData + "']").hide();
             }
@@ -598,6 +606,7 @@
 
         stepBtn.on('click', stepFunc);
     });
+
 
     $(document).ready(function () {
         let stepBtn = $('.step-wrap .btn-line.active');
@@ -697,13 +706,11 @@
                 if (response.ok) {
                     console.log("ok")
                     return response.json();
-                    // window.location.href = '/html/sub03_01.html';
                 } else {
                     throw new Error('Failed to send JSON data');
                 }
             })
             .then(data => {
-                // 서버에서의 응답을 처리하거나 필요한 작업을 수행
                 window.location.href = data.url;
             })
     });
