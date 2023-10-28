@@ -50,7 +50,10 @@
                                             <!-- 대단원 -->
                                             <div class="check-group title on">
                                                 <!--check-group 클래스가 생성 되었을 때-->
-                                                <div class="title-chk"><input type="checkbox" class="que-allCheck depth01 largeChapterId" th:id="${'chk01_' + itemStat}" th:value="${item.largeChapterId}">
+                                                <div class="title-chk"><input type="checkbox"
+                                                                              class="que-allCheck depth01 largeChapterId"
+                                                                              th:id="${'chk01_' + itemStat}"
+                                                                              th:value="${item.largeChapterId}">
 
                                                     <label th:for="${'chk01_' + itemStat}">
                                                         <button type="button" class="dep-btn active"
@@ -62,7 +65,10 @@
                                                 <!-- 중단원 -->
                                                 <div th:each="mediumItem, mediumItemStat : ${item.mediumChapters}">
                                                     <div class="check-group on">
-                                                        <input type="checkbox" class="que-allCheck depth01 mediumChapterId" th:id="${'chk02_' + mediumItemStat}" th:value="${mediumItem.mediumChapterId}">
+                                                        <input type="checkbox"
+                                                               class="que-allCheck depth01 mediumChapterId"
+                                                               th:id="${'chk02_' + mediumItemStat}"
+                                                               th:value="${mediumItem.mediumChapterId}">
 
                                                         <label th:for="${'chk02_' + mediumItemStat}">
                                                             <button type="button" class="dep-btn active"
@@ -73,7 +79,10 @@
                                                         <!--소단원-->
                                                         <div th:each="smallItem, smallItemStat : ${mediumItem.smallChapters}">
                                                             <div class="check-group on">
-                                                                <input type="checkbox" class="que-allCheck depth01 smallChapterId" th:id="${'chk03_' + smallItemStat}" th:value="${smallItem.smallChapterId}">
+                                                                <input type="checkbox"
+                                                                       class="que-allCheck depth01 smallChapterId"
+                                                                       th:id="${'chk03_' + smallItemStat}"
+                                                                       th:value="${smallItem.smallChapterId}">
 
                                                                 <label th:for="${'chk03_' + smallItemStat}">
                                                                     <button type="button" class="dep-btn active"
@@ -84,7 +93,10 @@
                                                                 <!-- 토픽 -->
                                                                 <div th:each="topicItem, topicItemStat : ${smallItem.topicChapters}"
                                                                      class="check-group on">
-                                                                    <input type="checkbox" th:id="${'chk04_' + topicItemStat}" class="topicChapterId" th:value="${topicItem.topicChapterId}">
+                                                                    <input type="checkbox"
+                                                                           th:id="${'chk04_' + topicItemStat}"
+                                                                           class="topicChapterId"
+                                                                           th:value="${topicItem.topicChapterId}">
                                                                     <label th:for="${'chk04_' + topicItemStat}">
                                                                         <span th:text="${topicItem.topicChapterName}"></span>
                                                                     </label>
@@ -152,8 +164,12 @@
                                         </div>
                                     </div>
                                     <div class="btn-wrap multi">
-                                        <div th:each="evaluationItem : ${evaluationList}">
-                                            <button type="button" class="btn-line active evaluation" th:text="${evaluationItem}" th:value="${evaluationItem}"></button>
+                                        <div th:each="evaluationItem, evalIndex : ${evaluationList}">
+                                            <button type="button" class="btn-line active evaluation" style="width: 7rem"
+                                                    th:if="${evalIndex.even}"
+                                                    th:text="${evaluationItem}"
+                                                    th:value="${evaluationList[evalIndex.index - 1]}"
+                                            ></button>
                                         </div>
                                     </div>
                                 </div>
@@ -437,7 +453,6 @@
         });
 
 
-
         // 팝업창에 있는 총 문제도 변경해주기
         // "총 문제 수"를 변경할 값을 정의
         const newTotalCount = lastTotalCount; // 원하는 값으로 대체
@@ -623,8 +638,8 @@
 
         const activityCategoryList = [];
 
-        activeButtons.forEach(function(button) {
-            activityCategoryList.push(button.textContent);
+        activeButtons.forEach(function (button) {
+            activityCategoryList.push(button.value);
         });
 
         const questionFormButtons = document.querySelectorAll('.btn-line.active.questionForm');
@@ -658,14 +673,12 @@
 
         selectedTopicChapters.forEach(function (input) {
             const topicChapterValue = input.value;
-            topicChapterLists.push({ "topic": topicChapterValue });
+            topicChapterLists.push({"topic": topicChapterValue});
         });
 
 
-
-
         const jsonData = {
-            "minorClassification": topicChapterLists.map(item => ({ "topic": item.topic })),
+            "minorClassification": topicChapterLists.map(item => ({"topic": item.topic})),
             "levelCnt": [lowest, low, medium, high, highest],
             "questionForm": concatenatedValues,
             "activityCategoryList": activityCategoryList
@@ -682,7 +695,7 @@
         })
             .then(response => {
                 if (response.ok) {
-                   console.log("ok")
+                    console.log("ok")
                     return response.json();
                     // window.location.href = '/html/sub03_01.html';
                 } else {
@@ -691,7 +704,7 @@
             })
             .then(data => {
                 // 서버에서의 응답을 처리하거나 필요한 작업을 수행
-                window.location.href=data.url;
+                window.location.href = data.url;
             })
     });
 </script>
