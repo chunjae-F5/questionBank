@@ -622,11 +622,11 @@
 
         let subjectId = document.getElementById('subjectId').getAttribute("data-subjectId");
 
-        let lowest = document.getElementById('lowest').getAttribute('data-step');
-        let low = document.getElementById('low').getAttribute('data-step');
-        let medium = document.getElementById('medium').getAttribute('data-step');
-        let high = document.getElementById('high').getAttribute('data-step');
-        let highest = document.getElementById('highest').getAttribute('data-step');
+        let lowest = document.getElementById('lowest').getAttribute('data-value');
+        let low = document.getElementById('low').getAttribute('data-value');
+        let medium = document.getElementById('medium').getAttribute('data-value');
+        let high = document.getElementById('high').getAttribute('data-value');
+        let highest = document.getElementById('highest').getAttribute('data-value');
 
         function replaceIfStepExists(value) {
             if (value.includes('step')) {
@@ -691,26 +691,24 @@
 
         console.log(jsonData);
 
-        fetch('http://localhost:8080/item-img/chapter/item-list', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(jsonData)
-        })
-            .then(response => {
-                if (response.ok) {
-                    console.log("ok")
-                    return response.json();
-                    // window.location.href = '/html/sub03_01.html';
-                } else {
-                    throw new Error('Failed to send JSON data');
-                }
-            })
-            .then(data => {
-                // 서버에서의 응답을 처리하거나 필요한 작업을 수행
-                window.location.href = data.url;
-            })
+        // fetch('http://localhost:8080/item-img/chapter/item-list', {
+        //     method: 'POST',
+        //     headers: {
+        //         'Content-Type': 'application/json',
+        //     },
+        //     body: JSON.stringify(jsonData)
+        // })
+        //     .then(response => {
+        //         if (response.ok) {
+        //             console.log("ok")
+        //             return response.json();
+        //         } else {
+        //             throw new Error('Failed to send JSON data');
+        //         }
+        //     })
+        //     .then(data => {
+        //         window.location.href = data.url;
+        //     })
     });
 </script>
 </html>
