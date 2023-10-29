@@ -73,7 +73,6 @@ $(function () {
                 const index = ui.item.index();
                 var problemItems = $(".view-que-list .sort-group");
                 // 아이템을 위로 올릴 때
-                console.log(ui.position.top + " < curent origin > " + ui.originalPosition.top + " index>" + index)
                 if (ui.position.top > ui.originalPosition.top) {
                     problemItem.insertAfter(problemItems.eq(index));
                     updateNumbers();

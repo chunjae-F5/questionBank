@@ -31,9 +31,9 @@ public class ExamService {
 
             JsonObject itemObject = itemElement.getAsJsonObject();
             responseDto.setItemId(itemObject.get("itemId").getAsInt());
-            responseDto.setQuestionFormName(itemObject.get("questionFormCode").getAsString()); // 여기를 바꿔서 보내줘야함
             responseDto.setDifficultyName(itemObject.get("difficultyName").getAsString());
             responseDto.setChapterName(String.join(" > ", itemObject.get("largeChapterName").getAsString(), itemObject.get("mediumChapterName").getAsString(), itemObject.get("smallChapterName").getAsString(), itemObject.get("topicChapterName").getAsString()));
+            responseDto.setPassageUrl(itemObject.get("passageUrl").getAsString());
             responseDto.setQuestionUrl(itemObject.get("questionUrl").getAsString());
             responseDto.setAnswerUrl(itemObject.get("answerUrl").getAsString());
             responseDto.setExplainUrl(itemObject.get("explainUrl").getAsString());
@@ -41,6 +41,11 @@ public class ExamService {
             // questionFormCode 50이하면 객관식으로 변형해서 담고, 50초과면 주관식으로 담기
             // questionFormCode를 인트로 파싱해서 해야됨
             // 여기에  questionFormCode를 questionFormName으로 변경해서 딤기
+            if (Integer.parseInt(itemObject.get("questionFormCode").getAsString()) <= 50){
+                responseDto.setQuestionFormName("객관식");
+            } else {
+                responseDto.setQuestionFormName("주관식");
+            }
 
             itemList.add(responseDto);
         }

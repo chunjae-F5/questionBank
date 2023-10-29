@@ -1,7 +1,6 @@
 package com.example.f5.exam.service;
 
 import com.itextpdf.kernel.colors.Color;
-import com.itextpdf.kernel.colors.ColorConstants;
 import com.itextpdf.kernel.events.Event;
 import com.itextpdf.kernel.events.IEventHandler;
 import com.itextpdf.kernel.events.PdfDocumentEvent;
@@ -14,7 +13,6 @@ import com.itextpdf.kernel.pdf.canvas.PdfCanvas;
 import com.itextpdf.layout.Canvas;
 import com.itextpdf.layout.properties.TextAlignment;
 
-import javax.swing.text.StyleConstants;
 import java.io.IOException;
 
 public class Header implements IEventHandler {
