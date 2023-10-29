@@ -693,24 +693,24 @@
 
         console.log(jsonData);
 
-        // fetch('http://localhost:8080/item-img/chapter/item-list', {
-        //     method: 'POST',
-        //     headers: {
-        //         'Content-Type': 'application/json',
-        //     },
-        //     body: JSON.stringify(jsonData)
-        // })
-        //     .then(response => {
-        //         if (response.ok) {
-        //             console.log("ok")
-        //             return response.json();
-        //         } else {
-        //             throw new Error('Failed to send JSON data');
-        //         }
-        //     })
-        //     .then(data => {
-        //         window.location.href = data.url;
-        //     })
+        fetch('http://localhost:8080/item-img/chapter/item-list', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(jsonData)
+        })
+            .then(response => {
+                if (response.ok) {
+                    console.log("ok")
+                    return response.json();
+                } else {
+                    throw new Error('Failed to send JSON data');
+                }
+            })
+            .then(data => {
+                window.location.href = data.url;
+            })
     });
 </script>
 </html>

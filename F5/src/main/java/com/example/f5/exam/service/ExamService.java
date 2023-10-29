@@ -47,6 +47,7 @@ public class ExamService {
                 responseDto.setQuestionFormName("주관식");
             }
 
+            itemList.stream().forEach(e -> System.out.println(itemList));
             itemList.add(responseDto);
         }
         return itemList;
