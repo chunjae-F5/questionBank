@@ -34,6 +34,7 @@ public class ExamService {
             responseDto.setItemId(itemObject.get("itemId").getAsInt());
             responseDto.setDifficultyName(itemObject.get("difficultyName").getAsString());
             responseDto.setChapterName(String.join(" > ", itemObject.get("largeChapterName").getAsString(), itemObject.get("mediumChapterName").getAsString(), itemObject.get("smallChapterName").getAsString(), itemObject.get("topicChapterName").getAsString()));
+            responseDto.setPassageUrl(itemObject.get("passageUrl").getAsString());
             responseDto.setQuestionUrl(itemObject.get("questionUrl").getAsString());
             responseDto.setAnswerUrl(itemObject.get("answerUrl").getAsString());
             responseDto.setExplainUrl(itemObject.get("explainUrl").getAsString());
