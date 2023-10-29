@@ -81,7 +81,7 @@
 									</div>
 								</div>
 							</div>
-							<div class="view-que-list scroll-inner" style="display: -webkit-box;-webkit-box-orient:vertical">
+							<div class="view-que-list scroll-inner left-panel" style="display: -webkit-box;-webkit-box-orient:vertical">
 								<div class="sort-group">
 									<div class="view-que-box">
 										<div class="que-top">
@@ -92,9 +92,9 @@
 													<span class="que-badge gray">주관식</span>
 												</div>
 											</div>
-											<div class="btn-wrap">
+											<div class="btn-wrap item">
 												<button type="button" class="btn-error pop-btn" data-pop="error-report-pop"></button>
-												<button type="button" class="btn-delete"></button>
+												<button type="button" class="btn-delete delete" data-quenum="1" data-itemid="494588"></button>
 											</div>
 										</div>
 										<div class="view-que">
@@ -380,12 +380,43 @@
 											</div>
 										</div>
 									</div>
-									<div class="view-que-list scroll-inner" id="similar-items"></div>
+									<div class="view-que-list scroll-inner right-panel" id="similar-items"></div>
 								</div>
 								<script th:src="@{/js/similar.js}"></script>
 								<div class="contents">
-									탭 컨텐츠 (3)
+									<div class="contents on">
+										<div class="view-que-list scroll-inner">
+											<div class="delete-panel"></div>
+										</div>
+									</div>
 								</div>
+
+<!--								<script>-->
+<!--									// "삭제" 버튼 클릭 이벤트 처리-->
+<!--									const leftPanel = document.querySelector('.item');-->
+<!--									const rightPanel = document.querySelector('.delete-panel');-->
+
+<!--									leftPanel.addEventListener('click', (event) => {-->
+<!--										if (event.target.classList.contains('btn-delete')) {-->
+<!--											const item = event.target.parentNode; // 클릭한 "삭제" 버튼의 부모 요소인 문항-->
+<!--											if (leftPanel.contains(item)) {-->
+<!--												leftPanel.removeChild(item); // 왼쪽에서 삭제-->
+<!--												rightPanel.appendChild(item); // 오른쪽으로 이동-->
+<!--											}-->
+<!--										}-->
+<!--									});-->
+
+<!--									rightPanel.addEventListener('click', (event) => {-->
+<!--										if (event.target.classList.contains('btn-delete')) {-->
+<!--											const item = event.target.parentNode; // 클릭한 "삭제" 버튼의 부모 요소인 문항-->
+<!--											if (rightPanel.contains(item)) {-->
+<!--												rightPanel.removeChild(item); // 오른쪽에서 삭제-->
+<!--												leftPanel.appendChild(item); // 왼쪽으로 이동-->
+<!--											}-->
+<!--										}-->
+<!--									});-->
+<!--								</script>-->
+
 							</div>
 						</div>
 					</div>
@@ -504,6 +535,7 @@
 				</div>
 			</div>
 		</div>
+	</div>
 		<script>
 			$(function () {
 				let _leg = $('.view-que').length;
