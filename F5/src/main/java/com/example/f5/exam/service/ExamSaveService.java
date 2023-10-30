@@ -22,8 +22,6 @@ import com.itextpdf.kernel.pdf.PdfPage;
 import com.itextpdf.kernel.pdf.PdfWriter;
 import com.itextpdf.kernel.pdf.canvas.PdfCanvas;
 import com.itextpdf.layout.Document;
-import com.itextpdf.layout.element.AreaBreak;
-import com.itextpdf.layout.properties.AreaBreakType;
 import com.itextpdf.svg.converter.SvgConverter;
 import com.itextpdf.svg.processors.ISvgConverterProperties;
 import com.itextpdf.svg.processors.impl.SvgConverterProperties;
@@ -38,6 +36,7 @@ import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.nio.charset.StandardCharsets;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -53,7 +52,7 @@ public class ExamSaveService {
 
     private final Gson gson;
 
-    public static final String DEST = "D:\\pdf_file\\exam_file.pdf";
+    public static final String DEST = "D:\\pdf_file\\";
 
     // 문제 테이블 저장
     public void questionSave(ExamSaveRequestDTO dtos) {
@@ -118,8 +117,11 @@ public class ExamSaveService {
         String topLine = totQuestion + "문제 | " + userName + " | " + name;
         String day = "일일";
 
+        // 임시 유저아이디
+        String userId = "sky";
+
         // PDF객체 생성
-        PdfDocument pdf = new PdfDocument(new PdfWriter(DEST));
+        PdfDocument pdf = new PdfDocument(new PdfWriter(setPdfName(DEST, requestDTOS.getExamName(), userId)));
         Document document = new Document(pdf);
 
         Color mainLineColor = new DeviceCmyk(100, 0, 20, 0);
@@ -146,6 +148,17 @@ public class ExamSaveService {
         document.close();
 
         System.out.println("pdf create success!");
+    }
+
+    // PDF 파일 이름 변경
+    private String setPdfName(String dest, String examName, String userId) {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        LocalDate date = LocalDate.parse(LocalDate.now().format(formatter));
+        String dateParse = String.valueOf(date).replaceAll("-", "");
+        String pdfName = dest + "exam_" + userId + "_" + examName + "_" + dateParse;
+        String extension = ".pdf";
+
+        return pdfName + extension;
     }
 
     private void convertSvgToPdf(PdfDocument pdf, Document document, String passageSvgUrl, String questionSvgUrl) throws IOException {
@@ -320,15 +333,16 @@ public class ExamSaveService {
 
     // 보관함 DB 저장
     public void archiveSave(ExamSaveRequestDTO requestDTOS) {
+        String userId = "sky";
 
         if(requestDTOS != null){
             Archive archive = new Archive();
-            archive.setUserId("sky");
+            archive.setUserId(userId);
             archive.setFlag("M");
             archive.setGrade("1");
             archive.setName(requestDTOS.getExamName());
             archive.setTotal(requestDTOS.getShortAnswer()+ requestDTOS.getChoiceAnswer());
-            archive.setQuestion(DEST);
+            archive.setQuestion(setPdfName(DEST, requestDTOS.getExamName(), userId));
 
             archiveSaveRepository.save(archive);
         }

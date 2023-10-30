@@ -89,12 +89,14 @@
                 <th>다운로드</th>
             </tr>
             <tr  th:each="list : ${archiveList}">
-                <td th:text="${list.getIdx()}"></td>
+                <td th:text="${listStat.count}"></td>
                 <td th:text="${#temporals.format(list.createdDate, 'yyyy-MM-dd')}"></td>
                 <td th:text="${list.getName()}"></td>
                 <td th:text="${list.getTotal()}"></td>
                 <td><img th:src="@{/images/menu.png}" th:width="30px" th:height="30px"></td>
-                <td><img th:src="@{/images/pointer.png}" th:width="35px" th:height="35px"></td>
+                <td>
+                    <img th:src="@{/images/pointer.png}" th:width="35px" th:height="35px" th:id="'downImg' + ${list.getIdx()}" th:onclick="'downloadPdf(' + ${list.getIdx()} + ')'" />
+                </td>
             </tr>
         </table>
     </div>
@@ -104,6 +106,12 @@
     //     var itemId = element.getAttribute('data-itemId');
     //     window.location.href = `/category/select?itemId=${itemId}`;
     // }
+
+    function downloadPdf(idx) {
+        console.log(idx);
+        window.location.href = `/exam-archive/download?idx=${idx}`;
+    }
+
 </script>
 </body>
 </html>
