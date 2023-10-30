@@ -3,8 +3,10 @@ package com.example.f5.exam.service;
 import com.example.f5.exam.dto.ExamSaveListDTO;
 import com.example.f5.exam.dto.ExamSaveListRequestDTO;
 import com.example.f5.exam.dto.ExamSaveRequestDTO;
+import com.example.f5.exam.entity.Archive;
 import com.example.f5.exam.entity.Exam;
 import com.example.f5.exam.entity.Question;
+import com.example.f5.exam.repository.ArchiveSaveRepository;
 import com.example.f5.exam.repository.ExamSaveRepository;
 import com.example.f5.exam.repository.QuestionSaveRepository;
 import com.google.gson.Gson;
@@ -47,6 +49,7 @@ public class ExamSaveService {
 
     private final QuestionSaveRepository questionSaveRepository;
     private final ExamSaveRepository examSaveRepository;
+    private final ArchiveSaveRepository archiveSaveRepository;
 
     private final Gson gson;
 
@@ -147,7 +150,7 @@ public class ExamSaveService {
 
     private void convertSvgToPdf(PdfDocument pdf, Document document, String passageSvgUrl, String questionSvgUrl) throws IOException {
         // Create a new A4-sized page
-        document.add(new AreaBreak(AreaBreakType.NEXT_PAGE));
+//        document.add(new AreaBreak(AreaBreakType.NEXT_PAGE));
 
         // Create a new page for drawing
         PdfPage page = pdf.addNewPage(PageSize.A4);
@@ -187,9 +190,21 @@ public class ExamSaveService {
         inputStream.close();
 
         // Adjust the width and height in the SVG content as needed
+//        return svgContent.toString()
+//                .replaceFirst("width=\"\\s+\"", "width=\"50%\"")
+//                .replaceFirst("height=\"\\s+\"", "height=\"auto\"");
+
+        PageSize pageSize = PageSize.A4;
+
+        // Calculate the width and height for the SVG based on the page size
+        float width = pageSize.getWidth() / 2; // Adjust as needed
+//        float height = (width / pageWidth) * pageHeight;
+
+        // Replace width and height in the SVG content
         return svgContent.toString()
-                .replaceFirst("width=\"\\d+\"", "width=\"300\"")
-                .replaceFirst("height=\"\\s+\"", "height=\"auto\"");
+                .replaceAll("width=\"[0-9.]+\"", "width=\"" + width + "\"");
+//                .replaceAll("height=\"[0-9.]+\"", "height=\"" + height + "\"");
+
     }
 
 //    private void convertSvgToPdf(PdfDocument pdf, Document document, String passageSvgUrl, String questionSvgUrl, int pageNumber) throws IOException {
@@ -303,4 +318,20 @@ public class ExamSaveService {
         return Collections.emptyList();
     }
 
+    // 보관함 DB 저장
+    public void archiveSave(ExamSaveRequestDTO requestDTOS) {
+
+        if(requestDTOS != null){
+            Archive archive = new Archive();
+            archive.setUserId("sky");
+            archive.setFlag("M");
+            archive.setGrade("1");
+            archive.setName(requestDTOS.getExamName());
+            archive.setTotal(requestDTOS.getShortAnswer()+ requestDTOS.getChoiceAnswer());
+            archive.setQuestion(DEST);
+
+            archiveSaveRepository.save(archive);
+        }
+
+    }
 }

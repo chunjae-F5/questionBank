@@ -57,6 +57,7 @@ public class ExamSaveController {
             examSaveService.examSave(requestDTOS);
             try {
                 examSaveService.generatePdf(requestDTOS);
+                examSaveService.archiveSave(requestDTOS);
             } catch (FileNotFoundException e) {
                 throw new RuntimeException(e);
             }  catch (IOException e) {
