@@ -22,10 +22,11 @@ public class ExamController {
 
     @PostMapping("/item-img/chapter/item-list")
     @ResponseBody
-    public ResponseEntity<Map<String, String>> getItemList(@RequestBody ExamDto.itemInfoRequest requestDto, Model model, HttpSession session) {
+    public ResponseEntity<Map<String, String>> getItemList(@RequestBody ExamDto.itemInfoRequest requestDto, HttpSession session) {
         List<ExamDto.itemInfoResponse> itemList = examService.getItemList(requestDto);
+
         session.setAttribute("itemList", itemList);
-        //model.addAttribute("itemList", itemList);
+
         Map<String, String> res = new HashMap<>();
         res.put("url", "/item-img/chapter/item-list/red");
         return ResponseEntity.ok(res);
