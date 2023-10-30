@@ -38,9 +38,9 @@ public class ExamController {
         model.addAttribute("itemList", itemList);
 
         if (itemList.get(0).getPassageUrl() != null) {
-        return "html/sub03_01_01";
+            return "html/sub03_01";
         }
-        return "html/sub03_01";
+        return "html/sub03_01_01";
     }
 
     @GetMapping("/category/select")
