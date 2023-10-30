@@ -44,8 +44,7 @@
             <div class="view-box">
                 <div class="view-top">
                     <div class="paper-info">
-                        <span>수학 1</span>
-                        이준열(2015)
+                        <span id="subjectName">여기를 바꿔야함</span>
                     </div>
                     <button class="btn-default btn-research"><i class="research"></i>재검색</button>
                     <button class="btn-default pop-btn" data-pop="que-scope-pop">출제범위</button>
@@ -384,6 +383,12 @@
     </div>
 </div>
 <script>
+
+    const sessionSubjectName = sessionStorage.getItem('subjectName');
+    document.getElementById('subjectName').textContent = sessionSubjectName;
+
+
+
     $(function () {
 
 
