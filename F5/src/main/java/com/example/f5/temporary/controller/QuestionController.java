@@ -77,7 +77,7 @@ public class QuestionController {
 
         model.addAttribute("itemIds", itemIds);
 
-        return "html/sub03_03";
+        return "html/sub04_01";
     }
 
 }

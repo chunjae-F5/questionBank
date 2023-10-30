@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="ko">
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
 
 <head>
 	<meta charset="UTF-8">
@@ -22,6 +22,16 @@
 </head>
 
 <body>
+<script>
+	function displayDataFromSession() {
+		// 세션에서 데이터 가져오기
+		var itemList = JSON.parse(sessionStorage.getItem('itemList')); // sessionStorage에서 데이터 가져옴
+		// 데이터를 콘솔에 출력
+		console.log(itemList);
+		// displayDataFromSession 함수 호출
+		displayDataFromSession();
+	}
+</script>
 	<div id="wrap" class="full-pop-que">
 		<div class="full-pop-wrap">
 			<div class="pop-header">
