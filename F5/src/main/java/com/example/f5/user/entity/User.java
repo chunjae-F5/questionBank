@@ -32,5 +32,5 @@ public class User extends BaseTimeEntity {
 
     @Column(name = "delete_yn", nullable = false)
     @Comment(value = "탈퇴여부")
-    private boolean deletedYN;
+    private boolean deletedYN = false;
 }

@@ -1,0 +1,207 @@
+html, body {
+    margin: 0;
+    background-color: #f1f1f1;
+}
+
+h1, h2 {
+    margin-top: 0;
+    margin-bottom: 0;
+}
+
+/*all*/
+.login {
+    width: 40%;
+    margin: auto;
+}
+
+/*header*/
+.login_header {
+    background-color: #fff;
+    height: 72px;
+    margin-bottom: 20px;
+}
+
+.brand {
+    padding: 20px 0 20px 40px;
+}
+.brand > a {
+    background-image: url("../images/pc_logo.png");
+    background-repeat: no-repeat;
+
+    color: transparent;
+    text-decoration-line: none;
+}
+
+/*contents*/
+.login_contents {
+    padding: 50px;
+    background-color: #fff;
+    margin-bottom: 20px;
+}
+
+.tit_h2 {
+    text-align : center;
+    font-weight: bolder;
+}
+
+.welcome_bold {
+    text-align : center;
+    font-weight: bolder;
+}
+
+.welcome {
+    text-align : center;
+}
+
+.login_box {
+    margin: 50px 0;
+}
+
+.form_check {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.custom-control {
+    display: flex;
+    align-items: center;
+}
+
+.util_link {
+    list-style-type: none;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.util_link li {
+    display: inline;
+    /*margin-right: 20px;*/
+}
+
+.util_link li:not(:last-child)::after {
+    content: 'ㅣ';
+    margin-left: 5px;
+}
+
+.util_link a {
+    text-decoration: none;
+    color: #333;
+    transition: color 0.2s;
+}
+
+.util_link a:hover {
+    color: #007bff;
+}
+
+.btn.btn-primary {
+    background-color: #289afe;
+
+    width: 50%;
+    height: 60px;
+    border-radius: 5px;
+
+    left: 50% !important;
+    transform: translate(50%, 0);
+
+    margin-top: 20px;
+}
+
+.box_milkt {
+    background-color: #f1f1f1;
+    border-radius: 2px;
+    padding: 20px;
+    font-size: small;
+
+    display: flex;
+    align-items: center; /* 요소들을 수직 중앙에 배치합니다. */
+    justify-content: center; /* 요소들을 수평 중앙에 배치합니다. */
+}
+
+.box_milkt p {
+    margin-right: auto; /* p 태그와 a 태그 사이의 간격입니다. 필요에 따라 조절하실 수 있습니다. */
+}
+
+.btn_milkt {
+    display: inline-flex;
+    align-items: center;
+    text-decoration: none; /* 링크의 밑줄 제거 */
+    padding: 5px 10px; /* 버튼의 크기 조절 */
+    border: 1px solid #333; /* 버튼 테두리 */
+    border-radius: 5px; /* 버튼 모서리 둥글게 */
+    color: black;
+}
+
+.icon-arrow-right-darkgray {
+    margin-left: 10px; /* 아이콘과 텍스트 사이의 간격 */
+}
+
+/*footer*/
+
+.login_footer {
+    background-color: #fff;
+}
+
+.login_footer {
+    font-family: Arial, sans-serif; /* 기본 글꼴 설정 */
+    font-size: 14px;
+    padding: 20px 0;
+    background-color: #f7f7f7; /* 배경색 */
+    border-top: 1px solid #e5e5e5;
+}
+
+.login_footer .dropup-center {
+    text-align: center; /* 중앙 정렬 */
+    margin-bottom: 20px; /* 하단 여백 */
+}
+
+.login_footer .btn-secondary {
+    background-color: #ffffff; /* 버튼 배경색 */
+    border: 1px solid #cccccc;
+    border-radius: 5px;
+    color: #333333;
+    padding: 10px 15px;
+}
+
+.login_footer .btn-secondary:focus,
+.login_footer .btn-secondary:active {
+    outline: none; /* 포커스 아웃라인 제거 */
+}
+
+.login_footer .dropdown-menu {
+    width: 100%; /* 드롭다운 너비 */
+    text-align: center; /* 드롭다운 항목 중앙 정렬 */
+    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1); /* 드롭다운 그림자 */
+}
+
+.login_footer .dropdown-item {
+    padding: 10px 15px;
+}
+
+.login_footer ul {
+    list-style-type: none; /* 목록 스타일 제거 */
+    padding: 0 50px; /* 패딩 제거 */
+    margin: 10px 0; /* 여백 추가 */
+}
+
+.login_footer .terms {
+    display: flex;
+    justify-content: center; /* 가운데 정렬 */
+}
+
+.login_footer .group_partners li {
+    margin: 5px 0; /* 리스트 항목간 여백 */
+}
+
+.login_footer .address {
+    color: #999999; /* 주소 텍스트 색상 */
+}
+
+.login_footer .copyright {
+    text-align: center; /* 중앙 정렬 */
+    margin-top: 20px; /* 상단 여백 */
+    font-weight: bold; /* 굵게 */
+    color: #666666;
+}

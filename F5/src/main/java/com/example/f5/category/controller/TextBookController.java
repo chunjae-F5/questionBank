@@ -6,6 +6,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.SessionAttribute;
 
 import java.util.List;
 
@@ -16,9 +17,14 @@ public class TextBookController {
     private final TextBookService tbService;
 
     @GetMapping("/")
-    public String getTextBookInfo(Model model) {
+    public String getTextBookInfo(Model model, @SessionAttribute(name = "userId", required = false) String userId) {
         List<TextBookDto.ResponseDto> itemList = tbService.getTextBookInfo();
         model.addAttribute("itemList", itemList);
+        if (userId != null) {
+            model.addAttribute("isLoggedIn", true);
+        } else {
+            model.addAttribute("isLoggedIn", false);
+        }
         return "html/main";
     }
 }
