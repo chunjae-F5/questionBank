@@ -244,6 +244,12 @@
 		});
 
 	</script>
+	<script th:inline="javascript">
+		/* JavaScript code here */
+		var itemList = [[${itemIdList}]]; // 타임리프를 사용하여 데이터를 JavaScript 변수에 할당
+		console.log(itemList); // itemList 변수에 데이터가 저장됨
+	</script>
+
 </head>
 <body>
 <div id="wrap" class="full-pop-que">

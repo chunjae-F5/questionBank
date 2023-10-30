@@ -35,8 +35,10 @@ public class ExamDto {
     public static class itemInfoResponse {
         private long itemId;
         private String questionFormName;
+        private String questionFormCode;
         private String difficultyName;
         private String chapterName;
+        private String passageUrl;
         private String questionUrl;
         private String answerUrl;
         private String explainUrl;

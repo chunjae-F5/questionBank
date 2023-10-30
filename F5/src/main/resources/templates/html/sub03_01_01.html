@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="ko">
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
 
 <head>
 	<meta charset="UTF-8">
@@ -8,9 +8,9 @@
 	<title>T셀파 문제은행</title>
 	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@8/swiper-bundle.min.css" />
 	<link rel="stylesheet" href="https://code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css">
-	<link rel="stylesheet" href="../../static/css/font.css">
-	<link rel="stylesheet" href="../../static/css/reset.css">
-	<link rel="stylesheet" href="../../static/css/common.css">
+	<link rel="stylesheet" th:href="@{/css/font.css}">
+	<link rel="stylesheet" th:href="@{/css/reset.css}">
+	<link rel="stylesheet" th:href="@{/css/common.css}">
 
 	<script src="https://code.jquery.com/jquery-1.12.4.min.js"
 		integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ=" crossorigin="anonymous"></script>
@@ -22,6 +22,16 @@
 </head>
 
 <body>
+<script>
+	function displayDataFromSession() {
+		// 세션에서 데이터 가져오기
+		var itemList = JSON.parse(sessionStorage.getItem('itemList')); // sessionStorage에서 데이터 가져옴
+		// 데이터를 콘솔에 출력
+		console.log(itemList);
+		// displayDataFromSession 함수 호출
+		displayDataFromSession();
+	}
+</script>
 	<div id="wrap" class="full-pop-que">
 		<div class="full-pop-wrap">
 			<div class="pop-header">
@@ -36,8 +46,7 @@
 				<div class="view-box">
 					<div class="view-top">
 						<div class="paper-info">
-							<span>국어 1</span>
-							노미숙(2015)
+							<span id="subjectName"></span>
 						</div>
 						<button class="btn-default btn-research"><i class="research"></i>재검색</button>
 						<button class="btn-default pop-btn" data-pop="que-scope-pop">출제범위</button>
@@ -812,6 +821,9 @@
 					})
 				}
 			})*/
+
+			const sessionSubjectName = sessionStorage.getItem('subjectName');
+			document.getElementById('subjectName').textContent = sessionSubjectName;
 
 			// 문제를 API로 로드하는 함수 (예시)
 			function loadQuestionsFromAPI() {

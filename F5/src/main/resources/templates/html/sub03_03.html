@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="ko">
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
 
 <head>
 	<meta charset="UTF-8">
@@ -19,6 +19,25 @@
 </head>
 
 <body>
+<script>
+	// URL에서 'itemIds' 매개변수를 가져옵니다.
+	var urlParams = new URLSearchParams(window.location.search);
+	var itemIds = urlParams.get('itemIds');
+
+	if (itemIds) {
+		// URL에서 전달받은 itemIds를 파싱합니다.
+		try {
+			var decodedItemIds = decodeURIComponent(itemIds);
+			var itemIdsArray = JSON.parse(decodedItemIds);
+
+			console.log('Received itemIds:', itemIdsArray);
+		} catch (error) {
+			console.error('Error parsing or decoding itemIds:', error);
+		}
+	} else {
+		console.log('No itemIds found in the URL.');
+	}
+</script>
 	<div id="wrap" class="full-pop-que">
 		<div class="full-pop-wrap">
 			<div class="pop-header">

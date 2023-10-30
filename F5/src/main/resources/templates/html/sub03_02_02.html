@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="ko">
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
 
 <head>
 	<meta charset="UTF-8">
@@ -19,6 +19,26 @@
 </head>
 
 <body>
+
+<script>
+	// URL에서 'itemId'와 'count' 매개변수를 가져옵니다.
+	var urlParams = new URLSearchParams(window.location.search);
+	var itemId = urlParams.get('itemId');
+	var count = urlParams.get('count');
+
+	if (itemId && count) {
+		// URL에서 전달받은 'itemId'와 'count'를 디코딩합니다.
+		itemId = decodeURIComponent(itemId);
+		count = decodeURIComponent(count);
+
+		// 데이터를 콘솔에 출력합니다.
+		console.log('Received itemId:', itemId);
+		console.log('Received count:', count);
+	} else {
+		console.log('No itemId and count found in the URL.');
+	}
+</script>
+
 	<div id="wrap" class="full-pop-que">
 		<div class="full-pop-wrap">
 			<div class="pop-header">
@@ -504,6 +524,7 @@
 				</div>
 			</div>
 		</div>
+	</div>
 		<script>
 			$(function () {
 				let _leg = $('.view-que').length;
