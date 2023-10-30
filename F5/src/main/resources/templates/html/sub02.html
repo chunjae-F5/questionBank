@@ -522,6 +522,8 @@
         let highest = document.getElementById('highest').getAttribute('data-value');
         document.querySelector('.highestInput.num').value = highest;
 
+        document.querySelector('.range.total span.num').textContent = totalCount;
+
     }
 
     // 난이도 입력 동적으로 변경 기능을 추가해보자
@@ -564,6 +566,15 @@
 
     // 팝업창에서 저장 누르면 난이도 재분배 기능
     function updateLevelCount() {
+        // data-value에 값 저장
+        const lowestInput = document.querySelector('.lowestInput').value;
+        const lowInput = document.querySelector('.lowInput').value;
+        const mediumInput = document.querySelector('.mediumInput').value;
+        const highInput = document.querySelector('.highInput').value;
+        const highestInput = document.querySelector('.highestInput').value;
+
+        const buttonElement = document.querySelector('button[data-step="step1"]');
+        buttonElement.getAttribute('data-value') == lowestInput;
 
     }
 
