@@ -47,9 +47,16 @@
                         <span>수학 1</span>
                         이준열(2015)
                     </div>
-                    <button class="btn-default btn-research"><i class="research"></i>재검색</button>
+                    <button class="btn-default btn-research" id="refreshButton"><i class="research"></i>재검색</button>
                     <button class="btn-default pop-btn" data-pop="que-scope-pop">출제범위</button>
                 </div>
+                <script>
+                    const refreshButton = document.getElementById('refreshButton');
+
+                    refreshButton.addEventListener('click', function() {
+                        location.reload(); // 현재 페이지를 새로고침
+                    });
+                </script>
                 <div class="view-bottom type01">
                     <div class="cnt-box">
                         <div class="cnt-top">
@@ -127,22 +134,7 @@
                                                             <img th:src="${item.answerUrl}" alt="Question Image">
                                                         </div>
                                                     </div>
-                                                    <button type="button" class="btn-similar-que btn-default"
-                                                            th:attr="data-itemId=${item.itemId}, data-count=${iterStat.count}"
-                                                            onclick="sendDataToDahee(this)"><i
-                                                            class="similar"></i> 유사 문제
-                                                    </button>
-                                                    <script>
-                                                        function sendDataToDahee(button) {
-                                                            var itemId = button.getAttribute("data-itemId");
-                                                            var count = button.getAttribute("data-count");
-
-                                                            var encodedItemId = encodeURIComponent(itemId);
-                                                            var encodedCount = encodeURIComponent(count);
-
-                                                            window.location.href = '/sendData?itemId=' + encodedItemId + '&count=' + encodedCount;
-                                                        }
-                                                    </script>
+                                                    <button type="button" class="btn-similar-que btn-default similar-items-button" th:attr="data-itemid=${item.itemId}, data-quenum=${iterStat.count}"><i class="similar"></i> 유사 문제</button>
                                                 </div>
                                             </div>
                                         </div>
@@ -227,6 +219,7 @@
                                         </div>
                                     </div>
                                 </div>
+
                                 <div class="bottom-box">
                                     <div class="que-badge-group">
                                         <div class="que-badge-wrap">
@@ -240,8 +233,35 @@
                                     </div>
                                 </div>
                             </div>
+                            <div class="contents on">
+                                <div class="cnt-top">
+                                    <span class="title"><div id="quenum-display"></div></span>
+                                    <div class="right-area">
+                                        <div class="select-wrap">
+                                            <select id="difficulty">
+                                                <option data-difficulty="전체">난이도 전체</option>
+                                                <option data-difficulty="상">상</option>
+                                                <option data-difficulty="중">중</option>
+                                                <option data-difficulty="하">하</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="view-que-list scroll-inner right-panel" id="similar-items">
+                                    <div class="view-que-list no-data">
+                                        <p>
+                                            문제 목록에서 <i class="ic-no-data"></i> 유사문제 버튼을 선택해주세요.
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                            <script th:src="@{/js/similar.js}"></script>
                             <div class="contents">
-                                탭 컨텐츠 (2)
+                                <div class="contents on">
+                                    <div class="view-que-list scroll-inner">
+                                        <div class="delete-panel"></div>
+                                    </div>
+                                </div>
                             </div>
                             <div class="contents">
                                 탭 컨텐츠 (3)

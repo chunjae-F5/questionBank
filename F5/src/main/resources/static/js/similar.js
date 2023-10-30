@@ -5,7 +5,8 @@ let currentItemId; // 현재 선택된 itemId를 저장할 변수
 document.querySelectorAll('.similar-items-button').forEach(button => {
     button.addEventListener('click', async () => {
         currentItemId = button.getAttribute('data-itemid');
-        const quenum = button.getAttribute('data-quenum');
+        const quenum = button.getAttribute('data-quenum');;
+
         // 결과를 표시할 요소를 찾음
         const quenumDisplay = document.getElementById('quenum-display');
         // quenum 값을 결과를 표시하는 요소에 추가
@@ -110,8 +111,10 @@ async function fetchSimilarItems(itemId) {
 function displaySimilarItems(similarItems, selectedDifficulty) {
     const similarItemsElement = document.getElementById('similar-items');
     similarItemsElement.innerHTML = ''; // 이전 데이터 지우기
+
     let count = 1;
-    if (similarItems) {
+
+    if (similarItems && similarItems.length > 0) {
         similarItems.forEach(item => {
             if (selectedDifficulty === '전체' || item.difficultyName === selectedDifficulty) {
                 const sortGroupDiv = document.createElement('div');
@@ -196,6 +199,15 @@ function displaySimilarItems(similarItems, selectedDifficulty) {
                 count++;
             }
         });
+    }
+    else {
+        // 유사 문항이 없을 때 표시할 HTML
+        const noDataHtml = `
+            <div class="view-que-list no-data">
+                <p>해당 문제은 유사 문제가 없습니다.</p>
+            </div>
+        `;
+        similarItemsElement.innerHTML = noDataHtml;
     }
 }
 // // 추가 버튼 클릭 이벤트 리스너 추가
