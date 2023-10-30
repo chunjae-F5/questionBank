@@ -366,7 +366,6 @@
             count++;
         }
         console.log(count);
-
     }
 
     // console.log('초기 카운트: ' + count);
@@ -419,10 +418,11 @@
             btn.classList.remove("active");
             if (btn.getAttribute("data-value") == inputValue) {
                 btn.classList.add("active");
+                const buttonClick = new Event('click');
+                btn.dispatchEvent(buttonClick);
             }
         });
     }
-
 
     function changeCount() {
         let totalCount = totalNumSpan.textContent;
