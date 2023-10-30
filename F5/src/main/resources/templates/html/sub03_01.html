@@ -25,27 +25,31 @@
 <script th:inline="javascript">
     /* JavaScript code here */
     var itemList = [[${itemList}]]; // 타임리프를 사용하여 데이터를 JavaScript 변수에 할당
+    var itemIdArray = [[${itemIdArray}]]; // 타임리프를 사용하여 데이터를 JavaScript 변수에 할당
+
     console.log(itemList); // itemList 변수에 데이터가 저장됨
+    console.log(itemIdArray); // 콘솔에 표시 (테스트용)
 </script>
 <script th:inline="javascript">
     function sendDataToHaneul() {
-        var itemList = [[${itemList}]]; // itemList 변수에 데이터가 저장됨
-        console.log(itemList); // itemList를 콘솔에 출력
+        const sortGroups = document.getElementsByClassName("sort-group");
+        const array = [];
 
-         // itemId 값을 추출하여 새로운 배열에 담습니다
-        var itemIdArray = [];
-         for (var i = 0; i < itemList.length; i++) {
-             itemIdArray.push(itemList[i].itemId);
-         }
+        for (let i = 0; i < sortGroups.length; ++i) {
+            const itemElement = sortGroups[i];
+            const itemId = itemElement.getAttribute("item-id");
+            array.push(itemId);
+        }
+        console.log(array);
+
 
         // itemIdArray를 JSON 문자열로 변환
-        var itemIdArrayJSON = JSON.stringify(itemIdArray);
+        var itemIdArrayJSON = JSON.stringify(array);
 
-        // 다음 페이지로 이동하면서 itemIdArrayJSON을 URL 파라미터로 전달
-        // var nextUrl = "/sendDataForSave?itemIdArray=" + encodeURIComponent(itemIdArrayJSON);
         window.location.href = "/sendDataForSave?itemIdArray=" + encodeURIComponent(itemIdArrayJSON);
     }
 </script>
+
 
 <div id="wrap" class="full-pop-que">
     <div class="full-pop-wrap">
@@ -110,11 +114,14 @@
                         </div>
                         <div class="view-que-list scroll-inner"
                              style="display: -webkit-box;-webkit-box-orient:vertical">
-                                <div class="sort-group" th:each="item, iterStat : ${itemList}" th:data-summary-id="'summary-' + ${iterStat.count}">
+                                <div class="sort-group" th:each="item, iterStat : ${itemList}"
+                                                        th:data-summary-id="'summary-' + ${iterStat.count}"
+                                                        th:item-id="${item.itemId}"
+                                                        th:attr="data-item-id=${item.itemId}">
                                     <div class="view-que-box">
                                         <div class="que-top">
                                             <div class="title">
-                                                <span class="num" th:text="${iterStat.count}"></span> <!-- 1부터 시작하는 번호 부여 -->
+                                                <span class="num" th:text="${iterStat.count}" id="num"></span> <!-- 1부터 시작하는 번호 부여 -->
                                                 <div class="que-badge-group">
                                                     <span class="que-badge yellow" th:text="${item.difficultyName}"></span> <!--난이도 -->
                                                     <span class="que-badge gray" th:text="${item.questionFormName}"></span> <!--객/주-->
@@ -124,7 +131,8 @@
                                             <div class="btn-wrap">
                                                 <button type="button" class="btn-error pop-btn"
                                                         data-pop="error-report-pop"></button>
-                                                <button type="button" class="btn-delete"></button>
+                                                <button type="button" class="btn-delete" th:attr="data-item-id=${item.itemId}" onclick="moveSortGroupToTarget(this)"  ></button>
+
                                             </div>
                                         </div>
                                         <div class="view-que">
@@ -272,16 +280,37 @@
                                 </div>
                             </div>
                             <script th:src="@{/js/similar.js}"></script>
-                            <div class="contents">
-                                <div class="contents on">
-                                    <div class="view-que-list scroll-inner">
-                                        <div class="delete-panel"></div>
-                                    </div>
-                                </div>
+
+                            <div class="contents" id="targetDiv">
+                                탭 컨텐츠 (3)
                             </div>
-<!--                            <div class="contents">-->
-<!--                                탭 컨텐츠 (3)-->
-<!--                            </div>-->
+                            <script th:inline="javascript">
+                                function moveSortGroupToTarget(button) {
+                                    const itemId = button.getAttribute("data-item-id");
+
+                                    console.log(itemId);
+
+                                    const sortGroups = document.querySelector('.sort-group[data-item-id="' + itemId + '"]');
+                                    const targetDiv = document.getElementById("targetDiv");
+
+                                    if (sortGroups) {
+                                        targetDiv.appendChild(sortGroups);
+                                    }
+                                }
+                            </script>
+
+                            <script type="text/javascript"><!--onclick="deleteItem(this)"-->
+                            function deleteItem(button) {
+                                // 클릭한 버튼의 data-item-id 속성을 읽어옴
+                                const itemId = button.getAttribute("data-item-id");
+
+                                // 해당 itemId와 일치하는 .sort-group 클래스를 가진 요소를 삭제
+                                const elementToDelete = document.querySelector('.sort-group[data-item-id="' + itemId + '"]');
+                                if (elementToDelete) {
+                                    elementToDelete.remove();
+                                }
+                            }
+                            </script>
                         </div>
                     </div>
                 </div>

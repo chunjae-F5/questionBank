@@ -71,7 +71,7 @@ $(function () {
                 const summaryId = $(ui.item).data("summary-id");
                 const problemItem = $(".view-que-list").find(".sort-group[data-summary-id='" + summaryId + "']");
                 const index = ui.item.index();
-                var problemItems = $(".view-que-list .sort-group");
+                const problemItems = $(".view-que-list .sort-group");
                 // 아이템을 위로 올릴 때
                 if (ui.position.top > ui.originalPosition.top) {
                     problemItem.insertAfter(problemItems.eq(index));
@@ -80,6 +80,14 @@ $(function () {
                     problemItem.insertBefore(problemItems.eq(index));
                     updateNumbers();
                 }
+                const itemIdArray = [];
+                $("#itemList .item").each(function() {
+                    const itemId = $(this).data("item-id");
+                    itemIdArray.push(itemId);
+                });
+
+                // itemIdArray를 서버로 전송하거나 필요한 작업 수행
+                console.log(itemIdArray); // 콘솔에 표시 (테스트용)
             }
         });
     });
