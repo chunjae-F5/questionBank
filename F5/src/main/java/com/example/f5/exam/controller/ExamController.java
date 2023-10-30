@@ -25,7 +25,6 @@ public class ExamController {
     public ResponseEntity<Map<String, String>> getItemList(@RequestBody ExamDto.itemInfoRequest requestDto, Model model, HttpSession session) {
         List<ExamDto.itemInfoResponse> itemList = examService.getItemList(requestDto);
         session.setAttribute("itemList", itemList);
-        //model.addAttribute("itemList", itemList);
         Map<String, String> res = new HashMap<>();
         res.put("url", "/item-img/chapter/item-list/red");
         return ResponseEntity.ok(res);
@@ -46,6 +45,7 @@ public class ExamController {
 
     }
 
+    /*시험 제작 페이지 form*/
     @GetMapping("/category/select")
     public String createExamForm(@RequestParam int itemId, Model model) throws JsonProcessingException {
         ExamDto.Curriculum itemList = examService.getCategory(itemId);

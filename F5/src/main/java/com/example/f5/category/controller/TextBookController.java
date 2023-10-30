@@ -16,6 +16,7 @@ public class TextBookController {
 
     private final TextBookService tbService;
 
+    /*메인 페이지 form*/
     @GetMapping("/")
     public String getTextBookInfo(Model model, @SessionAttribute(name = "userId", required = false) String userId) {
         List<TextBookDto.ResponseDto> itemList = tbService.getTextBookInfo();
