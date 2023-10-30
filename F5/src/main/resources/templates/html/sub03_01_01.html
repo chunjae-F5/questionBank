@@ -27,6 +27,26 @@
     var itemList = [[${itemList}]]; // 타임리프를 사용하여 데이터를 JavaScript 변수에 할당
     console.log(itemList); // itemList 변수에 데이터가 저장됨
 </script>
+<script th:inline="javascript">
+	function sendDataToHaneul() {
+		var itemList = [[${itemList}]]; // itemList 변수에 데이터가 저장됨
+		console.log(itemList); // itemList를 콘솔에 출력
+
+		// itemId 값을 추출하여 새로운 배열에 담습니다
+		var itemIdArray = [];
+		for (var i = 0; i < itemList.length; i++) {
+			itemIdArray.push(itemList[i].itemId);
+		}
+
+		// itemIdArray를 JSON 문자열로 변환
+		var itemIdArrayJSON = JSON.stringify(itemIdArray);
+
+		// 다음 페이지로 이동하면서 itemIdArrayJSON을 URL 파라미터로 전달
+		// var nextUrl = "/sendDataForSave?itemIdArray=" + encodeURIComponent(itemIdArrayJSON);
+		window.location.href = "/sendDataForSave?itemIdArray=" + encodeURIComponent(itemIdArrayJSON);
+	}
+</script>
+
 	<div id="wrap" class="full-pop-que">
 		<div class="full-pop-wrap">
 			<div class="pop-header">
