@@ -693,6 +693,10 @@
 
         console.log(jsonData);
 
+        const subjectName = document.getElementById('subjectId').textContent;
+
+        sessionStorage.setItem("subjectName", subjectName);
+
         fetch('http://localhost:8080/item-img/chapter/item-list', {
             method: 'POST',
             headers: {

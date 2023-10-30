@@ -46,8 +46,7 @@
 				<div class="view-box">
 					<div class="view-top">
 						<div class="paper-info">
-							<span>국어 1</span>
-							노미숙(2015)
+							<span id="subjectName"></span>
 						</div>
 						<button class="btn-default btn-research"><i class="research"></i>재검색</button>
 						<button class="btn-default pop-btn" data-pop="que-scope-pop">출제범위</button>
@@ -822,6 +821,9 @@
 					})
 				}
 			})*/
+
+			const sessionSubjectName = sessionStorage.getItem('subjectName');
+			document.getElementById('subjectName').textContent = sessionSubjectName;
 
 			// 문제를 API로 로드하는 함수 (예시)
 			function loadQuestionsFromAPI() {
