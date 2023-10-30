@@ -130,7 +130,7 @@
                                             </button>
                                             <button type="button" class="btn-line total-questions" data-value="25">25
                                             </button>
-                                            <button type="button" class="btn-line total-questions active"
+                                            <button type="button" class="btn-line total-questions active" id="clicked"
                                                     data-value="30">30
                                             </button>
                                         </div>
@@ -233,7 +233,7 @@
         </div>
         <div class="step-btn-wrap">
             <button type="button" class="btn-step">출제 방법 선택</button>
-            <button type="button" class="btn-step next pop-btn" data-pop="que-pop">STEP2 문항 편집</button>
+            <button type="button" class="btn-step next" data-pop="que-pop" onclick="submit()">STEP2 문항 편집</button>
             <!-- 230629 pop-btn 추가-->
         </div>
     </div>
@@ -617,8 +617,7 @@
         });
     });
 
-    document.getElementById('watchJson').addEventListener('click', function () {
-        // 각 체크박스의 값을 JavaScript 변수에 할당을 해보자
+    const submit = () => {
 
         let subjectId = document.getElementById('subjectId').getAttribute("data-subjectId");
 
@@ -627,7 +626,6 @@
         let medium = document.getElementById('medium').getAttribute('data-value');
         let high = document.getElementById('high').getAttribute('data-value');
         let highest = document.getElementById('highest').getAttribute('data-value');
-
 
         console.log(lowest + " , " + low+ " , " + medium + " , "+ high + " , "+ highest);
         function replaceIfStepExists(value) {
@@ -693,6 +691,10 @@
 
         console.log(jsonData);
 
+        const subjectName = document.getElementById('subjectId').textContent;
+
+        sessionStorage.setItem("subjectName", subjectName);
+
         fetch('http://localhost:8080/item-img/chapter/item-list', {
             method: 'POST',
             headers: {
@@ -711,6 +713,19 @@
             .then(data => {
                 window.location.href = data.url;
             })
+
+
+    }
+
+    window.onload = function () {
+
+        const countButton = document.getElementById('clicked');
+        const buttonClick = new Event('click');
+        countButton.dispatchEvent(buttonClick);
+    }
+
+    document.getElementById('watchJson').addEventListener('click', function () {
+
     });
 </script>
 </html>

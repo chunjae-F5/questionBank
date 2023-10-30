@@ -21,13 +21,30 @@
     <!-- E 230808 순서 변경-->
     <script th:src="@{/js/common.js}"></script>
 </head>
-
 <body>
-
 <script th:inline="javascript">
     /* JavaScript code here */
     var itemList = [[${itemList}]]; // 타임리프를 사용하여 데이터를 JavaScript 변수에 할당
     console.log(itemList); // itemList 변수에 데이터가 저장됨
+</script>
+<script th:inline="javascript">
+    function sendDataToHaneul() {
+        var itemList = [[${itemList}]]; // itemList 변수에 데이터가 저장됨
+        console.log(itemList); // itemList를 콘솔에 출력
+
+         // itemId 값을 추출하여 새로운 배열에 담습니다
+        var itemIdArray = [];
+         for (var i = 0; i < itemList.length; i++) {
+             itemIdArray.push(itemList[i].itemId);
+         }
+
+        // itemIdArray를 JSON 문자열로 변환
+        var itemIdArrayJSON = JSON.stringify(itemIdArray);
+
+        // 다음 페이지로 이동하면서 itemIdArrayJSON을 URL 파라미터로 전달
+        // var nextUrl = "/sendDataForSave?itemIdArray=" + encodeURIComponent(itemIdArrayJSON);
+        window.location.href = "/sendDataForSave?itemIdArray=" + encodeURIComponent(itemIdArrayJSON);
+    }
 </script>
 
 <div id="wrap" class="full-pop-que">
@@ -44,8 +61,7 @@
             <div class="view-box">
                 <div class="view-top">
                     <div class="paper-info">
-                        <span>수학 1</span>
-                        이준열(2015)
+                        <span id="subjectName">여기를 바꿔야함</span>
                     </div>
                     <button class="btn-default btn-research" id="refreshButton"><i class="research"></i>재검색</button>
                     <button class="btn-default pop-btn" data-pop="que-scope-pop">출제범위</button>
@@ -274,25 +290,7 @@
         <div class="step-btn-wrap">
             <button type="button" class="btn-step">STEP 1 단원 선택</button>
             <button type="button" class="btn-step next" onclick="sendDataToHaneul()">STEP 3 시험지 저장</button>
-            <script th:inline="javascript">
-                function sendDataToHaneul() {
-                    var itemList = [[${itemList}]]; // itemList 변수에 데이터가 저장됨
-                    console.log(itemList); // itemList를 콘솔에 출력
 
-                    // itemId 값을 추출하여 새로운 배열에 담습니다
-                    var itemIdArray = [];
-                    for (var i = 0; i < itemList.length; i++) {
-                        itemIdArray.push(itemList[i].itemId);
-                    }
-
-                    // itemIdArray를 JSON 문자열로 변환
-                    var itemIdArrayJSON = JSON.stringify(itemIdArray);
-
-                    // 다음 페이지로 이동하면서 itemIdArrayJSON을 URL 파라미터로 전달
-                    var nextUrl = "/next-page?itemIdArray=" + encodeURIComponent(itemIdArrayJSON);
-                    window.location.href = nextUrl;
-                }
-            </script>
         </div>
     </div>
     <div class="dim"></div>
@@ -404,6 +402,12 @@
     </div>
 </div>
 <script>
+
+    const sessionSubjectName = sessionStorage.getItem('subjectName');
+    document.getElementById('subjectName').textContent = sessionSubjectName;
+
+
+
     $(function () {
 
 
