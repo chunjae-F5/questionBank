@@ -11,6 +11,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
 
 import java.io.IOException;
 import java.net.URLDecoder;
@@ -65,19 +66,24 @@ public class QuestionController {
     }
 
     @GetMapping("/sendDataForSave")
-    public String sendDataForSave(@RequestParam("itemIds") String encodedItemIds, Model model) {
-        String decodedItemIds = URLDecoder.decode(encodedItemIds, StandardCharsets.UTF_8);
+    public ModelAndView sendDataForSave(@RequestParam("itemIdArray") String itemIdArray) {
+        // itemIdArray는 JSON 문자열로 전달됩니다.
 
-        List<String> itemIds = new ArrayList<>();
+        // JSON 문자열을 다시 배열로 변환
+        ObjectMapper objectMapper = new ObjectMapper();
         try {
-            itemIds = new ObjectMapper().readValue(decodedItemIds, new TypeReference<List<String>>() {});
+            List<Integer> itemIdList = objectMapper.readValue(itemIdArray, new TypeReference<List<Integer>>() {});
+
+            // itemIdList를 모델에 추가하여 다음 페이지로 전달
+            ModelAndView modelAndView = new ModelAndView("html/sub04_01");
+            modelAndView.addObject("itemIdList", itemIdList);
+
+            return modelAndView;
         } catch (IOException e) {
-            // 예외 처리
+            // JSON 파싱 오류 처리
+            e.printStackTrace();
+            return new ModelAndView("errorPage");
         }
-
-        model.addAttribute("itemIds", itemIds);
-
-        return "html/sub04_01";
     }
 
 }
