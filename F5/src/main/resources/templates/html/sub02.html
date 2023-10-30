@@ -32,7 +32,8 @@
             <div class="view-box">
                 <div class="view-top">
                     <div class="paper-info">
-                        <span id="subjectId" th:text="${itemList.getSubjectName}" th:data-subjectId="${itemList.getSubjectId()}"></span>
+                        <span id="subjectId" th:text="${itemList.getSubjectName}"
+                              th:data-subjectId="${itemList.getSubjectId()}"></span>
                     </div>
                 </div>
                 <div class="view-bottom">
@@ -189,19 +190,24 @@
                                         <span class="tit-text">난이도 구성</span>
                                     </div>
                                     <div class="step-wrap">
-                                        <button type="button" class="btn-line type02 color01" data-step="step1" data-value="step1"
+                                        <button type="button" class="btn-line type02 color01" data-step="step1"
+                                                data-value="step1"
                                                 onclick="divide(this)">최하
                                         </button>
-                                        <button type="button" class="btn-line type02 color02 active" data-step="step2" data-value="step2"
+                                        <button type="button" class="btn-line type02 color02 active" data-step="step2"
+                                                data-value="step2"
                                                 onclick="divide(this)">하
                                         </button>
-                                        <button type="button" class="btn-line type02 color03 active" data-step="step3" data-value="step3"
+                                        <button type="button" class="btn-line type02 color03 active" data-step="step3"
+                                                data-value="step3"
                                                 onclick="divide(this)">중
                                         </button>
-                                        <button type="button" class="btn-line type02 color04 active" data-step="step4" data-value="step4"
+                                        <button type="button" class="btn-line type02 color04 active" data-step="step4"
+                                                data-value="step4"
                                                 onclick="divide(this)">상
                                         </button>
-                                        <button type="button" class="btn-line type02 color05" data-step="step5" data-value="step5"
+                                        <button type="button" class="btn-line type02 color05" data-step="step5"
+                                                data-value="step5"
                                                 onclick="divide(this)">최상
                                         </button>
                                     </div>
@@ -211,7 +217,7 @@
 											<span class="tit-text">난이도별 문제 수
 												<button type="button" class="btn-icon2 pop-btn"
                                                         data-pop="que-range-pop"><i
-                                                        class="setting"></i></button>
+                                                        class="setting" onclick="updatePopupDisplay()"></i></button>
 											</span>
                                     </div>
                                     <div class="range-wrap">
@@ -251,25 +257,25 @@
                 <span class="txt">문제 수를 입력하여<br> 난이도별 문제 수를 조정하세요.</span>
                 <div class="range-wrap">
                     <!-- S: 문제 수 맞지 않을 시 .fail 클래스 추가 -->
-                    <div class="range color01 fail count" data-step="step1" style="display:none;">
+                    <div class="range color01 count" data-step="step1" style="display:none;">
                         <span class="color01">최하</span>
-                        <input type="number" class="num">
+                        <input type="number" class="lowestInput num">
                     </div>
                     <div class="range color02 count" data-step="step2" style="display:none;">
                         <span class="color02">하</span>
-                        <input type="number" class="num">
+                        <input type="number" class="lowInput num">
                     </div>
                     <div class="range color03 count" data-step="step3" style="display:none;">
                         <span class="color03">중</span>
-                        <input type="number" class="num">
+                        <input type="number" class="mediumInput num">
                     </div>
                     <div class="range color04 count" data-step="step4" style="display:none;">
                         <span class="color04">상</span>
-                        <input type="number" class="num">
+                        <input type="number" class=" highInput num">
                     </div>
                     <div class="range color05 count" data-step="step5" style="display:none;">
                         <span class="color05">최상</span>
-                        <input type="number" class="num">
+                        <input type="number" class="highestInput num">
                     </div>
                     <div class="range total">
                         <span>합계</span>
@@ -279,8 +285,8 @@
                 </div>
             </div>
             <div class="pop-footer">
-                <button>초기화</button>
-                <button class="disabled">저장</button>
+                <button onclick="updatePopupDisplay()">초기화</button>
+                <button id="popSave" class="disabled" onclick="updateLevelCount()">저장</button>
             </div>
         </div>
     </div>
@@ -297,23 +303,23 @@
                 <div class="range-wrap">
                     <div class="range">
                         <span class="color01">최하</span>
-                        <span class="num">2</span>
+                        <span class="lowest num">2</span>
                     </div>
                     <div class="range">
                         <span class="color02">하</span>
-                        <span class="num">5</span>
+                        <span class="low num">5</span>
                     </div>
                     <div class="range">
                         <span class="color03">중</span>
-                        <span class="num">6</span>
+                        <span class="medium num">6</span>
                     </div>
                     <div class="range">
                         <span class="color04">상</span>
-                        <span class="num">5</span>
+                        <span class="high num">5</span>
                     </div>
                     <div class="range">
                         <span class="color05">최상</span>
-                        <span class="num">2</span>
+                        <span class="highest num">2</span>
                     </div>
                     <div class="range total">
                         <span>합계</span>
@@ -410,6 +416,10 @@
             }
         }
         syncButtonWithInput(inputValue);
+
+        // 팝업창 전체 숫자 업데이트하기
+        const totalCount = document.getElementById('total-count').textContent;
+        document.querySelector('.range.total span.num').textContent = totalCount;
     }
 
     function syncButtonWithInput(inputValue) {
@@ -418,10 +428,15 @@
             btn.classList.remove("active");
             if (btn.getAttribute("data-value") == inputValue) {
                 btn.classList.add("active");
-                const buttonClick = new Event('click');
-                btn.dispatchEvent(buttonClick);
             }
         });
+
+    }
+
+    window.onload = function () {
+        const countButton = document.getElementById('clicked');
+        const buttonClick = new Event('click');
+        countButton.dispatchEvent(buttonClick);
     }
 
     function changeCount() {
@@ -454,31 +469,7 @@
                 }
             }
         });
-
-
-        // 팝업창에 있는 총 문제도 변경해주기
-        // "총 문제 수"를 변경할 값을 정의
-        const newTotalCount = lastTotalCount; // 원하는 값으로 대체
-
-        // "총 문제 수" 엘리먼트를 선택하고 내용을 변경
-        const totalNumElement = document.querySelector('.pop-wrap .range.total .num');
-        totalNumElement.textContent = newTotalCount;
-
     }
-
-    function updatePopWrapDividedCount() {
-        const popWrap = document.querySelector('.pop-wrap .range-type')
-        let flexInputs = popWrap.querySelectorAll("input[class*='range']")
-
-        flexInputs.forEach(function (input, index) {
-            if (index === 0) {
-                input.textContent = `${divideCount + restCount}`;
-            } else {
-                input.textContent = `${divideCount}`;
-            }
-        });
-    }
-
 
     function updateTotalNumDisplay(value) {
         totalNumSpan.textContent = value;
@@ -511,14 +502,71 @@
 
     }
 
-    function updatePopupDisplay(inputValue) {
-        const step2Button = document.querySelector('.btn-step.next');
-        if (inputValue % 5 === 0) {
-            step2Button.classList.add("pop-btn");
+    // 팝업창 난이도별 숫자 업데이트 기능
+    function updatePopupDisplay() {
+
+        const totalCount = document.getElementById('total-count').textContent;
+
+        let lowest = document.getElementById('lowest').getAttribute('data-value');
+        document.querySelector('.lowestInput.num').value = lowest;
+
+        let low = document.getElementById('low').getAttribute('data-value');
+        document.querySelector('.lowInput.num').value = low;
+
+        let medium = document.getElementById('medium').getAttribute('data-value');
+        document.querySelector('.mediumInput.num').value = medium;
+
+        let high = document.getElementById('high').getAttribute('data-value');
+        document.querySelector('.highInput.num').value = high;
+
+        let highest = document.getElementById('highest').getAttribute('data-value');
+        document.querySelector('.highestInput.num').value = highest;
+
+    }
+
+    // 난이도 입력 동적으로 변경 기능을 추가해보자
+
+    const lowestInput = document.querySelector('.lowestInput');
+    const lowInput = document.querySelector('.lowInput');
+    const mediumInput = document.querySelector('.mediumInput');
+    const highInput = document.querySelector('.highInput');
+    const highestInput = document.querySelector('.highestInput');
+    const saveButton = document.getElementById('popSave');
+    const failDiv = document.querySelector('.range.total');
+
+    lowestInput.addEventListener('input', updateTotal);
+    lowInput.addEventListener('input', updateTotal);
+    mediumInput.addEventListener('input', updateTotal);
+    highInput.addEventListener('input', updateTotal);
+    highestInput.addEventListener('input', updateTotal);
+
+    function updateTotal() {
+        const lowest = parseInt(lowestInput.value) || 0;
+        const low = parseInt(lowInput.value) || 0;
+        const medium = parseInt(mediumInput.value) || 0;
+        const high = parseInt(highInput.value) || 0;
+        const highest = parseInt(highestInput.value) || 0;
+        const totalCountSum = lowest + low + medium + high + highest;
+
+        const totalSpan = document.querySelector('.range.total span.num');
+        totalSpan.textContent = totalCountSum;
+
+        const totalCount = document.getElementById('total-count').textContent;
+
+        if (totalCountSum != totalCount) {
+            saveButton.classList.add('disabled');
+            failDiv.classList.add('fail');
         } else {
-            step2Button.classList.remove("pop-btn");
+            saveButton.classList.remove('disabled');
+            failDiv.classList.remove('fail');
         }
     }
+
+    // 팝업창에서 저장 누르면 난이도 재분배 기능
+    function updateLevelCount() {
+
+    }
+
 
     const step2Button = document.querySelector('.btn-step.next');
 
@@ -627,7 +675,8 @@
         let high = document.getElementById('high').getAttribute('data-value');
         let highest = document.getElementById('highest').getAttribute('data-value');
 
-        console.log(lowest + " , " + low+ " , " + medium + " , "+ high + " , "+ highest);
+        console.log(lowest + " , " + low + " , " + medium + " , " + high + " , " + highest);
+
         function replaceIfStepExists(value) {
             if (value == null) {
                 return 0;
@@ -640,6 +689,11 @@
         medium = replaceIfStepExists(medium);
         high = replaceIfStepExists(high);
         highest = replaceIfStepExists(highest);
+
+        // 여기서 팝업창 업데이트를 하면?
+        const lowestInput = document.querySelector('.lowest.num');
+        lowestInput.value = lowest;
+
 
         const activeButtons = document.querySelectorAll('.btn-line.active.evaluation');
 
@@ -710,19 +764,13 @@
                     throw new Error('Failed to send JSON data');
                 }
             })
-            .then(data => {
-                window.location.href = data.url;
-            })
+        // .then(data => {
+        //     window.location.href = data.url;
+        // })
 
 
     }
 
-    window.onload = function () {
-
-        const countButton = document.getElementById('clicked');
-        const buttonClick = new Event('click');
-        countButton.dispatchEvent(buttonClick);
-    }
 
     document.getElementById('watchJson').addEventListener('click', function () {
 
