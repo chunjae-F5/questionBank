@@ -35,12 +35,18 @@ dependencies {
     implementation group: 'com.google.code.gson', name: 'gson', version: '2.9.0'
 
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
+<<<<<<< HEAD
     implementation group: 'com.google.code.gson', name: 'gson', version: '2.9.0'
 
     implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
     implementation group: 'com.google.code.gson', name: 'gson', version: '2.9.0'
 }
+=======
+    implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
+    implementation group: 'com.google.code.gson', name: 'gson', version: '2.9.0'
+>>>>>>> 8866b4b84c01b78086f8730b6cd4037785f9532d
 
-tasks.named('test') {
-    useJUnitPlatform()
+    implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
+    implementation group: 'com.google.code.gson', name: 'gson', version: '2.9.0'
 }
+

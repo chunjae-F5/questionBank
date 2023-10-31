@@ -2,8 +2,6 @@ package com.example.f5.exam.entity;
 
 import com.example.f5.util.BaseTimeEntity;
 import jakarta.persistence.*;
-import jakarta.validation.constraints.Max;
-import jakarta.validation.constraints.Size;
 import lombok.Getter;
 import org.hibernate.annotations.Comment;
 

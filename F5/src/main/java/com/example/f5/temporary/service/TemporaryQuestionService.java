@@ -3,8 +3,15 @@ package com.example.f5.temporary.service;
 import com.example.f5.temporary.dto.TemporaryQuestionDto;
 import com.example.f5.temporary.entity.TemporaryQuestion;
 import com.example.f5.temporary.repository.TemporaryQuestionRepository;
+<<<<<<< HEAD
 import com.google.gson.*;
 import jakarta.persistence.EntityNotFoundException;
+=======
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
+>>>>>>> 8866b4b84c01b78086f8730b6cd4037785f9532d
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 import org.springframework.stereotype.Service;
@@ -25,7 +32,11 @@ public class TemporaryQuestionService {
     @SneakyThrows
     public void saveQuestionService() {
         List<Integer> problemCodeList = Arrays.asList(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20);
+<<<<<<< HEAD
         String apiUrl = "https://doctor.item-factory.com/items/item/item-list";
+=======
+        String apiUrl = "https://tsherpa.item-factory.com/chapter/chapter-list";
+>>>>>>> 8866b4b84c01b78086f8730b6cd4037785f9532d
 
         // HttpClient 객체 생성
         HttpClient httpClient = HttpClient.newHttpClient();
@@ -41,10 +52,13 @@ public class TemporaryQuestionService {
         // 요청 보내기
         HttpResponse<String> response = httpClient.send(request, HttpResponse.BodyHandlers.ofString());
 
+<<<<<<< HEAD
         // 응답 출력
 //        System.out.println("Response Code: " + response.statusCode());
 //        System.out.println("Response Body: " + response.body());
 
+=======
+>>>>>>> 8866b4b84c01b78086f8730b6cd4037785f9532d
         String responseBody = response.body();
         JsonArray itemArray = JsonParser.parseString(responseBody).getAsJsonObject().getAsJsonArray("items");
 
@@ -87,6 +101,7 @@ public class TemporaryQuestionService {
 
         return questionDtos;
     }
+<<<<<<< HEAD
 
     public void updateQuestionOrder(List<TemporaryQuestionDto.SaveDataDto> updatedQuestions) {
         List<TemporaryQuestion> updatedQuestionEntities = new ArrayList<>();
@@ -101,4 +116,6 @@ public class TemporaryQuestionService {
 
         tqRepository.saveAll(updatedQuestionEntities);
     }
+=======
+>>>>>>> 8866b4b84c01b78086f8730b6cd4037785f9532d
 }

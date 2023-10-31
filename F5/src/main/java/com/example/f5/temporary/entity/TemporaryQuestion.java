@@ -35,7 +35,40 @@ public class TemporaryQuestion extends BaseTimeEntity {
     @Comment(value = "ex) 상 (중, 하)")
     private String level;
 
+<<<<<<< HEAD
     @Column(name = "question_file", nullable = false)
     @Comment(value = "문제 사진 경로 url")
     private String questionFile;
+=======
+    @Column(name = "question_html", nullable = false, length = 100000)
+    @Comment(value = "문제 HTML")
+    private String questionHtml;
+
+    @Column(name = "answer_html", nullable = false, length = 100000)
+    @Comment(value = "정답 HTML")
+    private String answerHtml;
+
+    @Column(name = "explain_html", nullable = false, length = 100000)
+    @Comment(value = "해설 HTML")
+    private String explainHtml;
+
+    public TemporaryQuestion(TemporaryContent temporaryContentIdx, int number, String type, String form, String level, String questionHtml, String answerHtml, String explainHtml) {
+        this.temporaryContentIdx = temporaryContentIdx;
+        this.number = number;
+        this.type = type;
+        this.form = form;
+        this.level = level;
+        this.questionHtml = questionHtml;
+        this.answerHtml = answerHtml;
+        this.explainHtml = explainHtml;
+    }
+
+    public TemporaryQuestion() {
+
+    }
+
+    public void updateNumber(int newNumber) {
+        this.number = newNumber;
+    }
+>>>>>>> 8866b4b84c01b78086f8730b6cd4037785f9532d
 }

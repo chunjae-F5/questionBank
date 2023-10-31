@@ -21,7 +21,15 @@ public class TextBook extends BaseTimeEntity {
     @Comment(value = "ex) 우장희")
     private String writer;
 
+    @Column(name = "item_id", nullable = false)
+    @Comment(value = "api pk값")
+    private int itemId;
+
     @Column(name = "curriculum", nullable = false)
     @Comment(value = "ex) 2015개정 교육과정")
     private String curriculum;
+
+    @Column(name = "img_url", nullable = false)
+    @Comment(value = "ex) 교과서 이미지 url")
+    private String imgUrl;
 }

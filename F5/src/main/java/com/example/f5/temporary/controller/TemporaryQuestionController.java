@@ -1,11 +1,16 @@
 package com.example.f5.temporary.controller;
 
 import com.example.f5.temporary.dto.TemporaryQuestionDto;
+<<<<<<< HEAD
 import com.example.f5.temporary.entity.TemporaryQuestion;
 import com.example.f5.temporary.repository.TemporaryQuestionRepository;
 import com.example.f5.temporary.service.TemporaryQuestionService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+=======
+import com.example.f5.temporary.service.TemporaryQuestionService;
+import lombok.RequiredArgsConstructor;
+>>>>>>> 8866b4b84c01b78086f8730b6cd4037785f9532d
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
