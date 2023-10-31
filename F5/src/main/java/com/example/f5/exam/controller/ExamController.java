@@ -41,6 +41,7 @@ public class ExamController {
             return "html/sub03_01";
     }
 
+    /*시험 제작 페이지 form*/
     @GetMapping("/category/select")
     public String createExamForm(@RequestParam int itemId, Model model) throws JsonProcessingException {
         ExamDto.Curriculum itemList = examService.getCategory(itemId);

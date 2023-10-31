@@ -1,17 +1,143 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>Title</title>
+    <meta charset="UTF-8">
+    <title>로그인 페이지</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+    <link rel="stylesheet" th:href="@{/css/login.css}">
+    <link rel="stylesheet" th:href="@{/css/font.css}">
 </head>
 <body>
-<div class="container">
-    <h2>로그인 화면</h2>
-    <form class="form-signin" method="post" action="/login/login-proc">
-        <input type="text" id="username" name="username" class="form-control" placeholder="아이디" autofocus>
-        <input type="password" id="password" name="password" class="form-control" placeholder="비밀번호">
-        <input id="loginBtn" type="submit" class="btn btn-secondary active" value="로그인">
-        <a href="/login/join" class="btn btn-info active" th:href="@{/login/join}" role="button">회원가입</a>
-    </form>
+<div class="login">
+    <!--  헤더  -->
+    <div class="login_header">
+        <h1 class="brand">
+            <a href="/static">
+                <span>T_셀파</span>
+            </a>
+        </h1>
+    </div>
+
+    <!--  콘텐츠  -->
+    <div class="login_contents">
+        <div class="login_wrap">
+            <h2 class="tit_h2">로그인</h2>
+            <div class="welcome_bold">
+                T셀파에 오신 선생님들을 환영합니다.
+            </div>
+            <p class="welcome">
+                T셀파에서는 선생님들의 역량 강화 및 수업에<br>
+                도움을 드리기 위해 최선을 다하도록 하겠습니다.
+            </p>
+            <div class="login_box">
+                <div class="form-floating mb-3">
+                    <input type="text" class="form-control" id="floatingInputId" placeholder="name@example.com">
+                    <label for="floatingInputId">아이디</label>
+                </div>
+                <div class="form-floating">
+                    <input type="password" class="form-control" id="floatingPassword" placeholder="Password">
+                    <label for="floatingPassword">비밀번호</label>
+                </div>
+                <div class="form_check">
+                    <div class="custom-control custom-checkbox">
+                        <input type="checkbox" class="custom-control-input" id="rememberUserId">
+                        <label class="custom-control-label" for="rememberUserId">아이디 저장</label>
+                    </div>
+                    <ul class="util_link">
+                        <li><a href="form_find_id.html?tab=id">아이디 찾기</a></li>
+                        <li><a href="form_find_id.html?tab=pw">비밀번호 찾기</a></li>
+                        <li><a href="/register">회원가입</a></li>
+                    </ul>
+                </div>
+                <div class="full-box">
+                    <button type="button" class="btn btn-primary" onclick="submitLoginInfo()">로그인</button>
+                </div>
+            </div>
+            <div class="box_milkt">
+                <p>
+                    학부모/학생<br>
+                    -초, 중학 스마트 학습 밀크T를 이용해보세요!
+                </p>
+                <a href="http://www.milkt.co.kr/" class="btn_milkt" target="_blank">
+                    <img src="../images/logo_milkt.png" style="width: 50px;">
+                    &nbsp바로가기<i class="bi bi-chevron-right"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+    <div class="login_footer">
+        <div class="dropup-center dropup">
+            <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown"
+                    aria-expanded="false">
+                T셀파 패밀리 사이트
+            </button>
+            <ul class="dropdown-menu">
+                <li><a class="dropdown-item" href="https://www.chunjae.co.kr/">천재교육</a></li>
+                <li><a class="dropdown-item" href="https://www.milkt.co.kr/">밀크티 초등</a></li>
+                <li><a class="dropdown-item" href="https://mid.milkt.co.kr/">밀크티 중학</a></li>
+                <li><a class="dropdown-item" href="https://hme.chunjae.co.kr/">HME 전국 해법수학 학력평가</a></li>
+                <li><a class="dropdown-item" href="https://mall.chunjae.co.kr/">천재교육 쇼핑몰</a></li>
+            </ul>
+        </div>
+
+        <ul class="terms">
+            <li><a href="info_policy.html?tab=policy1">이용약관</a></li>
+            ㅣ
+            <li><a href="info_policy.html?tab=policy2" style="color:#000">개인정보처리방침</a></li>
+        </ul>
+
+        <ul class="group_partners">
+            <li>
+                <strong>천재교육</strong>
+                대표 : 강희철, 최정민 ㅣ 주소 : 서울시 금천구 가산로 9길 54 <br>
+                사업자등록번호 : 119-81-19350 ㅣ 부가통신사업신고번호 : 016712
+            </li>
+            <li>
+                <strong>천재교과서</strong>
+                대표 : 박정과, 최돈용, 임형진 ㅣ <span class="address">주소 : 서울시 금천구 가산디지털1로 16, 2011호(가산동)</span><br>
+            </li>
+        </ul>
+
+        <p class="copyright">
+            COPYRIGHT© 2022 BY CHUNJAE CO.LTD ALL RIGHTS RESERVED.
+        </p>
+    </div>
 </div>
 </body>
+<script>
+    function submitLoginInfo() {
+        const userId = document.getElementById("floatingInputId").value;
+        const password = document.getElementById("floatingPassword").value;
+
+        const data = {
+            userId: userId,
+            password: password
+        };
+
+        fetch('/login', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(data)
+        })
+            .then(response => {
+                if (response.ok) {
+                    window.location.href = '/';
+                }else if (response.status === 400) {
+                    alert("비밀번호가 일치하지 않습니다.");
+                }else if (response.status === 500) {
+                    alert("아이디가 존재하지 않습니다.");
+                }
+            })
+            .then(data => {
+                console.log(data);
+            })
+            .catch(error => {
+                console.log('Error: ', error);
+            })
+    }
+</script>
 </html>
