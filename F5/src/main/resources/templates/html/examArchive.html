@@ -15,9 +15,89 @@
     <script src="https://code.jquery.com/ui/1.13.1/jquery-ui.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/swiper@8/swiper-bundle.min.js"></script>
     <script th:src="@{/js/common.js}"></script>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
-          integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+    <!--    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"-->
+    <!--          integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">-->
+    <!--    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">-->
+
+    <script>
+
+        function downloadPdf(idx) {
+            console.log('download : ' + idx);
+            window.location.href = `/exam-archive/download?idx=${idx}`;
+        }
+
+        // 미리보기 버튼 클릭 시 호출
+        function previewPdf(idx){
+            fetch('/exam-archive/preview?idx=' + idx)
+                .then(response => response.blob())
+                .then(blob => {
+                    const objectURL = URL.createObjectURL(blob);
+                    document.getElementById('previewImage').src = objectURL;
+                    document.getElementById('pdfPreviewModal').style.display = 'block';
+                });
+        }
+
+        // function previewPdf(idx) {
+        //     console.log('preview : ' + idx);
+        //
+        //     // 이미지 URL 생성
+        //     var imageUrl = '/exam-archive/preview?idx=' + idx;
+        //
+        //     // 새 창 열기
+        //     var popup = window.open('', 'Image Preview', 'width=800, height=600');
+        //
+        //     // 이미지 엘리먼트 생성
+        //     var imgElement = document.createElement('img');
+        //     imgElement.src = imageUrl;
+        //     imgElement.style.maxWidth = '100%';
+        //     imgElement.style.maxHeight = '100%';
+        //
+        //     // 이미지를 팝업 창에 추가
+        //     popup.document.body.appendChild(imgElement);
+        // }
+
+        // function previewPdf(idx) {
+        //     console.log('preview : ' + idx);
+        //
+        //     let url = "";
+        //     fetch(`/exam-archive/preview?idx=${idx}`, {
+        //         method: "GET",
+        //     }).then(response => {
+        //         if (response.ok) {
+        //             console.log(response)
+        //             return response.json();
+        //         }
+        //         throw new Error('Failed to send the GET request.');
+        //     }).then(data => {
+        //         url = data;
+        //         console.log("url " + url);
+        //         openPreview(url)
+        //     }).catch(error => {
+        //         console.error('Error: ', error);
+        //     });
+        // }
+        //
+        // function openPreview(url){
+        //     const img = document.createElement('img');
+        //     img.src = img;
+        //     img.alt = 'PDF Preview';
+        //
+        //     const modal = document.createElement('div');
+        //     modal.classList.add('modal');
+        //
+        //     modal.appendChild(img);
+        //     document.body.appendChild(modal);
+        //
+        //     // 팝업 닫기 버튼
+        //     const closeButton = document.createElement('button');
+        //     closeButton.textContent = 'Close';
+        //     closeButton.addEventListener('click', function () {
+        //         document.body.removeChild(modal);
+        //     });
+        //     modal.appendChild(closeButton);
+        // }
+    </script>
+
 </head>
 <style>
     #nav-list div {
@@ -27,28 +107,28 @@
         background: #9c9c9c;
     }
 
-    img {
-        margin: auto;
-    }
+    /*img {*/
+    /*    margin: auto;*/
+    /*}*/
 
-    .row, .card {
-        margin: auto;
-        border: transparent;
-    }
+    /*.row, .card {*/
+    /*    margin: auto;*/
+    /*    border: transparent;*/
+    /*}*/
 
-    .card-title {
-        font-weight: bold;
-    }
+    /*.card-title {*/
+    /*    font-weight: bold;*/
+    /*}*/
 
-    .btn.btn-primary {
-        color: black;
-        background-color: transparent !important;
-        border: transparent;
-    }
+    /*.btn.btn-primary {*/
+    /*    color: black;*/
+    /*    background-color: transparent !important;*/
+    /*    border: transparent;*/
+    /*}*/
 
-    .btn.btn-primary:hover {
-        color: #3DB7CC;
-    }
+    /*.btn.btn-primary:hover {*/
+    /*    color: #3DB7CC;*/
+    /*}*/
 
     #header-row {
         height: 30px;
@@ -60,58 +140,150 @@
     #header-row > .col:hover {
         color: #3DB7CC;
     }
-</style>
 
-<body class="p-3 m-0 border-0 bd-example m-0 border-0 bd-example-row">
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
-        crossorigin="anonymous"></script>
-<div class="container text-center">
-    <div class="row" id="header-row">
-        <div class="col">초등</div>
-        <div class="col">중등</div>
-        <div class="col">고등</div>
-        <div class="col">시험지 보관함</div>
-    </div>
-    <!--card example-->
+    /*div .table-style {*/
+    /*    display: grid;*/
+    /*}*/
 
-    <div style="border: solid">
-        <h2>문제지 보관함</h2>
-    </div>
-    <div>
-        <table>
-            <tr>
-                <th>번호</th>
-                <th>생성날짜</th>
-                <th>문제지명</th>
-                <th>문제수</th>
-                <th>미리보기</th>
-                <th>다운로드</th>
-            </tr>
-            <tr  th:each="list : ${archiveList}">
-                <td th:text="${listStat.count}"></td>
-                <td th:text="${#temporals.format(list.createdDate, 'yyyy-MM-dd')}"></td>
-                <td th:text="${list.getName()}"></td>
-                <td th:text="${list.getTotal()}"></td>
-                <td><img th:src="@{/images/menu.png}" th:width="30px" th:height="30px"></td>
-                <td>
-                    <img th:src="@{/images/pointer.png}" th:width="35px" th:height="35px" th:id="'downImg' + ${list.getIdx()}" th:onclick="'downloadPdf(' + ${list.getIdx()} + ')'" />
-                </td>
-            </tr>
-        </table>
-    </div>
-</div>
-<script>
-    // function submitItemId(element) {
-    //     var itemId = element.getAttribute('data-itemId');
-    //     window.location.href = `/category/select?itemId=${itemId}`;
-    // }
-
-    function downloadPdf(idx) {
-        console.log(idx);
-        window.location.href = `/exam-archive/download?idx=${idx}`;
+    .title-archive {
+        text-align: center;
+        width: 100%;
+        font-size: x-large;
     }
 
-</script>
+    .table {
+        display: inline;
+        justify-content: center;
+        align-items: center;
+    }
+    .table > .fix-head span:nth-child(1){
+        width: 10%;
+    }
+    .table > .fix-head span:nth-child(2){
+        width: 20%;
+    }
+    .table > .fix-head span:nth-child(3){
+        width: 30%;
+    }
+    .table > .fix-head span:nth-child(4){
+        width: 10%;
+    }
+    .table > .fix-head span:nth-child(5){
+        width: 14%;
+    }
+    .table > .fix-head span:nth-child(6){
+        width: 14%;
+    }
+
+    .table > .tbody > .scroll-inner > .fix-span span:nth-child(1){
+        width: 10%;
+    }
+    .table > .tbody > .scroll-inner > .fix-span span:nth-child(2){
+        width: 20%;
+    }
+    .table > .tbody > .scroll-inner > .fix-span span:nth-child(3){
+        width: 30%;
+    }
+    .table > .tbody > .scroll-inner > .fix-span span:nth-child(4){
+        width: 10%;
+    }
+    .table > .tbody > .scroll-inner > .fix-span span:nth-child(5){
+        width: 14%;
+    }
+    .table > .tbody > .scroll-inner > .fix-span span:nth-child(6){
+        width: 14%;
+    }
+
+</style>
+
+<body>
+<!--<body class="p-3 m-0 border-0 bd-example m-0 border-0 bd-example-row">-->
+<!--<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"-->
+<!--        integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"-->
+<!--        crossorigin="anonymous"></script>-->
+<div id="wrap" class="full-pop-que">
+    <div class="full-pop-wrap">
+        <div class="pop-header">
+                <div class="col">초등</div>
+                <div class="col">중등</div>
+                <div class="col">고등</div>
+                <div class="col">시험지 보관함</div>
+        </div>
+
+        <!--card example-->
+        <div class="pop-content">
+            <div class="view-box">
+                <div class="view-bottom type02 scroll-inner">
+
+                    <div class="type-form">
+                        <h2 class="title-archive">문제지 보관함</h2>
+                    </div>
+                </div>
+                <div class="tab-list-type01">
+                    <div class="table">
+                        <div class="fix-head">
+                            <span>번호</span>
+                            <span>생성 날짜</span>
+                            <span>문제지 명</span>
+                            <span>문제 수</span>
+                            <span>미리보기</span>
+                            <span>다운로드</span>
+                        </div>
+                        <div class="tbody">
+                            <div class="scroll-inner">
+                                <div class="fix-span" th:each="list : ${archiveList}">
+                                    <span th:text="${listStat.count}"></span>
+                                    <span th:text="${#temporals.format(list.createdDate, 'yyyy-MM-dd')}"></span>
+                                    <span th:text="${list.getName()}"></span>
+                                    <span th:text="${list.getTotal()} + '문제'"></span>
+                                    <span>
+                                    <img th:src="@{/images/menu.png}" th:width="30px" th:height="30px"
+                                     th:id="'previewImg' + ${list.getIdx()}"
+                                     th:onclick="'previewPdf(' + ${list.getIdx()} +')'">
+                                    </span>
+                                    <span>
+                                    <img th:src="@{/images/pointer.png}" th:width="35px" th:height="35px"
+                                     th:id="'downImg' + ${list.getIdx()}"
+                                     th:onclick="'downloadPdf(' + ${list.getIdx()} + ')'"/>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Modal Popup -->
+        <div id="pdfPreviewModal" style="display: none;">
+            <img id="previewImage" src="" />
+        </div>
+    </div>
+</div>
+<!--    <div class="table-style">-->
+<!--        <table>-->
+<!--            <tr>-->
+<!--                <th>번호</th>-->
+<!--                <th>생성날짜</th>-->
+<!--                <th>문제지명</th>-->
+<!--                <th>문제수</th>-->
+<!--                <th>미리보기</th>-->
+<!--                <th>다운로드</th>-->
+<!--            </tr>-->
+<!--            <tr  th:each="list : ${archiveList}">-->
+<!--                <td th:text="${listStat.count}"></td>-->
+<!--                <td th:text="${#temporals.format(list.createdDate, 'yyyy-MM-dd')}"></td>-->
+<!--                <td th:text="${list.getName()}"></td>-->
+<!--                <td th:text="${list.getTotal()}"></td>-->
+<!--                <td>-->
+<!--                    <img th:src="@{/images/menu.png}" th:width="30px" th:height="30px" th:id="'previewImg' + ${list.getIdx()}" th:onclick="'previewPdf(' + ${list.getIdx()} +')'">-->
+<!--                </td>-->
+<!--                <td>-->
+<!--                    <img th:src="@{/images/pointer.png}" th:width="35px" th:height="35px" th:id="'downImg' + ${list.getIdx()}" th:onclick="'downloadPdf(' + ${list.getIdx()} + ')'" />-->
+<!--                </td>-->
+<!--            </tr>-->
+<!--        </table>-->
+<!--    </div>-->
+</div>
 </body>
 </html>

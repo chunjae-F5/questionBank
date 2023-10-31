@@ -30,8 +30,10 @@ public class ExamArchiveService {
         return archiveListDTOS;
     }
 
-    public Optional<Archive> downloadPdf(Long idx) {
+    public Optional<Archive> loadPdfFromDatabase(Long idx) {
         Optional<Archive> archive = archiveSaveRepository.findById(idx);
         return archive;
     }
+
+
 }
