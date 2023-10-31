@@ -18,10 +18,6 @@ public class Archive extends BaseTimeEntity {
     @Comment(value = "유저 아이디")
     private String userId;
 
-//    @Column(name = "type", nullable = false)
-//    @Comment(value = "유형")
-//    private String type;
-
     @Column(name = "grade", nullable = false, length = 50)
     @Comment(value = "학년")
     private String grade;
@@ -37,14 +33,6 @@ public class Archive extends BaseTimeEntity {
     @Column(name = "question", nullable = false)
     @Comment(value = "문제지")
     private String question;
-
-//    @Column(name = "answer", nullable = false)
-//    @Comment(value = "해설지")
-//    private String answer;
-
-//    @Column(name = "distributor", nullable = false)
-//    @Comment(value = "배포받은 사람")
-//    private String distributor; //배포 받은 사람
 
     @Column(name = "flag", nullable = false, length = 50)
     @Comment(value = "분류 (H: 고 M: 중 E:초)")
