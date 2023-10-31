@@ -35,9 +35,9 @@ public class ExamController {
         List<ExamDto.itemInfoResponse> itemList = (List<ExamDto.itemInfoResponse>)session.getAttribute("itemList");
         model.addAttribute("itemList", itemList);
 
-        if (itemList.get(0).getPassageUrl() != null) {
+        /*if (itemList.get(0).getPassageUrl() != null) {
         return "html/sub03_01_01";
-        }
+        }*/
             return "html/sub03_01";
     }
 
