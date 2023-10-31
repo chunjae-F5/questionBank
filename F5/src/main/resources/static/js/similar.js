@@ -182,7 +182,7 @@ function displaySimilarItems(similarItems, selectedDifficulty) {
                     <div class="btn-wrap">
 <!--                        <button type="button" class="btn-default" class="btn-add" class="add-button"><i class="add-type02"></i>추가</button>-->
                         <button type="button" class="btn-default btn-add" onclick="moveSortGroupToSource(this)"><i class="add-type02"></i> 추가</button>
-                        <button type="button" class="btn-default replace-button"><i class="replace"></i>교체</button>
+<!--                        <button type="button" class="btn-default replace-button"><i class="replace"></i>교체</button>-->
                     </div>
                 `;
                 const queInfoLastDiv = document.createElement('div');
