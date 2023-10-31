@@ -50,7 +50,6 @@
     }
 </script>
 
-
 <div id="wrap" class="full-pop-que">
     <div class="full-pop-wrap">
         <div class="pop-header">
@@ -174,19 +173,40 @@
                             <div class="que-badge-group type01">
                                 <div class="que-badge-wrap">
                                     <span class="que-badge purple">하</span>
-                                    <span class="num">5</span>
+                                    <span class="num" id="diff-low">0</span>
                                 </div>
                                 <div class="que-badge-wrap">
                                     <span class="que-badge green">중</span>
-                                    <span class="num">15</span>
+                                    <span class="num" id="diff-medium">0</span>
                                 </div>
                                 <div class="que-badge-wrap">
                                     <span class="que-badge yellow">상</span>
-                                    <span class="num">25</span>
+                                    <span class="num" id="diff-high">0</span>
                                 </div>
                             </div>
-                            <p class="total-num">총 <span>30</span>문제</p>
+                            <p class="total-num" id="diff-total">총 <span></span>문제</p>
                         </div>
+                        <script th:inline="javascript">
+                            function countDifficulty() {
+                                const difficultyCount = {
+                                    '상': 0,
+                                    '중': 0,
+                                    '하': 0
+                                };
+
+                                for (const item of [[${itemList}]]) {
+                                    const difficulty = item.difficultyName;
+                                    if (difficulty in difficultyCount) {
+                                        difficultyCount[difficulty]++;
+                                    }
+                                }
+                                document.getElementById('diff-high').textContent = difficultyCount['상'];
+                                document.getElementById('diff-medium').textContent = difficultyCount['중'];
+                                document.getElementById('diff-low').textContent = difficultyCount['하'];
+                                return difficultyCount;
+                            }
+                            console.log(countDifficulty());
+                        </script>
                     </div>
                     <div class="cnt-box type01">
                         <div class="tab-wrap">
@@ -306,18 +326,6 @@
                                 }
                             </script>
 
-                            <script type="text/javascript"><!--onclick="deleteItem(this)"-->
-                            function deleteItem(button) {
-                                // 클릭한 버튼의 data-item-id 속성을 읽어옴
-                                const itemId = button.getAttribute("data-item-id");
-
-                                // 해당 itemId와 일치하는 .sort-group 클래스를 가진 요소를 삭제
-                                const elementToDelete = document.querySelector('.sort-group[data-item-id="' + itemId + '"]');
-                                if (elementToDelete) {
-                                    elementToDelete.remove();
-                                }
-                            }
-                            </script>
                         </div>
                     </div>
                 </div>
@@ -439,8 +447,6 @@
 
     const sessionSubjectName = sessionStorage.getItem('subjectName');
     document.getElementById('subjectName').textContent = sessionSubjectName;
-
-
 
     $(function () {
 
