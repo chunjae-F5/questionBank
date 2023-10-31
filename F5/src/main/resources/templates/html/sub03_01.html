@@ -112,9 +112,9 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="view-que-list scroll-inner"
+                        <div id="simQueAdd" class="view-que-list scroll-inner"
                              style="display: -webkit-box;-webkit-box-orient:vertical">
-                                <div class="sort-group" th:each="item, iterStat : ${itemList}"
+                                <div class="sort-group sort-group-add" th:each="item, iterStat : ${itemList}"
                                                         th:data-summary-id="'summary-' + ${iterStat.count}"
                                                         th:item-id="${item.itemId}"
                                                         th:attr="data-item-id=${item.itemId}">
@@ -167,6 +167,7 @@
                                 </div>
                             <br>
                         </div>
+<!--                        <div class="contents" id="simQueAdd"></div>-->
                         <div class="bottom-box">
                             <div class="que-badge-group type01">
                                 <div class="que-badge-wrap">
@@ -269,7 +270,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div id="similar-items">
+                                <div class="view-que-list scroll-inner right-panel" id="similar-items">
                                     <div class="view-que-list no-data">
                                         <p>
                                             문제 목록에서 <i class="ic-no-data"></i> 유사문제 버튼을 선택해주세요.
@@ -288,7 +289,7 @@
 
                                     console.log(itemId);
 
-                                    const sortGroups = document.querySelector('.sort-group[data-item-id="' + itemId + '"]');
+                                    const sortGroups = document.querySelector('.sort-group-add[data-item-id="' + itemId + '"]');
                                     const targetDiv = document.getElementById("targetDiv");
 
                                     if (sortGroups) {

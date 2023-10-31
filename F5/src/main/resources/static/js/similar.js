@@ -180,8 +180,9 @@ function displaySimilarItems(similarItems, selectedDifficulty) {
                 queBottomDiv.className = 'que-bottom';
                 queBottomDiv.innerHTML = `
                     <div class="btn-wrap">
-                        <button type="button" class="btn-default" class="btn-add" class="add-button"><i class="add-type02"></i>추가</button>
-                        <button type="button" class="btn-default" class="replace-button"><i class="replace"></i>교체</button>
+<!--                        <button type="button" class="btn-default" class="btn-add" class="add-button"><i class="add-type02"></i>추가</button>-->
+                        <button type="button" class="btn-default btn-add" onclick="moveSortGroupToSource(this)"><i class="add-type02"></i> 추가</button>
+                        <button type="button" class="btn-default replace-button"><i class="replace"></i>교체</button>
                     </div>
                 `;
                 const queInfoLastDiv = document.createElement('div');
@@ -208,6 +209,23 @@ function displaySimilarItems(similarItems, selectedDifficulty) {
             </div>
         `;
         similarItemsElement.innerHTML = noDataHtml;
+    }
+}
+
+// 추가 버튼 클릭 시, 왼쪽으로 문항 이동
+function moveSortGroupToSource(button) {
+    const itemId = button.getAttribute("data-item-id");
+    const sortGroups = document.querySelector('.sort-group[data-item-id="' + itemId + '"]');
+    const simQueAdd = document.getElementById("simQueAdd");
+
+    if (sortGroups) {
+        const addButton = sortGroups.querySelector('.btn-add');
+        if (addButton) {
+            addButton.classList.remove('btn-add');
+            addButton.classList.add('btn-similar-que');
+            addButton.innerHTML = '<i class="similar"></i> 유사 문제';
+        }
+        simQueAdd.appendChild(sortGroups);
     }
 }
 // // 추가 버튼 클릭 이벤트 리스너 추가
