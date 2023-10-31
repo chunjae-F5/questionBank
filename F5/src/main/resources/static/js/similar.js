@@ -218,6 +218,8 @@ function moveSortGroupToSource(button) {
     const sortGroups = document.querySelector('.sort-group[data-item-id="' + itemId + '"]');
     const simQueAdd = document.getElementById("simQueAdd");
 
+    console.log("item: " + itemId);
+
     if (sortGroups) {
         const addButton = sortGroups.querySelector('.btn-add');
         if (addButton) {
@@ -228,33 +230,7 @@ function moveSortGroupToSource(button) {
         simQueAdd.appendChild(sortGroups);
     }
 }
-// // 추가 버튼 클릭 이벤트 리스너 추가
-// const addButton = document.querySelector('.add-type02'); // 여기에는 실제 버튼의 선택자를 사용해야 합니다.
-// addButton.addEventListener('click', () => {
-//     const originalDiv = document.querySelector('.original-div'); // 원래 있던 div의 선택자를 사용해야 합니다.
-//     const newDiv = document.createElement('div');
-//     newDiv.className = 'addSimilar'; // 새로운 div의 클래스 이름
-//
-//     // 새로운 div 내용 설정
-//     newDiv.innerHTML = `
-//         <p>새로운 문항</p>
-//         <button type="button" class="btn-remove">제거</button>
-//     `;
-//
-//     // 원래 있던 div를 숨김
-//     originalDiv.style.display = 'none';
-//
-//     // 새로운 div를 추가
-//     originalDiv.parentNode.insertBefore(newDiv, originalDiv);
-//
-//     // 제거 버튼 클릭 이벤트 리스너 추가
-//     const removeButton = newDiv.querySelector('.btn-remove');
-//     removeButton.addEventListener('click', () => {
-//         // 새로운 div를 제거하고 원래 있던 div를 다시 표시
-//         originalDiv.style.display = 'block';
-//         newDiv.parentNode.removeChild(newDiv);
-//     });
-// });
+
 function getDifficultyColorClass(difficultyName) {
     switch (difficultyName) {
         case '상':
