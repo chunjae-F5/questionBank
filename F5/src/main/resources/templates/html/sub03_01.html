@@ -128,8 +128,10 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="view-que-list scroll-inner contents on"
-                             style="display: -webkit-box;-webkit-box-orient:vertical">
+
+                        <div class="view-que-list scroll-inner"
+                             style="display: -webkit-box;-webkit-box-orient:vertical" id="simQueAdd"><!--contents on-->
+
                                 <div class="sort-group" th:each="item, iterStat : ${itemList}"
                                                         th:data-summary-id="'summary-' + ${iterStat.count}"
                                                         th:item-id="${item.itemId}"
@@ -492,6 +494,7 @@
             </div>
         </div>
     </div>
+</div>
 </div>
 </div>
 <script th:inline="javascript">
