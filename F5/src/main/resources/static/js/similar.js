@@ -136,7 +136,7 @@ function displaySimilarItems(similarItems, selectedDifficulty) {
                     <p><img src="${item.questionUrl}" alt="Question Image"></p>
                     <div class="que-bottom">
                         <div class="data-area">
-                            <div class="que-info">
+                            <div class="que-info explain">
                             <p class="answer"><span class="label">해설</span></p>
                             <div class="data-answer-area">
                             <!-- s: 해설 데이터 영역 -->
@@ -144,7 +144,7 @@ function displaySimilarItems(similarItems, selectedDifficulty) {
                         </div>
                     </div>
                     <div class="data-area type01">
-                        <div class="que-info">
+                        <div class="que-info answer">
                             <p class="answer"><span class="label type01">정답</span></p>
                             <div class="data-answer-area">
                                 <!-- s: 정답 데이터 영역 -->

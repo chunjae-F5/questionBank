@@ -135,11 +135,11 @@
                                                         th:item-id="${item.itemId}"
                                                         th:attr="data-item-id=${item.itemId}">
                                     <div class="view-que-box" th:if="${item.passageUrl != null}">
-                                        <div class="que-top">
-                                            <div class="title">
+                                        <!--<div class="que-top">
+                                            &lt;!&ndash;<div class="title">
                                                 <span class="num" th:text="${iterStat.count}"></span>
-                                            </div>
-                                        </div>
+                                            </div>&ndash;&gt;
+                                        </div>-->
                                         <div class="view-que">
                                             <img th:src="${item.passageUrl}" alt="Question Image">
                                         </div>
@@ -494,14 +494,12 @@
     </div>
 </div>
 </div>
-<script>
+<script th:inline="javascript">
 
     const sessionSubjectName = sessionStorage.getItem('subjectName');
     document.getElementById('subjectName').textContent = sessionSubjectName;
 
-    $(function () {
-
-
+    /*$(function () {
         let _leg = $('.view-que').length;
         let arr = [];
 
@@ -519,11 +517,11 @@
 
                 let _idx = $(this).index();
 
-                for (var i = 0; i < _leg; i++) {
+                for (let i = 0; i < _leg; i++) {
                     arr.push($('.view-que').eq(i).offset().top - 280);
                 }
 
-                console.log(arr);
+                console.log("asdasd : "+arr);
 
                 $('.view-que-list').animate({
                     scrollTop: arr[_idx]
@@ -540,7 +538,25 @@
 
             })
         }
-    })
+    })*/
+
+    // 오른쪽 div 요약 요소를 선택
+    const rightDivs = document.querySelectorAll('.right-div');
+
+    // 각 요약 요소를 클릭했을 때 스크롤 이벤트 처리
+    rightDivs.forEach(function(rightDiv) {
+        rightDiv.addEventListener('click', function() {
+            // data-scroll-id 속성을 사용하여 연결된 왼쪽 div의 ID를 가져옴
+            const scrollId = rightDiv.getAttribute('data-scroll-id');
+            const leftDiv = document.getElementById(scrollId);
+
+            // 왼쪽 div로 스크롤
+            leftDiv.scrollIntoView({ behavior: 'smooth' });
+        });
+    });
+/*
+ <div class="col sortable" th:each="item, iterStat : ${itemList}" th:data-summary-id="'summary-' + ${iterStat.count}">
+*/
 </script>
 
 </body>
