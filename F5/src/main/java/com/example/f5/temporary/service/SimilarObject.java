@@ -13,4 +13,5 @@ public class SimilarObject {
     private String questionUrl;
     private String answerUrl;
     private String explainUrl;
+    private String passageUrl;
 }
