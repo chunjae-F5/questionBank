@@ -50,5 +50,6 @@ public class ExamController {
         model.addAttribute("evaluationList", evaluationList);
         return "html/sub02";
     }
+
 }
 
