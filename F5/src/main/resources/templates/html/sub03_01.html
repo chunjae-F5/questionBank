@@ -131,7 +131,6 @@
 
                         <div class="view-que-list scroll-inner"
                              style="display: -webkit-box;-webkit-box-orient:vertical" id="simQueAdd"><!--contents on-->
-
                                 <div class="sort-group" th:each="item, iterStat : ${itemList}"
                                                         th:data-summary-id="'summary-' + ${iterStat.count}"
                                                         th:item-id="${item.itemId}"
@@ -158,7 +157,11 @@
                                             </div>
                                             <div class="btn-wrap">
                                                 <button type="button" class="btn-error pop-btn" data-pop="error-report-pop"></button>
+<!--
+                                                <button type="button" class="btn-delete" th:attr="data-item-id=${item.itemId}" onclick="moveSortGroupToTarget(this); deleteColByItemId()"></button>
+-->
                                                 <button type="button" class="btn-delete" th:attr="data-item-id=${item.itemId}" onclick="moveSortGroupToTarget(this)"></button>
+
                                             </div>
                                         </div>
                                         <div class="view-que">
@@ -263,7 +266,7 @@
                                     <div class="tbody">
                                         <div class="scroll-inner">
                                             <div class="test ui-sortable" id="table-1">
-                                                    <div class="col sortable" th:each="item, iterStat : ${itemList}" th:data-summary-id="'summary-' + ${iterStat.count}">
+                                                    <div class="col sortable" th:each="item, iterStat : ${itemList}" th:data-summary-id="'summary-' + ${iterStat.count}" th:attr="data-item-id=${item.itemId}">
                                                         <a href="javascript:;">
                                                         <span class="dragHandle ui-sortable-handle">
                                                             <img th:src="@{/images/ico_move_type01.png}" alt="">
@@ -322,6 +325,7 @@
                                                 return questionFrom;
                                             }
                                             console.log(countQuestionFrom());
+
                                         </script>
                                     </div>
                                 </div>
@@ -356,9 +360,7 @@
                             <script th:inline="javascript">
                                 function moveSortGroupToTarget(button) {
                                     const itemId = button.getAttribute("data-item-id");
-
-                                    console.log(itemId);
-
+                                    const dataSummaryIdToMove = itemId;
                                     const sortGroups = document.querySelector('.sort-group[data-item-id="' + itemId + '"]');
                                     const targetDiv = document.getElementById("targetDiv");
 
@@ -374,8 +376,45 @@
                                             deleteButton.style.display = 'none'; // '삭제' 버튼 숨기기
                                         }
                                         targetDiv.appendChild(sortGroups);
+                                        const cols = document.querySelectorAll('.col.sortable');
+                                        for (const col of cols) {
+                                            const summaryId = col.getAttribute('data-item-id');
+
+                                            if (summaryId === dataSummaryIdToMove) {
+                                                col.parentNode.removeChild(col); // col 요소 삭제
+                                                break; // 첫 번째 일치하는 요소만 삭제하려면 루프를 중지합니다.
+                                            }
+                                        }
                                     }
                                 }
+                                /*function deleteColByItemId() {
+                                    const numSpan = document.querySelector('.num');
+                                    if (numSpan) {
+                                        const count = numSpan.textContent;
+                                        const itemIdToDelete = 'summary-' + count;
+
+                                        const cols = document.querySelectorAll('.col.sortable');
+
+                                        for (const col of cols) {
+                                            const summaryId = col.getAttribute('th:data-summary-id');
+                                            if (summaryId === itemIdToDelete) {
+                                                col.parentNode.removeChild(col); // col 요소 삭제
+                                                break; // 첫 번째 일치하는 요소만 삭제하려면 루프를 중지합니다.
+                                            }
+                                        }
+                                    }
+                                    const cols = document.querySelectorAll('.col.sortable');
+                                    for (const col of cols) {
+                                        const summaryId = col.getAttribute('th:data-summary-id');
+                                        if (summaryId === dataSummaryIdToMove) {
+                                            col.parentNode.removeChild(col); // col 요소 삭제
+                                            break; // 첫 번째 일치하는 요소만 삭제하려면 루프를 중지합니다.
+                                        }
+                                    }
+                                }*/
+
+
+
                             </script>
 
                         </div>
