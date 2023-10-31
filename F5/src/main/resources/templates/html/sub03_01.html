@@ -166,7 +166,7 @@
                                 </div>
                             <br>
                         </div>
-                        <div class="view-que-list scroll-inner contents" id="simQueAdd"></div>
+<!--                        <div class="view-que-list scroll-inner contents" id="simQueAdd"></div>-->
 
 
                         <div class="bottom-box">
@@ -320,6 +320,10 @@
                                             similarButton.classList.remove('btn-similar-que');
                                             similarButton.classList.add('btn-add');
                                             similarButton.innerHTML = '<i class="add-type02"></i> 추가';
+                                        }
+                                        const deleteButton = sortGroups.querySelector('.btn-delete');
+                                        if (deleteButton) {
+                                            deleteButton.style.display = 'none'; // '삭제' 버튼 숨기기
                                         }
                                         targetDiv.appendChild(sortGroups);
                                     }
