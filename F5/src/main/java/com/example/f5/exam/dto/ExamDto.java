@@ -10,9 +10,11 @@ import java.util.Objects;
 
 public class ExamDto {
 
+    public ExamDto (){}
+
     @Getter
     @Setter
-    @AllArgsConstructor
+//    @AllArgsConstructor
     public static class itemInfoRequest {
         private List<Integer> activityCategoryList;
         private List<Integer> levelCnt;

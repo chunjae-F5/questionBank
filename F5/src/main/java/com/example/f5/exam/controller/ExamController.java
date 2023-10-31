@@ -22,8 +22,9 @@ public class ExamController {
 
     @PostMapping("/item-img/chapter/item-list")
     @ResponseBody
-    public ResponseEntity<Map<String, String>> getItemList(@RequestBody ExamDto.itemInfoRequest requestDto, Model model, HttpSession session) {
+    public ResponseEntity<Map<String, String>> getItemList(@RequestBody ExamDto.itemInfoRequest requestDto, HttpSession session) {
         List<ExamDto.itemInfoResponse> itemList = examService.getItemList(requestDto);
+//        session.setAttribute("subjectId", requestDto. getMinorClassification().get(0));
         session.setAttribute("itemList", itemList);
         Map<String, String> res = new HashMap<>();
         res.put("url", "/item-img/chapter/item-list/red");
@@ -33,16 +34,14 @@ public class ExamController {
     @GetMapping("/item-img/chapter/item-list/red")
     public String red(HttpSession session,Model model) {
         List<ExamDto.itemInfoResponse> itemList = (List<ExamDto.itemInfoResponse>)session.getAttribute("itemList");
+//        List<ExamDto.itemInfoResponse> subjectId = (List<ExamDto.itemInfoResponse>)session.getAttribute("subjectId");
+        model.addAttribute("itemList", itemList);
+//        model.addAttribute("subjectId", subjectId);
 
-        if (itemList.get(0).getPassageUrl() == null) {
-            model.addAttribute("itemList", itemList);
-            return "html/sub03_01_01";
-        } else {
-            model.addAttribute("itemList", itemList);
-            return "html/sub03_01";
+        if (itemList.get(0).getPassageUrl() != null) {
+        return "html/sub03_01_01";
         }
-
-
+            return "html/sub03_01";
     }
 
     /*시험 제작 페이지 form*/

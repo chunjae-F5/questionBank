@@ -5,7 +5,8 @@ let currentItemId; // 현재 선택된 itemId를 저장할 변수
 document.querySelectorAll('.similar-items-button').forEach(button => {
     button.addEventListener('click', async () => {
         currentItemId = button.getAttribute('data-itemid');
-        const quenum = button.getAttribute('data-quenum');
+        const quenum = button.getAttribute('data-quenum');;
+
         // 결과를 표시할 요소를 찾음
         const quenumDisplay = document.getElementById('quenum-display');
         // quenum 값을 결과를 표시하는 요소에 추가
@@ -31,6 +32,60 @@ async function updateSimilarItems() {
         similarItemsElement.scrollTop = 0;
     }
 }
+
+// '추가' 버튼 클릭 이벤트 처리
+document.querySelectorAll('.add-button').forEach(addButton => {
+    addButton.addEventListener('click', () => {
+        // 선택한 유사 문항을 왼쪽에 추가
+        const similarItem = addButton.parentNode;
+        addSimilarItemToLeft(similarItem);
+    });
+});
+
+function addSimilarItemToLeft(similarItem) {
+    // 왼쪽에 추가할 문항 목록의 부모 요소를 선택
+    const leftPanel = document.querySelector('.left-panel');
+    // 추가할 문항을 복제
+    const newSimilarItem = similarItem.cloneNode(true);
+    // '교체' 버튼을 '추가' 버튼으로 변경
+    newSimilarItem.querySelector('.replace-button').classList.remove('replace-button');
+    newSimilarItem.querySelector('.add-button').classList.add('replace-button');
+    // '추가' 버튼에 새로운 클릭 이벤트를 할당
+    newSimilarItem.querySelector('.add-button').addEventListener('click', () => {
+        replaceItem(newSimilarItem);
+    });
+    // 왼쪽에 추가
+    leftPanel.appendChild(newSimilarItem);
+}
+
+// '교체' 버튼 클릭 이벤트 처리
+document.querySelectorAll('.replace-button').forEach(replaceButton => {
+    replaceButton.addEventListener('click', () => {
+        // 선택한 유사 문항과 원래 문항 교체
+        const similarItem = replaceButton.parentNode;
+        replaceItem(similarItem);
+    });
+});
+
+function replaceItem(similarItem) {
+    // 오른쪽에 있는 문항 목록의 부모 요소를 선택
+    const rightPanel = document.querySelector('.right-panel');
+    // 교체할 문항을 복제
+    const newSimilarItem = similarItem.cloneNode(true);
+    // '추가' 버튼을 '교체' 버튼으로 변경
+    newSimilarItem.querySelector('.add-button').classList.remove('add-button');
+    newSimilarItem.querySelector('.replace-button').classList.add('add-button');
+    // '교체' 버튼에 새로운 클릭 이벤트를 할당
+    newSimilarItem.querySelector('.replace-button').addEventListener('click', () => {
+        addSimilarItemToLeft(newSimilarItem);
+    });
+    // 오른쪽에서 삭제
+    rightPanel.removeChild(similarItem);
+    // 왼쪽에 추가
+    const leftPanel = document.querySelector('.left-panel');
+    leftPanel.appendChild(newSimilarItem);
+}
+
 async function fetchSimilarItems(itemId) {
     const requestData = {
         items: [itemId]
@@ -56,8 +111,10 @@ async function fetchSimilarItems(itemId) {
 function displaySimilarItems(similarItems, selectedDifficulty) {
     const similarItemsElement = document.getElementById('similar-items');
     similarItemsElement.innerHTML = ''; // 이전 데이터 지우기
+
     let count = 1;
-    if (similarItems) {
+
+    if (similarItems && similarItems.length > 0) {
         similarItems.forEach(item => {
             if (selectedDifficulty === '전체' || item.difficultyName === selectedDifficulty) {
                 const sortGroupDiv = document.createElement('div');
@@ -91,8 +148,10 @@ function displaySimilarItems(similarItems, selectedDifficulty) {
                 btnWrapDiv.appendChild(btnErrorDiv);
                 queTopDiv.appendChild(titleDiv);
                 queTopDiv.appendChild(btnWrapDiv);
+
                 const viewQueDiv = document.createElement('div');
                 viewQueDiv.className = 'view-que';
+
                 const queContentDiv = document.createElement('div');
                 queContentDiv.className = 'que-content';
                 // height="340" width="450"     height="90" width="450"
@@ -121,8 +180,8 @@ function displaySimilarItems(similarItems, selectedDifficulty) {
                 queBottomDiv.className = 'que-bottom';
                 queBottomDiv.innerHTML = `
                     <div class="btn-wrap">
-                        <button type="button" class="btn-default" class="btn-add"><i class="add-type02"></i>추가</button>
-                        <button type="button" class="btn-default"><i class="replace"></i>교체</button>
+                        <button type="button" class="btn-default" class="btn-add" class="add-button"><i class="add-type02"></i>추가</button>
+                        <button type="button" class="btn-default" class="replace-button"><i class="replace"></i>교체</button>
                     </div>
                 `;
                 const queInfoLastDiv = document.createElement('div');
@@ -140,6 +199,15 @@ function displaySimilarItems(similarItems, selectedDifficulty) {
                 count++;
             }
         });
+    }
+    else {
+        // 유사 문항이 없을 때 표시할 HTML
+        const noDataHtml = `
+            <div class="view-que-list no-data">
+                <p>해당 문제은 유사 문제가 없습니다.</p>
+            </div>
+        `;
+        similarItemsElement.innerHTML = noDataHtml;
     }
 }
 // // 추가 버튼 클릭 이벤트 리스너 추가
