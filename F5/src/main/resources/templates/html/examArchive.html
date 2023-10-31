@@ -21,81 +21,64 @@
 
     <script>
 
+        // 다운로드 버튼 클릭시
         function downloadPdf(idx) {
             console.log('download : ' + idx);
             window.location.href = `/exam-archive/download?idx=${idx}`;
         }
 
-        // 미리보기 버튼 클릭 시 호출
-        function previewPdf(idx){
-            fetch('/exam-archive/preview?idx=' + idx)
-                .then(response => response.blob())
-                .then(blob => {
-                    const objectURL = URL.createObjectURL(blob);
-                    document.getElementById('previewImage').src = objectURL;
-                    document.getElementById('pdfPreviewModal').style.display = 'block';
-                });
+        // 미리보기 버튼 클릭시
+        function previewPdf(idx) {
+            console.log('preview : ' + idx);
+
+            let url = "";
+            fetch(`/exam-archive/preview?idx=${idx}`, {
+                method: "GET",
+            }).then(response => {
+                if (response.ok) {
+                    console.log(response)
+                    return response.text();
+                }
+                throw new Error('Failed to send the GET request.');
+            }).then(data => {
+                // url = decodeURIComponent(data.replace(/"/g, ''));
+                // console.log("url " + url);
+                // 수정된 URL 사용
+                let url = "https://drive.google.com/uc?id=1Ktb17suT1Cif0znm7CFKKWDO_9NLRNHI";
+                openPreview(url)
+            }).catch(error => {
+                console.error('Error: ', error);
+            });
         }
 
-        // function previewPdf(idx) {
-        //     console.log('preview : ' + idx);
-        //
-        //     // 이미지 URL 생성
-        //     var imageUrl = '/exam-archive/preview?idx=' + idx;
-        //
-        //     // 새 창 열기
-        //     var popup = window.open('', 'Image Preview', 'width=800, height=600');
-        //
-        //     // 이미지 엘리먼트 생성
-        //     var imgElement = document.createElement('img');
-        //     imgElement.src = imageUrl;
-        //     imgElement.style.maxWidth = '100%';
-        //     imgElement.style.maxHeight = '100%';
-        //
-        //     // 이미지를 팝업 창에 추가
-        //     popup.document.body.appendChild(imgElement);
-        // }
-
-        // function previewPdf(idx) {
-        //     console.log('preview : ' + idx);
-        //
-        //     let url = "";
-        //     fetch(`/exam-archive/preview?idx=${idx}`, {
-        //         method: "GET",
-        //     }).then(response => {
-        //         if (response.ok) {
-        //             console.log(response)
-        //             return response.json();
-        //         }
-        //         throw new Error('Failed to send the GET request.');
-        //     }).then(data => {
-        //         url = data;
-        //         console.log("url " + url);
-        //         openPreview(url)
-        //     }).catch(error => {
-        //         console.error('Error: ', error);
-        //     });
-        // }
-        //
-        // function openPreview(url){
-        //     const img = document.createElement('img');
-        //     img.src = img;
-        //     img.alt = 'PDF Preview';
-        //
-        //     const modal = document.createElement('div');
-        //     modal.classList.add('modal');
-        //
-        //     modal.appendChild(img);
-        //     document.body.appendChild(modal);
-        //
-        //     // 팝업 닫기 버튼
-        //     const closeButton = document.createElement('button');
-        //     closeButton.textContent = 'Close';
-        //     closeButton.addEventListener('click', function () {
-        //         document.body.removeChild(modal);
-        //     });
-        //     modal.appendChild(closeButton);
-        // }
+        function openPreview(url) {
+            window.open(url, 'Image Preview', 'width=800, height=600');
+            // console.log("URL : " + url);
+            //
+            // // 모달 생성
+            // const modal = document.createElement('div');
+            // modal.classList.add('modal');
+            // modal.style.display = 'block'; // 모달 표시
+            //
+            // // 이미지 엘리먼트 생성
+            // const img = document.createElement('img');
+            // img.src = url;
+            // img.alt = 'Image Preview';
+            //
+            // // 이미지와 닫기 버튼을 모달에 추가
+            // modal.appendChild(img);
+            //
+            // const closeButton = document.createElement('button');
+            // closeButton.textContent = 'Close';
+            // closeButton.addEventListener('click', function () {
+            //     modal.style.display = 'none'; // 모달 닫기
+            // });
+            //
+            // modal.appendChild(closeButton);
+            //
+            // // body에 모달 추가
+            // document.body.appendChild(modal);
+        }
     </script>
 
 </head>
@@ -111,10 +94,10 @@
     /*    margin: auto;*/
     /*}*/
 
-    /*.row, .card {*/
-    /*    margin: auto;*/
-    /*    border: transparent;*/
-    /*}*/
+    .row, .card {
+        margin: auto;
+        border: transparent;
+    }
 
     /*.card-title {*/
     /*    font-weight: bold;*/
@@ -135,6 +118,13 @@
         margin-bottom: 50px;
         background-color: transparent;
         font-weight: bolder;
+        display: flex;
+        justify-content: center;
+        margin-block: 30px;
+    }
+
+    .col {
+        width: 25%;
     }
 
     #header-row > .col:hover {
@@ -156,64 +146,134 @@
         justify-content: center;
         align-items: center;
     }
-    .table > .fix-head span:nth-child(1){
+
+    .table > .fix-head span:nth-child(1) {
         width: 10%;
     }
-    .table > .fix-head span:nth-child(2){
+
+    .table > .fix-head span:nth-child(2) {
         width: 20%;
     }
-    .table > .fix-head span:nth-child(3){
+
+    .table > .fix-head span:nth-child(3) {
         width: 30%;
     }
-    .table > .fix-head span:nth-child(4){
+
+    .table > .fix-head span:nth-child(4) {
         width: 10%;
     }
-    .table > .fix-head span:nth-child(5){
-        width: 14%;
-    }
-    .table > .fix-head span:nth-child(6){
+
+    .table > .fix-head span:nth-child(5) {
         width: 14%;
     }
 
-    .table > .tbody > .scroll-inner > .fix-span span:nth-child(1){
+    .table > .fix-head span:nth-child(6) {
+        width: 14%;
+    }
+
+    .table > .tbody > .scroll-inner > .fix-span span:nth-child(1) {
         width: 10%;
     }
-    .table > .tbody > .scroll-inner > .fix-span span:nth-child(2){
+
+    .table > .tbody > .scroll-inner > .fix-span span:nth-child(2) {
         width: 20%;
     }
-    .table > .tbody > .scroll-inner > .fix-span span:nth-child(3){
+
+    .table > .tbody > .scroll-inner > .fix-span span:nth-child(3) {
         width: 30%;
     }
-    .table > .tbody > .scroll-inner > .fix-span span:nth-child(4){
+
+    .table > .tbody > .scroll-inner > .fix-span span:nth-child(4) {
         width: 10%;
     }
-    .table > .tbody > .scroll-inner > .fix-span span:nth-child(5){
+
+    .table > .tbody > .scroll-inner > .fix-span span:nth-child(5) {
         width: 14%;
     }
-    .table > .tbody > .scroll-inner > .fix-span span:nth-child(6){
+
+    .table > .tbody > .scroll-inner > .fix-span span:nth-child(6) {
         width: 14%;
+    }
+
+    .quickmenu {
+        position: absolute;
+        width: 90px;
+        top: 50%;
+        margin-top: -50px;
+        right: 10px;
+        background: #fff;
+    }
+
+    .quickmenu ul {
+        position: relative;
+        float: left;
+        width: 100%;
+        display: inline-block;
+        *display: inline;
+        border: 1px solid #ddd;
+    }
+
+    .quickmenu ul li {
+        float: left;
+        width: 100%;
+        border-bottom: 1px solid #ddd;
+        text-align: center;
+        display: inline-block;
+        *display: inline;
+    }
+
+    .quickmenu ul li a {
+        position: relative;
+        float: left;
+        width: 100%;
+        height: 30px;
+        line-height: 30px;
+        text-align: center;
+        color: #999;
+        font-size: 9.5pt;
+    }
+
+    .quickmenu ul li a:hover {
+        color: #000;
+    }
+
+    .quickmenu ul li:last-child {
+        border-bottom: 0;
+    }
+
+    .text-center {
+        text-align: center!important;
     }
 
 </style>
-
-<body>
-<!--<body class="p-3 m-0 border-0 bd-example m-0 border-0 bd-example-row">-->
-<!--<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"-->
-<!--        integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"-->
-<!--        crossorigin="anonymous"></script>-->
-<div id="wrap" class="full-pop-que">
-    <div class="full-pop-wrap">
-        <div class="pop-header">
-                <div class="col">초등</div>
-                <div class="col">중등</div>
-                <div class="col">고등</div>
-                <div class="col">시험지 보관함</div>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
+        crossorigin="anonymous"></script>
+<script>
+    $(document).ready(function() {
+        $("#quickmenuContainer").load("quickmenu.html", function() {
+            // quickmenu.html이 로드된 후에 실행될 코드 (예: 이벤트 리스너 추가 등)
+        });
+    });
+</script>
+<body class="p-3 m-0 border-0 bd-example m-0 border-0 bd-example-row">
+<!--<div id="wrap" class="full-pop-que scroll-inner">-->
+<!--    <div class="full-pop-wrap">-->
+    <div class="container text-center">
+        <div class="row" id="header-row">
+<!--        <div class="pop-header">-->
+            <div class="col"><a href="/">초등</a></div>
+            <div class="col"><a href="/">중등</a></div>
+            <div class="col"><a href="/">고등</a></div>
+            <div class="col"><a href="/exam-archive/list">시험지 보관함</a></div>
         </div>
-
+    </div>
+<div id="wrap" class="full-pop-que scroll-inner">
+    <div class="full-pop-wrap">
         <!--card example-->
         <div class="pop-content">
-            <div class="view-box">
-                <div class="view-bottom type02 scroll-inner">
+            <div class="view-box scroll-inner">
+                <div class="view-bottom type02">
 
                     <div class="type-form">
                         <h2 class="title-archive">문제지 보관함</h2>
@@ -238,13 +298,13 @@
                                     <span th:text="${list.getTotal()} + '문제'"></span>
                                     <span>
                                     <img th:src="@{/images/menu.png}" th:width="30px" th:height="30px"
-                                     th:id="'previewImg' + ${list.getIdx()}"
-                                     th:onclick="'previewPdf(' + ${list.getIdx()} +')'">
+                                         th:id="'previewImg' + ${list.getIdx()}"
+                                         th:onclick="'previewPdf(' + ${list.getIdx()} +')'">
                                     </span>
                                     <span>
                                     <img th:src="@{/images/pointer.png}" th:width="35px" th:height="35px"
-                                     th:id="'downImg' + ${list.getIdx()}"
-                                     th:onclick="'downloadPdf(' + ${list.getIdx()} + ')'"/>
+                                         th:id="'downImg' + ${list.getIdx()}"
+                                         th:onclick="'downloadPdf(' + ${list.getIdx()} + ')'"/>
                                     </span>
                                 </div>
                             </div>
@@ -253,37 +313,9 @@
                 </div>
             </div>
         </div>
-
-        <!-- Modal Popup -->
-        <div id="pdfPreviewModal" style="display: none;">
-            <img id="previewImage" src="" />
-        </div>
     </div>
 </div>
-<!--    <div class="table-style">-->
-<!--        <table>-->
-<!--            <tr>-->
-<!--                <th>번호</th>-->
-<!--                <th>생성날짜</th>-->
-<!--                <th>문제지명</th>-->
-<!--                <th>문제수</th>-->
-<!--                <th>미리보기</th>-->
-<!--                <th>다운로드</th>-->
-<!--            </tr>-->
-<!--            <tr  th:each="list : ${archiveList}">-->
-<!--                <td th:text="${listStat.count}"></td>-->
-<!--                <td th:text="${#temporals.format(list.createdDate, 'yyyy-MM-dd')}"></td>-->
-<!--                <td th:text="${list.getName()}"></td>-->
-<!--                <td th:text="${list.getTotal()}"></td>-->
-<!--                <td>-->
-<!--                    <img th:src="@{/images/menu.png}" th:width="30px" th:height="30px" th:id="'previewImg' + ${list.getIdx()}" th:onclick="'previewPdf(' + ${list.getIdx()} +')'">-->
-<!--                </td>-->
-<!--                <td>-->
-<!--                    <img th:src="@{/images/pointer.png}" th:width="35px" th:height="35px" th:id="'downImg' + ${list.getIdx()}" th:onclick="'downloadPdf(' + ${list.getIdx()} + ')'" />-->
-<!--                </td>-->
-<!--            </tr>-->
-<!--        </table>-->
-<!--    </div>-->
-</div>
+
+<div th:insert="html/quickmenu.html :: quickmenuFrag"></div>
 </body>
 </html>

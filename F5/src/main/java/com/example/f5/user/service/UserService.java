@@ -94,7 +94,9 @@ public class UserService {
             httpServletRequest.getSession().invalidate();
             HttpSession session = httpServletRequest.getSession(true);
 
+            String userName = user.getName();
             session.setAttribute("userId", form.getUserId());
+            session.setAttribute("userName", userName);
             session.setMaxInactiveInterval(1800);
             return ResponseEntity.ok().body("");
         }

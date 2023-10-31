@@ -11,23 +11,34 @@ import com.example.f5.exam.repository.ExamSaveRepository;
 import com.example.f5.exam.repository.QuestionSaveRepository;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
+import com.itextpdf.io.image.ImageDataFactory;
 import com.itextpdf.kernel.colors.Color;
 import com.itextpdf.kernel.colors.DeviceCmyk;
 import com.itextpdf.kernel.events.PdfDocumentEvent;
 import com.itextpdf.kernel.font.PdfFont;
 import com.itextpdf.kernel.font.PdfFontFactory;
 import com.itextpdf.kernel.geom.PageSize;
+import com.itextpdf.kernel.geom.Rectangle;
 import com.itextpdf.kernel.pdf.PdfDocument;
 import com.itextpdf.kernel.pdf.PdfPage;
+import com.itextpdf.kernel.pdf.PdfReader;
 import com.itextpdf.kernel.pdf.PdfWriter;
 import com.itextpdf.kernel.pdf.canvas.PdfCanvas;
 import com.itextpdf.layout.Document;
+import com.itextpdf.layout.element.Image;
 import com.itextpdf.svg.converter.SvgConverter;
 import com.itextpdf.svg.processors.ISvgConverterProperties;
 import com.itextpdf.svg.processors.impl.SvgConverterProperties;
 import lombok.RequiredArgsConstructor;
+import org.apache.pdfbox.pdmodel.PDDocument;
+import org.apache.pdfbox.pdmodel.PDPage;
+import org.apache.pdfbox.rendering.PDFRenderer;
+import org.springframework.core.io.ClassPathResource;
 import org.springframework.stereotype.Service;
 
+import javax.imageio.ImageIO;
+import java.awt.*;
+import java.awt.image.BufferedImage;
 import java.io.*;
 import java.net.URI;
 import java.net.URL;
@@ -37,8 +48,7 @@ import java.net.http.HttpResponse;
 import java.nio.charset.StandardCharsets;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
-import java.util.Collections;
+import java.util.*;
 import java.util.List;
 
 
@@ -98,7 +108,7 @@ public class ExamSaveService {
     }
 
     // pdf 생성
-    public void generatePdf(ExamSaveRequestDTO requestDTOS) throws IOException {
+    public void generatePdf(ExamSaveRequestDTO requestDTOS, String userid, String username) throws IOException {
 
         // DTO에서 지문, 문제 url 각 배열에 담기
         List<String> passageUrls = new ArrayList<>();
@@ -111,17 +121,20 @@ public class ExamSaveService {
         // DTO에서 필요한 값 변수에 담기
         String examName = requestDTOS.getExamName();
         int totQuestion = requestDTOS.getChoiceAnswer() + requestDTOS.getShortAnswer();
-        String userName = "뫄뫄선생님";
+//        String userName = "뫄뫄선생님";
+        String userName = username + " 선생님";
         String name = "이름: ";
         String date = String.valueOf(LocalDate.now());
         String topLine = totQuestion + "문제 | " + userName + " | " + name;
         String day = "일일";
 
         // 임시 유저아이디
-        String userId = "sky";
+//        String userId = "sky";
+        String userId = userid;
 
         // PDF객체 생성
-        PdfDocument pdf = new PdfDocument(new PdfWriter(setPdfName(DEST, requestDTOS.getExamName(), userId)));
+        String pdfFilePath = setPdfName(DEST, requestDTOS.getExamName(), userId);
+        PdfDocument pdf = new PdfDocument(new PdfWriter(pdfFilePath));
         Document document = new Document(pdf);
 
         Color mainLineColor = new DeviceCmyk(100, 0, 20, 0);
@@ -150,10 +163,27 @@ public class ExamSaveService {
             convertSvgToPdf(pdf, document, passageUrls.get(i), questionUrls.get(i));
         }
 
+//
         document.close();
-
         System.out.println("pdf create success!");
+
+        String outputImgFile = setPngName();
+
+        PDDocument doc = PDDocument.load(new File(pdfFilePath));
+        PDFRenderer pdfRenderer = new PDFRenderer(doc);
+
+        // 첫 번째 페이지를 이미지로 렌더링
+        PDPage firstPage = doc.getPage(0);
+        BufferedImage image = pdfRenderer.renderImage(0);
+
+        // 이미지를 파일로 저장
+        ImageIO.write(image, "PNG", new File(outputImgFile));
+
+        doc.close();
+        System.out.println("Image saved to " + outputImgFile);
+
     }
+
 
     // PDF 파일 이름 변경
     private String setPdfName(String dest, String examName, String userId) {
@@ -164,6 +194,10 @@ public class ExamSaveService {
         String extension = ".pdf";
 
         return pdfName + extension;
+    }
+
+    private String setPngName(){
+        return DEST + "image_" + UUID.randomUUID() + ".png";
     }
 
     private void convertSvgToPdf(PdfDocument pdf, Document document, String passageSvgUrl, String questionSvgUrl) throws IOException {
@@ -234,52 +268,6 @@ public class ExamSaveService {
 
     }
 
-//    private void convertSvgToPdf(PdfDocument pdf, Document document, String passageSvgUrl, String questionSvgUrl, int pageNumber) throws IOException {
-//        URL passageUrl = new URL(passageSvgUrl);
-//        InputStream passageSvgIs = passageUrl.openStream();
-//        URL questionUrl = new URL(questionSvgUrl);
-//        InputStream questionSvgIs = questionUrl.openStream();
-//
-//        BufferedReader passageReader = new BufferedReader(new InputStreamReader(passageSvgIs, StandardCharsets.UTF_8));
-//        BufferedReader questionReader = new BufferedReader(new InputStreamReader(questionSvgIs, StandardCharsets.UTF_8));
-//
-//        StringBuilder passageSvgContent = new StringBuilder();
-//        StringBuilder questionSvgContent = new StringBuilder();
-//
-//        String pLine;
-//        while ((pLine = passageReader.readLine()) != null) {
-//            passageSvgContent.append(pLine);
-//        }
-//        passageSvgIs.close();
-//
-//        String qLine;
-//        while ((qLine = questionReader.readLine()) != null) {
-//            questionSvgContent.append(qLine);
-//        }
-//        questionSvgIs.close();
-//
-//        String adjustedPassageSvgContent = passageSvgContent.toString()
-//                .replaceFirst("width=\"\\d+\"", "width=\"200\"")
-//                .replaceFirst("height=\"\\d+\"", "height=\"auto\"");
-//
-//        String adjustedQuestionSvgContent = questionSvgContent.toString()
-//                .replaceFirst("width=\"\\d+\"", "width=\"200\"")
-//                .replaceFirst("height=\"\\d+\"", "height=\"auto\"");
-//
-//
-//        pdf.setDefaultPageSize(new PageSize(PageSize.A4));
-//
-//        InputStream adjustedPassageSvgInputStream = new ByteArrayInputStream(adjustedPassageSvgContent.getBytes(StandardCharsets.UTF_8));
-//        ISvgConverterProperties passageProperties = new SvgConverterProperties().setBaseUri("");
-//        SvgConverter.drawOnDocument(adjustedPassageSvgInputStream, pdf, pageNumber, passageProperties);
-//
-//        InputStream adjustedQuestionSvgInputStream = new ByteArrayInputStream(adjustedQuestionSvgContent.getBytes(StandardCharsets.UTF_8));
-//        ISvgConverterProperties questionProperties = new SvgConverterProperties().setBaseUri("");
-//        SvgConverter.drawOnDocument(adjustedQuestionSvgInputStream, pdf, pageNumber, questionProperties);
-//
-//
-//    }
-
 
 
     // 시험지 저장 페이지 api요청
@@ -337,8 +325,8 @@ public class ExamSaveService {
     }
 
     // 보관함 DB 저장
-    public void archiveSave(ExamSaveRequestDTO requestDTOS) {
-        String userId = "sky";
+    public void archiveSave(ExamSaveRequestDTO requestDTOS, String userId) {
+//        String userId = "sky";
 
         if(requestDTOS != null){
             Archive archive = new Archive();
@@ -348,7 +336,7 @@ public class ExamSaveService {
             archive.setName(requestDTOS.getExamName());
             archive.setTotal(requestDTOS.getShortAnswer()+ requestDTOS.getChoiceAnswer());
             archive.setQuestion(setPdfName(DEST, requestDTOS.getExamName(), userId));
-
+            archive.setPreviewImg(setPngName());
             archiveSaveRepository.save(archive);
         }
 
