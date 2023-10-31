@@ -117,6 +117,16 @@
                                                         th:data-summary-id="'summary-' + ${iterStat.count}"
                                                         th:item-id="${item.itemId}"
                                                         th:attr="data-item-id=${item.itemId}">
+                                    <div class="view-que-box" th:if="${item.passageUrl != null}">
+                                        <div class="que-top">
+                                            <div class="title">
+                                                <span class="num" th:text="${iterStat.count}"></span>
+                                            </div>
+                                        </div>
+                                        <div class="view-que">
+                                            <img th:src="${item.passageUrl}" alt="Question Image">
+                                        </div>
+                                    </div>
                                     <div class="view-que-box">
                                         <div class="que-top">
                                             <div class="title">
