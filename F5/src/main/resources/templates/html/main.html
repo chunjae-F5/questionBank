@@ -56,12 +56,81 @@
     #header-row > .col:hover {
         color: #3DB7CC;
     }
-</style>
 
-<body class="p-3 m-0 border-0 bd-example m-0 border-0 bd-example-row">
+    div, ul, li {
+        -webkit-box-sizing: border-box;
+        -moz-box-sizing: border-box;
+        box-sizing: border-box;
+        padding: 0;
+        margin: 0
+    }
+
+    a {
+        text-decoration: none;
+    }
+
+    .quickmenu {
+        position: absolute;
+        width: 90px;
+        top: 50%;
+        margin-top: -50px;
+        right: 10px;
+        background: #fff;
+    }
+
+    .quickmenu ul {
+        position: relative;
+        float: left;
+        width: 100%;
+        display: inline-block;
+        *display: inline;
+        border: 1px solid #ddd;
+    }
+
+    .quickmenu ul li {
+        float: left;
+        width: 100%;
+        border-bottom: 1px solid #ddd;
+        text-align: center;
+        display: inline-block;
+        *display: inline;
+    }
+
+    .quickmenu ul li a {
+        position: relative;
+        float: left;
+        width: 100%;
+        height: 30px;
+        line-height: 30px;
+        text-align: center;
+        color: #999;
+        font-size: 9.5pt;
+    }
+
+    .quickmenu ul li a:hover {
+        color: #000;
+    }
+
+    .quickmenu ul li:last-child {
+        border-bottom: 0;
+    }
+
+    .content {
+        position: relative;
+        min-height: 1000px;
+    }
+</style>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
         crossorigin="anonymous"></script>
+<script>
+    $(document).ready(function() {
+        $("#quickmenuContainer").load("quickmenu.html", function() {
+            // quickmenu.html이 로드된 후에 실행될 코드 (예: 이벤트 리스너 추가 등)
+        });
+    });
+</script>
+<body class="p-3 m-0 border-0 bd-example m-0 border-0 bd-example-row">
 <div class="container text-center">
     <div class="row" id="header-row">
         <div class="col">초등</div>
@@ -89,11 +158,7 @@
         </div>
     </div>
 </div>
-<script>
-    function submitItemId(element) {
-        var itemId = element.getAttribute('data-itemId');
-        window.location.href = `/category/select?itemId=${itemId}`;
-    }
-</script>
+
+<div th:insert="html/quickmenu.html :: quickmenuFrag"></div>
 </body>
 </html>

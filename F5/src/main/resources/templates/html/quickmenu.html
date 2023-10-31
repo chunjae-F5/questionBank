@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="kr" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+<!--로그인시 메뉴 변경되야함-->
+<!--로그인 전: 퀵 메뉴: 로그인, 회원가입, ^-->
+<!--로그인 후: 퀵 메뉴: 내 정보, 시험지 보관함, ^-->
+<div class="quickmenu" th:fragment="quickmenuFrag" th:data-loggedin="${isLoggedIn}">
+    <ul>
+    </ul>
+
+    <script>
+        $(document).ready(function () {
+            /*스크롤 따라가기*/
+            var currentPosition = parseInt($(".quickmenu").css("top"));
+            $(window).scroll(function () {
+                var position = $(window).scrollTop();
+                $(".quickmenu").stop().animate({"top": position + currentPosition + "px"}, 800);
+            });
+
+            // 로그인 상태에 따른 메뉴 변경
+            var isLoggedIn = $(".quickmenu").data('loggedin');
+            var menuUl = $(".quickmenu > ul");
+
+            if(isLoggedIn) {
+                // 로그인 한 경우
+                menuUl.html(`
+            <li style="background-color: #21b8ff">퀵 메뉴</li>
+            <li><a href="#">내 정보</a></li>
+            <li><a href="#">시험지 보관함</a></li>
+            <li><a href="/logout">로그 아웃</a></li>
+            <li><a href="#"><i class="bi bi-arrow-up"></i></a></li>
+        `);
+            } else {
+                // 로그인 안 한 경우
+                menuUl.html(`
+            <li style="background-color: #21b8ff">퀵 메뉴</li>
+            <li><a href="/login">로그인</a></li>
+            <li><a href="/register">회원가입</a></li>
+            <li><a href="#"><i class="bi bi-arrow-up"></i></a></li>
+        `);
+            }
+        });
+
+        function submitItemId(element) {
+            var itemId = element.getAttribute('data-itemId');
+            window.location.href = `/category/select?itemId=${itemId}`;
+        }
+    </script>
+</div>
+</body>
+</html>

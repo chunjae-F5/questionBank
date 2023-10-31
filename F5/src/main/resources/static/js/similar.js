@@ -180,8 +180,9 @@ function displaySimilarItems(similarItems, selectedDifficulty) {
                 queBottomDiv.className = 'que-bottom';
                 queBottomDiv.innerHTML = `
                     <div class="btn-wrap">
-                        <button type="button" class="btn-default" class="btn-add" class="add-button"><i class="add-type02"></i>추가</button>
-                        <button type="button" class="btn-default" class="replace-button"><i class="replace"></i>교체</button>
+<!--                        <button type="button" class="btn-default" class="btn-add" class="add-button"><i class="add-type02"></i>추가</button>-->
+                        <button type="button" class="btn-default btn-add" onclick="moveSortGroupToSource(this)"><i class="add-type02"></i> 추가</button>
+                        <button type="button" class="btn-default replace-button"><i class="replace"></i>교체</button>
                     </div>
                 `;
                 const queInfoLastDiv = document.createElement('div');
@@ -210,33 +211,26 @@ function displaySimilarItems(similarItems, selectedDifficulty) {
         similarItemsElement.innerHTML = noDataHtml;
     }
 }
-// // 추가 버튼 클릭 이벤트 리스너 추가
-// const addButton = document.querySelector('.add-type02'); // 여기에는 실제 버튼의 선택자를 사용해야 합니다.
-// addButton.addEventListener('click', () => {
-//     const originalDiv = document.querySelector('.original-div'); // 원래 있던 div의 선택자를 사용해야 합니다.
-//     const newDiv = document.createElement('div');
-//     newDiv.className = 'addSimilar'; // 새로운 div의 클래스 이름
-//
-//     // 새로운 div 내용 설정
-//     newDiv.innerHTML = `
-//         <p>새로운 문항</p>
-//         <button type="button" class="btn-remove">제거</button>
-//     `;
-//
-//     // 원래 있던 div를 숨김
-//     originalDiv.style.display = 'none';
-//
-//     // 새로운 div를 추가
-//     originalDiv.parentNode.insertBefore(newDiv, originalDiv);
-//
-//     // 제거 버튼 클릭 이벤트 리스너 추가
-//     const removeButton = newDiv.querySelector('.btn-remove');
-//     removeButton.addEventListener('click', () => {
-//         // 새로운 div를 제거하고 원래 있던 div를 다시 표시
-//         originalDiv.style.display = 'block';
-//         newDiv.parentNode.removeChild(newDiv);
-//     });
-// });
+
+// 추가 버튼 클릭 시, 왼쪽으로 문항 이동
+function moveSortGroupToSource(button) {
+    const itemId = button.getAttribute("data-item-id");
+    const sortGroups = document.querySelector('.sort-group[data-item-id="' + itemId + '"]');
+    const simQueAdd = document.getElementById("simQueAdd");
+
+    console.log("item: " + itemId);
+
+    if (sortGroups) {
+        const addButton = sortGroups.querySelector('.btn-add');
+        if (addButton) {
+            addButton.classList.remove('btn-add');
+            addButton.classList.add('btn-similar-que');
+            addButton.innerHTML = '<i class="similar"></i> 유사 문제';
+        }
+        simQueAdd.appendChild(sortGroups);
+    }
+}
+
 function getDifficultyColorClass(difficultyName) {
     switch (difficultyName) {
         case '상':

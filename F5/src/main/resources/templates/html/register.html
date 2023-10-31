@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>회원가입 페이지</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+    <link rel="stylesheet" th:href="@{/css/login.css}">
+    <link rel="stylesheet" th:href="@{/css/font.css}">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script th:src="@{/js/validate-user-info.js}"></script>
+</head>
+<body>
+<div class="login">
+    <!--  헤더  -->
+    <div class="login_header">
+        <h1 class="brand">
+            <a href="/">
+                <span>T_셀파</span>
+            </a>
+        </h1>
+    </div>
+
+    <!--  콘텐츠  -->
+    <div class="login_contents">
+        <div class="login_wrap">
+            <h2 class="tit_h2">회원가입</h2>
+
+            <form class="form" action="/register" method="POST" enctype="multipart/form-data">
+                <fieldset>
+                    <div class="login_box">
+                        <h3>개인 정보</h3>
+
+                        <!--아이디 중복 체크 필요-->
+                        <span id="userIdError" style="color: red; font-size: small"></span></br>
+                        <span id="idDuplicationMessage" style="font-size: small"></span>
+                        <div class="form-floating mb-3">
+                            <input type="text" class="form-control" id="floatingInput" placeholder="name@example.com" name="userId">
+                            <label for="floatingInput">아이디</label>
+                        </div>
+
+                        <span id="passwordError" style="color: red; font-size: small"></span>
+                        <div class="form-floating mb-3">
+                            <input type="password" class="form-control" id="floatingPassword" placeholder="Password" name="password">
+                            <label for="floatingPassword">비밀번호</label>
+                        </div>
+
+
+                        <span id="passwordCheckError" style="color: red; font-size: small"></span>
+                        <div class="form-floating mb-3">
+                            <input type="password" class="form-control" id="floatingPasswordCheck"
+                                   placeholder="Password" name="passwordCheck">
+                            <label for="floatingPasswordCheck">비밀번호 체크</label>
+                        </div>
+
+                        <span id="emailError" style="color: red; font-size: small"></span>
+                        <div class="form-floating mb-3">
+                            <input type="text" class="form-control" id="floatingInputEmail" placeholder="name@example.com" name="email">
+                            <label for="floatingInputEmail">이메일</label>
+                        </div>
+
+                        <span id="userNameError" style="color: red; font-size: small"></span>
+                        <div class="form-floating mb-3">
+                            <input type="text" class="form-control" id="floatingInputName" placeholder="name@example.com" name="username">
+                            <label for="floatingInputName">이름</label>
+                        </div>
+                    </div>
+
+                    <div>
+                        <h3>학원 정보</h3>
+                        <div class="form-floating mb-3">
+                            <input type="text" class="form-control" id="floatingAcaName"
+                                   placeholder="학원 이름" name="academyName">
+                            <label for="floatingAcaName">학원 이름</label>
+                        </div>
+
+                        <div class="form-floating mb-3">
+                            <input type="text" class="form-control" id="floatingAcaLocate"
+                                   placeholder="학원 위치" name="academyLocate">
+                            <label for="floatingAcaLocate">학원 위치</label>
+                        </div>
+
+                        <span id="validateFileError" style="color: red; font-size: small"></span>
+                        <div class="input-group mb-3">
+                            <label class="input-group-text" for="inputGroupFile01">학원 로고</label>
+                            <input type="file" class="form-control" id="inputGroupFile01" name="academyLogo">
+                        </div>
+
+                        <div class="full-box">
+                            <button type="submit" class="btn btn-primary">회원가입</button>
+                        </div>
+                    </div>
+                </fieldset>
+            </form>
+        </div>
+    </div>
+    <div class="login_footer">
+        <div class="dropup-center dropup">
+            <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown"
+                    aria-expanded="false">
+                T셀파 패밀리 사이트
+            </button>
+            <ul class="dropdown-menu">
+                <li><a class="dropdown-item" href="https://www.chunjae.co.kr/">천재교육</a></li>
+                <li><a class="dropdown-item" href="https://www.milkt.co.kr/">밀크티 초등</a></li>
+                <li><a class="dropdown-item" href="https://mid.milkt.co.kr/">밀크티 중학</a></li>
+                <li><a class="dropdown-item" href="https://hme.chunjae.co.kr/">HME 전국 해법수학 학력평가</a></li>
+                <li><a class="dropdown-item" href="https://mall.chunjae.co.kr/">천재교육 쇼핑몰</a></li>
+            </ul>
+        </div>
+
+        <ul class="terms">
+            <li><a href="info_policy.html?tab=policy1">이용약관</a></li>
+            ㅣ
+            <li><a href="info_policy.html?tab=policy2" style="color:#000">개인정보처리방침</a></li>
+        </ul>
+
+        <ul class="group_partners">
+            <li>
+                <strong>천재교육</strong>
+                대표 : 강희철, 최정민 ㅣ 주소 : 서울시 금천구 가산로 9길 54 <br>
+                사업자등록번호 : 119-81-19350 ㅣ 부가통신사업신고번호 : 016712
+            </li>
+            <li>
+                <strong>천재교과서</strong>
+                대표 : 박정과, 최돈용, 임형진 ㅣ <span class="address">주소 : 서울시 금천구 가산디지털1로 16, 2011호(가산동)</span><br>
+            </li>
+        </ul>
+
+        <p class="copyright">
+            COPYRIGHT© 2022 BY CHUNJAE CO.LTD ALL RIGHTS RESERVED.
+        </p>
+    </div>
+</div>
+</body>
+</html>
