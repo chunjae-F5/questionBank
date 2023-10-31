@@ -11,6 +11,8 @@ import java.util.Objects;
 public class ExamDto {
     public ExamDto (){}
 
+    public ExamDto (){}
+
     @Getter
     @Setter
 //    @AllArgsConstructor

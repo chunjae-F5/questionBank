@@ -88,7 +88,6 @@ public class ExamService {
                 itemList.add(responseDto);
             }
         }
-
         return itemList;
     }
 
