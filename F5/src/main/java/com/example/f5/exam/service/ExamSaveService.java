@@ -67,7 +67,7 @@ public class ExamSaveService {
                     question.setForm(processedData.getQuestionFormName());
                     question.setLevel(processedData.getDifficultyName());
                     question.setQuestionFile(processedData.getQuestionUrl());
-                    question.setContentFile(processedData.getPassageUrl());
+                    question.setContentFile(processedData.getPassageUrl() != null ? processedData.getPassageUrl() : "");
 
                     questions.add(question);
                 }
@@ -104,7 +104,7 @@ public class ExamSaveService {
         List<String> passageUrls = new ArrayList<>();
         List<String> questionUrls = new ArrayList<>();
         for(int i = 0; i < requestDTOS.getProcessedData().size(); i++){
-            passageUrls.add(requestDTOS.getProcessedData().get(i).getPassageUrl());
+            passageUrls.add(requestDTOS.getProcessedData().get(i).getPassageUrl().isEmpty() && requestDTOS.getProcessedData().get(i).getPassageUrl() == null ? "" : requestDTOS.getProcessedData().get(i).getPassageUrl());
             questionUrls.add(requestDTOS.getProcessedData().get(i).getQuestionUrl());
         }
 
@@ -142,6 +142,11 @@ public class ExamSaveService {
 
         // Body
         for(int i = 0; i< passageUrls.size(); i++){
+//            if(passageUrls.get(i).isEmpty() || passageUrls.get(i) == null){
+//
+//            }else{
+//
+//            }
             convertSvgToPdf(pdf, document, passageUrls.get(i), questionUrls.get(i));
         }
 
@@ -174,18 +179,27 @@ public class ExamSaveService {
         // Get the PdfCanvas for drawing
         PdfCanvas canvas = new PdfCanvas(page);
 
-        // Adjust the SVG content as needed (e.g., width and height)
-        String adjustedPassageSvgContent = adjustSvgContent(passageSvgUrl);
-        String adjustedQuestionSvgContent = adjustSvgContent(questionSvgUrl);
+        if(passageSvgUrl.isEmpty() || passageSvgUrl == null){
+            String adjustedQuestionSvgContent = adjustSvgContent(questionSvgUrl);
 
-        // Draw the adjusted SVG content on the page
-        InputStream adjustedPassageSvgInputStream = new ByteArrayInputStream(adjustedPassageSvgContent.getBytes(StandardCharsets.UTF_8));
-        InputStream adjustedQuestionSvgInputStream = new ByteArrayInputStream(adjustedQuestionSvgContent.getBytes(StandardCharsets.UTF_8));
-        ISvgConverterProperties passageProperties = new SvgConverterProperties().setBaseUri("");
-        SvgConverter.drawOnCanvas(adjustedPassageSvgInputStream, canvas, passageProperties);
+            InputStream adjustedQuestionSvgInputStream = new ByteArrayInputStream(adjustedQuestionSvgContent.getBytes(StandardCharsets.UTF_8));
 
-        ISvgConverterProperties questionProperties = new SvgConverterProperties().setBaseUri("");
-        SvgConverter.drawOnCanvas(adjustedQuestionSvgInputStream, canvas, questionProperties);
+            ISvgConverterProperties questionProperties = new SvgConverterProperties().setBaseUri("");
+            SvgConverter.drawOnCanvas(adjustedQuestionSvgInputStream, canvas, questionProperties);
+
+        }else{
+            String adjustedPassageSvgContent = adjustSvgContent(passageSvgUrl);
+            String adjustedQuestionSvgContent = adjustSvgContent(questionSvgUrl);
+
+            InputStream adjustedPassageSvgInputStream = new ByteArrayInputStream(adjustedPassageSvgContent.getBytes(StandardCharsets.UTF_8));
+            InputStream adjustedQuestionSvgInputStream = new ByteArrayInputStream(adjustedQuestionSvgContent.getBytes(StandardCharsets.UTF_8));
+            ISvgConverterProperties passageProperties = new SvgConverterProperties().setBaseUri("");
+            SvgConverter.drawOnCanvas(adjustedPassageSvgInputStream, canvas, passageProperties);
+
+            ISvgConverterProperties questionProperties = new SvgConverterProperties().setBaseUri("");
+            SvgConverter.drawOnCanvas(adjustedQuestionSvgInputStream, canvas, questionProperties);
+
+        }
 
     }
     private String adjustSvgContent(String svgUrl) throws IOException {
@@ -305,21 +319,12 @@ public class ExamSaveService {
                         itemInfo.setItemId(itemObject.get("itemId").getAsInt());
                         itemInfo.setQuestionFormCode(itemObject.get("questionFormCode").getAsString());
                         itemInfo.setQuestionFormName(itemObject.get("questionFormName").getAsString());
-//                        itemInfo.setDifficultyCode(itemObject.get("difficultyCode").getAsString());
                         itemInfo.setDifficultyName(itemObject.get("difficultyName").getAsString());
-//                        itemInfo.setLargeChapterId(itemObject.get("largeChapterId").getAsInt());
                         itemInfo.setLargeChapterName(itemObject.get("largeChapterName").getAsString());
-//                        itemInfo.setMediumChapterId(itemObject.get("mediumChapterId").getAsInt());
                         itemInfo.setMediumChapterName(itemObject.get("mediumChapterName").getAsString());
-//                        itemInfo.setSmallChapterId(itemObject.get("smallChapterId").getAsInt());
-//                        itemInfo.setSmallChapterName(itemObject.get("smallChapterName").getAsString());
-//                        itemInfo.setTopicChapterId(itemObject.get("topicChapterId").getAsInt());
-//                        itemInfo.setTopicChapterName(itemObject.get("topicChapterName").getAsString());
-                        itemInfo.setPassageId(itemObject.get("passageId").getAsInt());
-                        itemInfo.setPassageUrl(itemObject.get("passageUrl").getAsString());
+                        itemInfo.setPassageId(itemObject.has("passageId") && !itemObject.get("passageId").isJsonNull() ? itemObject.get("passageId").getAsInt() : 0);
+                        itemInfo.setPassageUrl(itemObject.has("passageUrl") && !itemObject.get("passageUrl").isJsonNull() ? itemObject.get("passageUrl").getAsString() : "");
                         itemInfo.setQuestionUrl(itemObject.get("questionUrl").getAsString());
-//                        itemInfo.setAnswerUrl(itemObject.get("answerUrl").getAsString());
-//                        itemInfo.setExplainUrl(itemObject.get("explainUrl").getAsString());
 
                         itemInfoList.add(itemInfo);
                     }
