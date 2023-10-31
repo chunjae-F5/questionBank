@@ -129,10 +129,8 @@
                                                 </div>
                                             </div>
                                             <div class="btn-wrap">
-                                                <button type="button" class="btn-error pop-btn"
-                                                        data-pop="error-report-pop"></button>
-                                                <button type="button" class="btn-delete" th:attr="data-item-id=${item.itemId}" onclick="moveSortGroupToTarget(this)"  ></button>
-
+                                                <button type="button" class="btn-error pop-btn" data-pop="error-report-pop"></button>
+                                                <button type="button" class="btn-delete" th:attr="data-item-id=${item.itemId}" onclick="moveSortGroupToTarget(this)"></button>
                                             </div>
                                         </div>
                                         <div class="view-que">
@@ -281,8 +279,8 @@
                             </div>
                             <script th:src="@{/js/similar.js}"></script>
 
-                            <div class="contents" id="targetDiv">
-                                탭 컨텐츠 (3)
+                            <div class="view-que-list scroll-inner contents" id="targetDiv">
+                                <div class="cnt-top">
                             </div>
                             <script th:inline="javascript">
                                 function moveSortGroupToTarget(button) {
@@ -294,6 +292,12 @@
                                     const targetDiv = document.getElementById("targetDiv");
 
                                     if (sortGroups) {
+                                        const similarButton = sortGroups.querySelector('.btn-similar-que');
+                                        if (similarButton) {
+                                            similarButton.classList.remove('btn-similar-que');
+                                            similarButton.classList.add('btn-add');
+                                            similarButton.innerHTML = '<i class="add-type02"></i> 추가';
+                                        }
                                         targetDiv.appendChild(sortGroups);
                                     }
                                 }
