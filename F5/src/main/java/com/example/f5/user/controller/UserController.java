@@ -1,8 +1,10 @@
 package com.example.f5.user.controller;
 
+import ch.qos.logback.core.model.Model;
 import com.example.f5.user.dto.UserDto;
 import com.example.f5.user.service.UserService;
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -56,5 +58,15 @@ public class UserController {
         response.put("isDuplicated", isDuplicated);
 
         return ResponseEntity.ok(response);
+    }
+
+    /*로그아웃*/
+    @GetMapping("/logout")
+    public String logout(HttpServletRequest request) {
+        HttpSession session = request.getSession(false);
+        if (session != null) {
+            session.invalidate();
+        }
+        return "redirect:/";
     }
 }
