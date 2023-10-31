@@ -159,7 +159,7 @@ function displaySimilarItems(similarItems, selectedDifficulty) {
                 queBottomDiv.innerHTML = `
                     <div class="btn-wrap">
 <!--                        <button type="button" class="btn-default" class="btn-add" class="add-button"><i class="add-type02"></i>추가</button>-->
-                        <button type="button" class="btn-default btn-add" onclick="moveSortGroupToSource(this)"><i class="add-type02"></i> 추가</button>
+                        <button type="button" class="btn-default btn-add" data-item-id=${item.itemId} onclick="moveSortGroupToSource(this)"><i class="add-type02"></i> 추가</button>
                     </div>
                 `;
 
@@ -206,14 +206,16 @@ function moveSortGroupToSource(button) {
     const sortGroups = document.querySelector('.sort-group[data-item-id="' + itemId + '"]');
     const simQueAdd = document.getElementById("simQueAdd");
 
-    console.log("item: " + itemId);
+    console.log("ㅇitem: " + itemId);
+    console.log(sortGroups);
 
     if (sortGroups) {
-        const addButton = sortGroups.querySelector('.btn-add');
-        if (addButton) {
-            addButton.classList.remove('btn-add');
-            addButton.classList.add('btn-similar-que');
-            addButton.innerHTML = '<i class="similar"></i> 유사 문제';
+        //"추가" 버튼을 "유사문제" 버튼으로 변경
+        const similarAddButton = sortGroups.querySelector('.btn-add');
+        if (similarAddButton) {
+            similarAddButton.classList.remove('btn-add');
+            similarAddButton.classList.add('btn-similar-que');
+            similarAddButton.innerHTML = '<i class="similar"></i> 유사 문제';
         }
         simQueAdd.appendChild(sortGroups);
     }
