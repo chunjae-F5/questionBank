@@ -282,7 +282,6 @@
                             <script th:src="@{/js/similar.js}"></script>
 
                             <div class="contents" id="targetDiv">
-                                탭 컨텐츠 (3)
                             </div>
                             <script th:inline="javascript">
                                 function moveSortGroupToTarget(button) {
@@ -298,8 +297,7 @@
                                     }
                                 }
                             </script>
-
-                            <script type="text/javascript"><!--onclick="deleteItem(this)"-->
+                            <!--<script type="text/javascript">&lt;!&ndash;onclick="deleteItem(this)"&ndash;&gt;
                             function deleteItem(button) {
                                 // 클릭한 버튼의 data-item-id 속성을 읽어옴
                                 const itemId = button.getAttribute("data-item-id");
@@ -310,7 +308,7 @@
                                     elementToDelete.remove();
                                 }
                             }
-                            </script>
+                            </script>-->
                         </div>
                     </div>
                 </div>
@@ -472,7 +470,6 @@
                     $('.view-que-box').removeClass('active');
                     $('.view-que-box').eq(_idx).addClass('active');
                 }
-                ;
 
             })
         }
