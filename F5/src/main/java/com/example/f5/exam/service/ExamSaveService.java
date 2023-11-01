@@ -108,7 +108,7 @@ public class ExamSaveService {
     }
 
     // pdf 생성
-    public void generatePdf(ExamSaveRequestDTO requestDTOS, String userid, String username) throws IOException {
+    public void generatePdf(ExamSaveRequestDTO requestDTOS, String userId, String username) throws IOException {
 
         // DTO에서 지문, 문제 url 각 배열에 담기
         List<String> passageUrls = new ArrayList<>();
@@ -121,16 +121,11 @@ public class ExamSaveService {
         // DTO에서 필요한 값 변수에 담기
         String examName = requestDTOS.getExamName();
         int totQuestion = requestDTOS.getChoiceAnswer() + requestDTOS.getShortAnswer();
-//        String userName = "뫄뫄선생님";
         String userName = username + " 선생님";
         String name = "이름: ";
         String date = String.valueOf(LocalDate.now());
         String topLine = totQuestion + "문제 | " + userName + " | " + name;
         String day = "일일";
-
-        // 임시 유저아이디
-//        String userId = "sky";
-        String userId = userid;
 
         // PDF객체 생성
         String pdfFilePath = setPdfName(DEST, requestDTOS.getExamName(), userId);

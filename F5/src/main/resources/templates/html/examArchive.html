@@ -242,7 +242,12 @@
     }
 
     .text-center {
-        text-align: center!important;
+        text-align: center !important;
+    }
+
+    .fix-span{
+        height: 70px;
+        padding-bottom: 14px;
     }
 
 </style>
@@ -250,8 +255,8 @@
         integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
         crossorigin="anonymous"></script>
 <script>
-    $(document).ready(function() {
-        $("#quickmenuContainer").load("quickmenu.html", function() {
+    $(document).ready(function () {
+        $("#quickmenuContainer").load("quickmenu.html", function () {
             // quickmenu.html이 로드된 후에 실행될 코드 (예: 이벤트 리스너 추가 등)
         });
     });
@@ -259,27 +264,27 @@
 <body class="p-3 m-0 border-0 bd-example m-0 border-0 bd-example-row">
 <!--<div id="wrap" class="full-pop-que scroll-inner">-->
 <!--    <div class="full-pop-wrap">-->
-    <div class="container text-center">
-        <div class="row" id="header-row">
-<!--        <div class="pop-header">-->
-            <div class="col"><a href="/">초등</a></div>
-            <div class="col"><a href="/">중등</a></div>
-            <div class="col"><a href="/">고등</a></div>
-            <div class="col"><a href="/exam-archive/list">시험지 보관함</a></div>
-        </div>
+<div class="container text-center scroll-inner">
+    <div class="row" id="header-row">
+        <!--        <div class="pop-header">-->
+        <div class="col"><a href="/">초등</a></div>
+        <div class="col"><a href="/">중등</a></div>
+        <div class="col"><a href="/">고등</a></div>
+        <div class="col"><a href="/exam-archive/list">시험지 보관함</a></div>
     </div>
+</div>
 <div id="wrap" class="full-pop-que scroll-inner">
     <div class="full-pop-wrap">
         <!--card example-->
-        <div class="pop-content">
-            <div class="view-box scroll-inner">
+        <div class="pop-content scroll-inner">
+            <div class="view-box">
                 <div class="view-bottom type02">
 
                     <div class="type-form">
                         <h2 class="title-archive">문제지 보관함</h2>
                     </div>
                 </div>
-                <div class="tab-list-type01">
+                <div class="tab-list-type01 scroll-inner">
                     <div class="table">
                         <div class="fix-head">
                             <span>번호</span>
@@ -290,7 +295,7 @@
                             <span>다운로드</span>
                         </div>
                         <div class="tbody">
-                            <div class="scroll-inner">
+                            <div class="scroll-inner" style="height: 40rem; padding-top: 15px; padding-bottom: 30px;">
                                 <div class="fix-span" th:each="list : ${archiveList}">
                                     <span th:text="${listStat.count}"></span>
                                     <span th:text="${#temporals.format(list.createdDate, 'yyyy-MM-dd')}"></span>
