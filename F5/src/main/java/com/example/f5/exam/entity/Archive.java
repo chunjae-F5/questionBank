@@ -34,6 +34,10 @@ public class Archive extends BaseTimeEntity {
     @Comment(value = "문제지")
     private String question;
 
+    @Column(name = "preview_img", nullable = false)
+    @Comment(value = "미리보기 이미지")
+    private String previewImg;
+
     @Column(name = "flag", nullable = false, length = 50)
     @Comment(value = "분류 (H: 고 M: 중 E:초)")
     private String flag;

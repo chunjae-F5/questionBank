@@ -253,6 +253,28 @@
 			subjectSpan.textContent = subjectName;
 		});
 
+		// 시험지명 특수문자 필터링
+		function filterSpecialCharacters(inputField) {
+			// 입력 필드의 값을 가져옵니다.
+			let inputValue = inputField.value;
+
+			// 특수문자를 허용하지 않는 정규식 패턴을 만듭니다.
+			let pattern = /[^a-zA-Z0-9가-힣ㄱ-ㅎㅏ-ㅣ\s]+/g;
+
+			// 정규식 패턴을 사용하여 특수문자를 필터링합니다.
+			let filteredValue = inputValue.replace(pattern, '');
+
+			// 필터링된 값을 입력 필드에 설정합니다.
+			inputValue.value = filteredValue;
+
+			// 필터링된 값과 원래 값이 다를 경우 오류 메시지를 표시합니다.
+			if (filteredValue !== inputValue) {
+				document.getElementById("errorMessage").textContent = "특수문자는 입력할 수 없습니다.";
+			} else {
+				document.getElementById("errorMessage").textContent = "";
+			}
+		}
+
 	</script>
 	<script th:inline="javascript">
 		/* JavaScript code here */
@@ -290,7 +312,8 @@
 							<span>시험지명</span>
 							<div class="search-wrap">
 								<div class="search-box">
-									<input type="text" placeholder="시험지명을 입력해주세요. (최대 20자)" maxlength="20" class="search" id="inputValue">
+									<input type="text" placeholder="시험지명을 입력해주세요. (최대 20자)" maxlength="20" class="search" id="inputValue" oninput="filterSpecialCharacters(this)">
+									<p id="errorMessage" style="color: red;"></p>
 								</div>
 							</div>
 						</div>
