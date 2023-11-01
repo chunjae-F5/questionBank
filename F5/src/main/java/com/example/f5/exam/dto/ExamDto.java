@@ -106,6 +106,13 @@ public class ExamDto {
                     MediumChapter that = (MediumChapter) o;
                     return Objects.equals(mediumChapterId, that.mediumChapterId);
                 }
+//                @Override
+//                public boolean equals(Object o) {
+//                    if (this == o) return true;
+//                    if (o == null || getClass() != o.getClass()) return false;
+//                    ExamDto.Curriculum.LargeChapter.MediumChapter that = (ExamDto.Curriculum.LargeChapter.MediumChapter) o;
+//                    return Objects.equals(mediumChapterId, that.mediumChapterId);
+//                }
 
                 @Override
                 public int hashCode() {
@@ -126,6 +133,13 @@ public class ExamDto {
                         SmallChapter that = (SmallChapter) o;
                         return Objects.equals(smallChapterId, that.smallChapterId);
                     }
+//                    @Override
+//                    public boolean equals(Object o) {
+//                        if (this == o) return true;
+//                        if (o == null || getClass() != o.getClass()) return false;
+//                        ExamDto.Curriculum.LargeChapter.MediumChapter.SmallChapter that = (ExamDto.Curriculum.LargeChapter.MediumChapter.SmallChapter) o;
+//                        return Objects.equals(smallChapterId, that.smallChapterId);
+//                    }
 
                     @Override
                     public int hashCode() {
@@ -145,6 +159,13 @@ public class ExamDto {
                             TopicChapter that = (TopicChapter) o;
                             return Objects.equals(topicChapterId, that.topicChapterId);
                         }
+//                        @Override
+//                        public boolean equals(Object o) {
+//                            if (this == o) return true;
+//                            if (o == null || getClass() != o.getClass()) return false;
+//                            ExamDto.Curriculum.LargeChapter.MediumChapter.SmallChapter.TopicChapter that = (ExamDto.Curriculum.LargeChapter.MediumChapter.SmallChapter.TopicChapter) o;
+//                            return Objects.equals(topicChapterId, that.topicChapterId);
+//                        }
 
                         @Override
                         public int hashCode() {
