@@ -32,7 +32,7 @@ public class ExamService {
             totalCount += requestDto.getLevelCnt().get(i);
         }
 
-        if (totalCount != itemArray.size()){
+        if (totalCount != itemArray.size()) {
             for (int i = 0; i < totalCount; i++) {
                 JsonElement itemElement = itemArray.get(i);
                 ExamDto.itemInfoResponse responseDto = new ExamDto.itemInfoResponse();
@@ -45,11 +45,11 @@ public class ExamService {
                 responseDto.setAnswerUrl(itemObject.get("answerUrl").getAsString());
                 responseDto.setExplainUrl(itemObject.get("explainUrl").getAsString());
 
-                if (itemObject.get("passageUrl") != null && !itemObject.get("passageUrl").isJsonNull()){
+                if (itemObject.get("passageUrl") != null && !itemObject.get("passageUrl").isJsonNull()) {
                     responseDto.setPassageUrl(itemObject.get("passageUrl").getAsString());
                 }
 
-                if (Integer.parseInt(itemObject.get("questionFormCode").getAsString()) <= 50){
+                if (Integer.parseInt(itemObject.get("questionFormCode").getAsString()) <= 50) {
                     responseDto.setQuestionFormName("객관식");
                 } else {
                     responseDto.setQuestionFormName("주관식");
@@ -70,10 +70,6 @@ public class ExamService {
                 responseDto.setQuestionUrl(itemObject.get("questionUrl").getAsString());
                 responseDto.setAnswerUrl(itemObject.get("answerUrl").getAsString());
                 responseDto.setExplainUrl(itemObject.get("explainUrl").getAsString());
-
-                // questionFormCode 50이하면 객관식으로 변형해서 담고, 50초과면 주관식으로 담기
-                // questionFormCode를 인트로 파싱해서 해야됨
-                // 여기에  questionFormCode를 questionFormName으로 변경해서 딤기
 
                 if (itemObject.get("passageUrl") != null && !itemObject.get("passageUrl").isJsonNull()) {
                     responseDto.setPassageUrl(itemObject.get("passageUrl").getAsString());

@@ -67,7 +67,8 @@ public class QuestionController {
         // JSON 문자열을 다시 배열로 변환
         ObjectMapper objectMapper = new ObjectMapper();
         try {
-            List<Integer> itemIdList = objectMapper.readValue(itemIdArray, new TypeReference<List<Integer>>() {});
+            List<Integer> itemIdList = objectMapper.readValue(itemIdArray, new TypeReference<List<Integer>>() {
+            });
 
             // itemIdList를 모델에 추가하여 다음 페이지로 전달
             ModelAndView modelAndView = new ModelAndView("html/sub04_01");

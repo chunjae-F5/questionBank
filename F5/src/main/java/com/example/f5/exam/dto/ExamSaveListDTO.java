@@ -25,19 +25,19 @@ public class ExamSaveListDTO {
         private String questionFormCode;
         @JsonProperty("questionFormName")
         private String questionFormName;
-//        @JsonProperty("difficultyCode")
+        //        @JsonProperty("difficultyCode")
 //        private String difficultyCode;
         @JsonProperty("difficultyName")
         private String difficultyName;
-//        @JsonProperty("largeChapterId")
+        //        @JsonProperty("largeChapterId")
 //        private int largeChapterId;
         @JsonProperty("largeChapterName")
         private String largeChapterName;
-//        @JsonProperty("mediumChapterId")
+        //        @JsonProperty("mediumChapterId")
 //        private int mediumChapterId;
         @JsonProperty("mediumChapterName")
         private String mediumChapterName;
-//        @JsonProperty("smallChapterId")
+        //        @JsonProperty("smallChapterId")
 //        private int smallChapterId;
 //        @JsonProperty("smallChapterName")
 //        private String smallChapterName;
@@ -56,7 +56,8 @@ public class ExamSaveListDTO {
 //        @JsonProperty("explainUrl")
 //        private String explainUrl;
 
-        public ItemInfo () {}
+        public ItemInfo() {
+        }
 
     }
 

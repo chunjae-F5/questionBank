@@ -8,11 +8,13 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 @Component
 @RequiredArgsConstructor
 public class WebConfig implements WebMvcConfigurer {
-    private final  LoginInterceptor loginInterceptor;
+    private final LoginInterceptor loginInterceptor;
 
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
         registry.addInterceptor(loginInterceptor)
-                .addPathPatterns("/category/*");
+                .addPathPatterns("/category/*")
+                .addPathPatterns("/exam-archive/*")
+                .addPathPatterns("/exam-save/*");
     }
 }
