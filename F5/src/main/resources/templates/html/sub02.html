@@ -567,7 +567,7 @@
     // 팝업창에서 저장 누르면 난이도 재분배 기능
     function updateLevelCount() {
         // data-value에 값 저장
-        const lowestInput = document.querySelector('.lowestInput').value;
+        const lowestinput = document.querySelector('.lowestInput').value;
         const lowInput = document.querySelector('.lowInput').value;
         const mediumInput = document.querySelector('.mediumInput').value;
         const highInput = document.querySelector('.highInput').value;
@@ -775,10 +775,9 @@
                     throw new Error('Failed to send JSON data');
                 }
             })
-        // .then(data => {
-        //     window.location.href = data.url;
-        // })
-
+        .then(data => {
+            window.location.href = data.url;
+        })
 
     }
 
