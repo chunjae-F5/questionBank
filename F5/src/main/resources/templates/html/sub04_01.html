@@ -18,19 +18,19 @@
 	<script th:src="@{/js/common.js}"></script>
 
 	<script>
-		// 배열 초기화
-		const array = [
-			494580,
-			494581,
-			494582,
-			494583,
-			494584,
-			494585,
-			494586,
-			494587,
-			494588,
-			494589
-		];
+		// // 배열 초기화
+		// const array = [
+		// 	494580,
+		// 	494581,
+		// 	494582,
+		// 	494583,
+		// 	494584,
+		// 	494585,
+		// 	494586,
+		// 	494587,
+		// 	494588,
+		// 	494589
+		// ];
 
 		let data = [];
 
@@ -46,7 +46,7 @@
 
 		// 데이터를 서버로부터 가져오는 함수
 		function fetchData() {
-			const requestBody = JSON.stringify({itemIdList: array});
+			const requestBody = JSON.stringify({itemIdList: itemList});
 
 			return fetch(`/exam-save/list`, {
 				method: 'POST',
@@ -243,16 +243,26 @@
 			}
 		});
 
+		// subjectName 불러오기
+		document.addEventListener('DOMContentLoaded', function (){
+			// 세션 스토리지에서 subjectName 값 가져오기
+			const subjectName = sessionStorage.getItem("subjectName");
+
+			// span 요소에 값을 설정
+			const subjectSpan = document.getElementById('subjectName');
+			subjectSpan.textContent = subjectName;
+		});
+
 	</script>
 	<script th:inline="javascript">
 		/* JavaScript code here */
-		var itemList = [[${itemIdList}]]; // 타임리프를 사용하여 데이터를 JavaScript 변수에 할당
-		console.log(itemList); // itemList 변수에 데이터가 저장됨
+		let itemList = [[${itemIdList}]]; // 타임리프를 사용하여 데이터를 JavaScript 변수에 할당
+		console.log('itemList: '+itemList); // itemList 변수에 데이터가 저장됨
 	</script>
 
 </head>
 <body>
-<div id="wrap" class="full-pop-que">
+<div id="wrap" class="full-pop-que scroll-inner">
 	<div class="full-pop-wrap">
 		<div class="pop-header">
 			<ul class="title">
@@ -266,8 +276,9 @@
 			<div class="view-box">
 				<div class="view-top">
 					<div class="paper-info">
-						<span>수학 1</span>
-						이준열(2015)
+						<span id="subjectName"></span>
+<!--						<span>수학 1</span>-->
+<!--						이준열(2015)-->
 					</div>
 					<div class="btn-wrap">
 						<button class="btn-default" id="moveFirstPageButton">처음으로</button>

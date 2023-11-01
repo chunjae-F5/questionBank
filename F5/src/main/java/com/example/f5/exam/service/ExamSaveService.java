@@ -3,8 +3,10 @@ package com.example.f5.exam.service;
 import com.example.f5.exam.dto.ExamSaveListDTO;
 import com.example.f5.exam.dto.ExamSaveListRequestDTO;
 import com.example.f5.exam.dto.ExamSaveRequestDTO;
+import com.example.f5.exam.entity.Archive;
 import com.example.f5.exam.entity.Exam;
 import com.example.f5.exam.entity.Question;
+import com.example.f5.exam.repository.ArchiveSaveRepository;
 import com.example.f5.exam.repository.ExamSaveRepository;
 import com.example.f5.exam.repository.QuestionSaveRepository;
 import com.google.gson.Gson;
@@ -20,8 +22,6 @@ import com.itextpdf.kernel.pdf.PdfPage;
 import com.itextpdf.kernel.pdf.PdfWriter;
 import com.itextpdf.kernel.pdf.canvas.PdfCanvas;
 import com.itextpdf.layout.Document;
-import com.itextpdf.layout.element.AreaBreak;
-import com.itextpdf.layout.properties.AreaBreakType;
 import com.itextpdf.svg.converter.SvgConverter;
 import com.itextpdf.svg.processors.ISvgConverterProperties;
 import com.itextpdf.svg.processors.impl.SvgConverterProperties;
@@ -36,6 +36,7 @@ import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.nio.charset.StandardCharsets;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -47,10 +48,11 @@ public class ExamSaveService {
 
     private final QuestionSaveRepository questionSaveRepository;
     private final ExamSaveRepository examSaveRepository;
+    private final ArchiveSaveRepository archiveSaveRepository;
 
     private final Gson gson;
 
-    public static final String DEST = "D:\\pdf_file\\exam_file.pdf";
+    public static final String DEST = "D:\\pdf_file\\";
 
     // 문제 테이블 저장
     public void questionSave(ExamSaveRequestDTO dtos) {
@@ -65,7 +67,7 @@ public class ExamSaveService {
                     question.setForm(processedData.getQuestionFormName());
                     question.setLevel(processedData.getDifficultyName());
                     question.setQuestionFile(processedData.getQuestionUrl());
-                    question.setContentFile(processedData.getPassageUrl());
+                    question.setContentFile(processedData.getPassageUrl() != null ? processedData.getPassageUrl() : "");
 
                     questions.add(question);
                 }
@@ -102,7 +104,7 @@ public class ExamSaveService {
         List<String> passageUrls = new ArrayList<>();
         List<String> questionUrls = new ArrayList<>();
         for(int i = 0; i < requestDTOS.getProcessedData().size(); i++){
-            passageUrls.add(requestDTOS.getProcessedData().get(i).getPassageUrl());
+            passageUrls.add(requestDTOS.getProcessedData().get(i).getPassageUrl().isEmpty() && requestDTOS.getProcessedData().get(i).getPassageUrl() == null ? "" : requestDTOS.getProcessedData().get(i).getPassageUrl());
             questionUrls.add(requestDTOS.getProcessedData().get(i).getQuestionUrl());
         }
 
@@ -115,8 +117,11 @@ public class ExamSaveService {
         String topLine = totQuestion + "문제 | " + userName + " | " + name;
         String day = "일일";
 
+        // 임시 유저아이디
+        String userId = "sky";
+
         // PDF객체 생성
-        PdfDocument pdf = new PdfDocument(new PdfWriter(DEST));
+        PdfDocument pdf = new PdfDocument(new PdfWriter(setPdfName(DEST, requestDTOS.getExamName(), userId)));
         Document document = new Document(pdf);
 
         Color mainLineColor = new DeviceCmyk(100, 0, 20, 0);
@@ -137,6 +142,11 @@ public class ExamSaveService {
 
         // Body
         for(int i = 0; i< passageUrls.size(); i++){
+//            if(passageUrls.get(i).isEmpty() || passageUrls.get(i) == null){
+//
+//            }else{
+//
+//            }
             convertSvgToPdf(pdf, document, passageUrls.get(i), questionUrls.get(i));
         }
 
@@ -145,9 +155,20 @@ public class ExamSaveService {
         System.out.println("pdf create success!");
     }
 
+    // PDF 파일 이름 변경
+    private String setPdfName(String dest, String examName, String userId) {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        LocalDate date = LocalDate.parse(LocalDate.now().format(formatter));
+        String dateParse = String.valueOf(date).replaceAll("-", "");
+        String pdfName = dest + "exam_" + userId + "_" + examName + "_" + dateParse;
+        String extension = ".pdf";
+
+        return pdfName + extension;
+    }
+
     private void convertSvgToPdf(PdfDocument pdf, Document document, String passageSvgUrl, String questionSvgUrl) throws IOException {
         // Create a new A4-sized page
-        document.add(new AreaBreak(AreaBreakType.NEXT_PAGE));
+//        document.add(new AreaBreak(AreaBreakType.NEXT_PAGE));
 
         // Create a new page for drawing
         PdfPage page = pdf.addNewPage(PageSize.A4);
@@ -158,18 +179,27 @@ public class ExamSaveService {
         // Get the PdfCanvas for drawing
         PdfCanvas canvas = new PdfCanvas(page);
 
-        // Adjust the SVG content as needed (e.g., width and height)
-        String adjustedPassageSvgContent = adjustSvgContent(passageSvgUrl);
-        String adjustedQuestionSvgContent = adjustSvgContent(questionSvgUrl);
+        if(passageSvgUrl.isEmpty() || passageSvgUrl == null){
+            String adjustedQuestionSvgContent = adjustSvgContent(questionSvgUrl);
 
-        // Draw the adjusted SVG content on the page
-        InputStream adjustedPassageSvgInputStream = new ByteArrayInputStream(adjustedPassageSvgContent.getBytes(StandardCharsets.UTF_8));
-        InputStream adjustedQuestionSvgInputStream = new ByteArrayInputStream(adjustedQuestionSvgContent.getBytes(StandardCharsets.UTF_8));
-        ISvgConverterProperties passageProperties = new SvgConverterProperties().setBaseUri("");
-        SvgConverter.drawOnCanvas(adjustedPassageSvgInputStream, canvas, passageProperties);
+            InputStream adjustedQuestionSvgInputStream = new ByteArrayInputStream(adjustedQuestionSvgContent.getBytes(StandardCharsets.UTF_8));
 
-        ISvgConverterProperties questionProperties = new SvgConverterProperties().setBaseUri("");
-        SvgConverter.drawOnCanvas(adjustedQuestionSvgInputStream, canvas, questionProperties);
+            ISvgConverterProperties questionProperties = new SvgConverterProperties().setBaseUri("");
+            SvgConverter.drawOnCanvas(adjustedQuestionSvgInputStream, canvas, questionProperties);
+
+        }else{
+            String adjustedPassageSvgContent = adjustSvgContent(passageSvgUrl);
+            String adjustedQuestionSvgContent = adjustSvgContent(questionSvgUrl);
+
+            InputStream adjustedPassageSvgInputStream = new ByteArrayInputStream(adjustedPassageSvgContent.getBytes(StandardCharsets.UTF_8));
+            InputStream adjustedQuestionSvgInputStream = new ByteArrayInputStream(adjustedQuestionSvgContent.getBytes(StandardCharsets.UTF_8));
+            ISvgConverterProperties passageProperties = new SvgConverterProperties().setBaseUri("");
+            SvgConverter.drawOnCanvas(adjustedPassageSvgInputStream, canvas, passageProperties);
+
+            ISvgConverterProperties questionProperties = new SvgConverterProperties().setBaseUri("");
+            SvgConverter.drawOnCanvas(adjustedQuestionSvgInputStream, canvas, questionProperties);
+
+        }
 
     }
     private String adjustSvgContent(String svgUrl) throws IOException {
@@ -187,9 +217,21 @@ public class ExamSaveService {
         inputStream.close();
 
         // Adjust the width and height in the SVG content as needed
+//        return svgContent.toString()
+//                .replaceFirst("width=\"\\s+\"", "width=\"50%\"")
+//                .replaceFirst("height=\"\\s+\"", "height=\"auto\"");
+
+        PageSize pageSize = PageSize.A4;
+
+        // Calculate the width and height for the SVG based on the page size
+        float width = pageSize.getWidth() / 2; // Adjust as needed
+//        float height = (width / pageWidth) * pageHeight;
+
+        // Replace width and height in the SVG content
         return svgContent.toString()
-                .replaceFirst("width=\"\\d+\"", "width=\"300\"")
-                .replaceFirst("height=\"\\s+\"", "height=\"auto\"");
+                .replaceAll("width=\"[0-9.]+\"", "width=\"" + width + "\"");
+//                .replaceAll("height=\"[0-9.]+\"", "height=\"" + height + "\"");
+
     }
 
 //    private void convertSvgToPdf(PdfDocument pdf, Document document, String passageSvgUrl, String questionSvgUrl, int pageNumber) throws IOException {
@@ -277,21 +319,12 @@ public class ExamSaveService {
                         itemInfo.setItemId(itemObject.get("itemId").getAsInt());
                         itemInfo.setQuestionFormCode(itemObject.get("questionFormCode").getAsString());
                         itemInfo.setQuestionFormName(itemObject.get("questionFormName").getAsString());
-//                        itemInfo.setDifficultyCode(itemObject.get("difficultyCode").getAsString());
                         itemInfo.setDifficultyName(itemObject.get("difficultyName").getAsString());
-//                        itemInfo.setLargeChapterId(itemObject.get("largeChapterId").getAsInt());
                         itemInfo.setLargeChapterName(itemObject.get("largeChapterName").getAsString());
-//                        itemInfo.setMediumChapterId(itemObject.get("mediumChapterId").getAsInt());
                         itemInfo.setMediumChapterName(itemObject.get("mediumChapterName").getAsString());
-//                        itemInfo.setSmallChapterId(itemObject.get("smallChapterId").getAsInt());
-//                        itemInfo.setSmallChapterName(itemObject.get("smallChapterName").getAsString());
-//                        itemInfo.setTopicChapterId(itemObject.get("topicChapterId").getAsInt());
-//                        itemInfo.setTopicChapterName(itemObject.get("topicChapterName").getAsString());
-                        itemInfo.setPassageId(itemObject.get("passageId").getAsInt());
-                        itemInfo.setPassageUrl(itemObject.get("passageUrl").getAsString());
+                        itemInfo.setPassageId(itemObject.has("passageId") && !itemObject.get("passageId").isJsonNull() ? itemObject.get("passageId").getAsInt() : 0);
+                        itemInfo.setPassageUrl(itemObject.has("passageUrl") && !itemObject.get("passageUrl").isJsonNull() ? itemObject.get("passageUrl").getAsString() : "");
                         itemInfo.setQuestionUrl(itemObject.get("questionUrl").getAsString());
-//                        itemInfo.setAnswerUrl(itemObject.get("answerUrl").getAsString());
-//                        itemInfo.setExplainUrl(itemObject.get("explainUrl").getAsString());
 
                         itemInfoList.add(itemInfo);
                     }
@@ -303,4 +336,21 @@ public class ExamSaveService {
         return Collections.emptyList();
     }
 
+    // 보관함 DB 저장
+    public void archiveSave(ExamSaveRequestDTO requestDTOS) {
+        String userId = "sky";
+
+        if(requestDTOS != null){
+            Archive archive = new Archive();
+            archive.setUserId(userId);
+            archive.setFlag("M");
+            archive.setGrade("1");
+            archive.setName(requestDTOS.getExamName());
+            archive.setTotal(requestDTOS.getShortAnswer()+ requestDTOS.getChoiceAnswer());
+            archive.setQuestion(setPdfName(DEST, requestDTOS.getExamName(), userId));
+
+            archiveSaveRepository.save(archive);
+        }
+
+    }
 }

@@ -65,6 +65,10 @@ public class QuestionService {
                 responseDto.setAnswerUrl(itemObject.get("answerUrl").getAsString());
                 responseDto.setExplainUrl(itemObject.get("explainUrl").getAsString());
 
+                if (itemObject.get("passageUrl") != null && !itemObject.get("passageUrl").isJsonNull()){
+                    responseDto.setPassageUrl(itemObject.get("passageUrl").getAsString());
+                }
+
                 itemList.add(responseDto);
             }
             return itemList;
@@ -74,9 +78,4 @@ public class QuestionService {
             return null;
         }
     }
-    public String deleteQuestion(DeletedQuestion request) {
-        return "";
-    }
-
-
 }

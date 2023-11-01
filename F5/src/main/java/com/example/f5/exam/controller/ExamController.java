@@ -35,12 +35,13 @@ public class ExamController {
         List<ExamDto.itemInfoResponse> itemList = (List<ExamDto.itemInfoResponse>)session.getAttribute("itemList");
         model.addAttribute("itemList", itemList);
 
-        if (itemList.get(0).getPassageUrl() != null) {
+        /*if (itemList.get(0).getPassageUrl() != null) {
         return "html/sub03_01_01";
-        }
+        }*/
             return "html/sub03_01";
     }
 
+    /*시험 제작 페이지 form*/
     @GetMapping("/category/select")
     public String createExamForm(@RequestParam int itemId, Model model) throws JsonProcessingException {
         ExamDto.Curriculum itemList = examService.getCategory(itemId);
@@ -49,5 +50,6 @@ public class ExamController {
         model.addAttribute("evaluationList", evaluationList);
         return "html/sub02";
     }
+
 }
 
