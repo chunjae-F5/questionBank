@@ -602,46 +602,6 @@
         highestElement.setAttribute('data-value', replacedHighestInput);
     }
 
-    function changeCountFromPopWrap() {
-        const rangeWrap = document.querySelector('.range-wrap');
-        let flexSpans = rangeWrap.querySelectorAll("span[style*='display: flex;']");
-
-        flexSpans.forEach(function (span, index) {
-            if (span.textContent.includes("(")) {
-                const matches = span.textContent.match(/\(([^)]+)\)/);
-                if (matches) {
-                    const contentInsideParentheses = matches[1];
-                    let replacement;
-
-                    // Use the updated data-value attributes from the buttons
-                    switch (index) {
-                        case 0:
-                            replacement = document.querySelector('button[data-step="step1"]').getAttribute('data-value');
-                            break;
-                        case 1:
-                            replacement = document.querySelector('button[data-step="step2"]').getAttribute('data-value');
-                            break;
-                        case 2:
-                            replacement = document.querySelector('button[data-step="step3"]').getAttribute('data-value');
-                            break;
-                        case 3:
-                            replacement = document.querySelector('button[data-step="step4"]').getAttribute('data-value');
-                            break;
-                        case 4:
-                            replacement = document.querySelector('button[data-step="step5"]').getAttribute('data-value');
-                            break;
-                        default:
-                            replacement = "0";
-                    }
-
-                    span.textContent = span.textContent.replace(`(${contentInsideParentheses})`, `(${replacement})`);
-                    span.setAttribute('data-value', replacement);
-                }
-            }
-        });
-
-    }
-
     const step2Button = document.querySelector('.btn-step.next');
 
     step2Button.addEventListener('click', function () {
