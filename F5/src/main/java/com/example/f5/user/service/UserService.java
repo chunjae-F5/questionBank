@@ -31,8 +31,6 @@ public class UserService {
 
     private String fileDir;
 
-    private String PDF_URL = "pdf_file\\";
-
     @Value("${windows.file.dir}")
     private String widowsFileDir;
 
@@ -117,7 +115,7 @@ public class UserService {
             session.setMaxInactiveInterval(1800);
             return ResponseEntity.ok().body("");
         }
-        return ResponseEntity.status(400).body("아이디 비밀번호가 일치하지 않음.");
+        return ResponseEntity.status(401).body("아이디 비밀번호가 일치하지 않음.");
     }
 
     public boolean checkIdDuplicated(String userId) {

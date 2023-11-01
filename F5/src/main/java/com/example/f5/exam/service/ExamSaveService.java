@@ -12,35 +12,24 @@ import com.example.f5.exam.repository.QuestionSaveRepository;
 import com.example.f5.util.FileUrl;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
-import com.itextpdf.io.image.ImageDataFactory;
 import com.itextpdf.kernel.colors.Color;
 import com.itextpdf.kernel.colors.DeviceCmyk;
 import com.itextpdf.kernel.events.PdfDocumentEvent;
 import com.itextpdf.kernel.font.PdfFont;
 import com.itextpdf.kernel.font.PdfFontFactory;
 import com.itextpdf.kernel.geom.PageSize;
-import com.itextpdf.kernel.geom.Rectangle;
 import com.itextpdf.kernel.pdf.PdfDocument;
 import com.itextpdf.kernel.pdf.PdfPage;
-import com.itextpdf.kernel.pdf.PdfReader;
 import com.itextpdf.kernel.pdf.PdfWriter;
 import com.itextpdf.kernel.pdf.canvas.PdfCanvas;
 import com.itextpdf.layout.Document;
-import com.itextpdf.layout.element.Image;
 import com.itextpdf.svg.converter.SvgConverter;
 import com.itextpdf.svg.processors.ISvgConverterProperties;
 import com.itextpdf.svg.processors.impl.SvgConverterProperties;
 import lombok.RequiredArgsConstructor;
-import org.apache.pdfbox.pdmodel.PDDocument;
-import org.apache.pdfbox.pdmodel.PDPage;
-import org.apache.pdfbox.rendering.PDFRenderer;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.core.io.ClassPathResource;
 import org.springframework.stereotype.Service;
 
-import javax.imageio.ImageIO;
-import java.awt.*;
-import java.awt.image.BufferedImage;
 import java.io.*;
 import java.net.URI;
 import java.net.URL;
@@ -50,8 +39,10 @@ import java.net.http.HttpResponse;
 import java.nio.charset.StandardCharsets;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
+import java.util.UUID;
 
 
 @Service
@@ -183,18 +174,18 @@ public class ExamSaveService {
 
         String outputImgFile = setPngName();
 
-        PDDocument doc = PDDocument.load(new File(pdfFilePath));
-        PDFRenderer pdfRenderer = new PDFRenderer(doc);
-
-        // 첫 번째 페이지를 이미지로 렌더링
-        PDPage firstPage = doc.getPage(0);
-        BufferedImage image = pdfRenderer.renderImage(0);
+//        PDDocument doc = PDDocument.load(new File(pdfFilePath));
+//        PDFRenderer pdfRenderer = new PDFRenderer(doc);
+//
+//        // 첫 번째 페이지를 이미지로 렌더링
+//        PDPage firstPage = doc.getPage(0);
+//        BufferedImage image = pdfRenderer.renderImage(0);
 
         // 이미지를 파일로 저장
-        ImageIO.write(image, "PNG", new File(outputImgFile));
+//        ImageIO.write(image, "PNG", new File(outputImgFile));
 
-        doc.close();
-        System.out.println("Image saved to " + outputImgFile);
+//        doc.close();
+//        System.out.println("Image saved to " + outputImgFile);
 
     }
 

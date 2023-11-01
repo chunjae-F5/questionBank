@@ -35,12 +35,13 @@ public class UserController {
 
     /*회원가입 기능*/
     @PostMapping("/register")
-    public ResponseEntity<String> registerUser(@Valid @ModelAttribute UserDto.RegisterResponseDto form) throws IOException {
+    public String registerUser(@Valid @ModelAttribute UserDto.RegisterResponseDto form) throws IOException {
         System.out.println(form.getAcademyLogo());
         /*파일 업로드*/
         userService.uploadFile(form.getAcademyLogo());
         /*회원가입*/
-        return userService.register(form);
+        userService.register(form);
+        return "redirect:/login";
     }
 
     /*로그인 기능*/
