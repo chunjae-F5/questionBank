@@ -5,10 +5,12 @@ import com.example.f5.user.entity.Academy;
 import com.example.f5.user.entity.User;
 import com.example.f5.user.repository.AcademyRepository;
 import com.example.f5.user.repository.UserRepository;
+import com.example.f5.util.FileUrl;
 import com.example.f5.util.PasswordEncoder;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -27,8 +29,16 @@ public class UserService {
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
 
-    @Value("${file.dir}")
     private String fileDir;
+
+    private String PDF_URL = "pdf_file\\";
+
+    @Value("${windows.file.dir}")
+    private String widowsFileDir;
+
+    @Value("${linux.file.dir}")
+    private String linuxFileDir;
+
 
     /*파일 업로드*/
     public void uploadFile(MultipartFile multipartFile) throws IOException {
@@ -51,6 +61,13 @@ public class UserService {
     }
 
     private String getFullPath(String fileName) {
+
+        FileUrl fileUrl = new FileUrl();
+
+        fileDir = fileUrl.selectUrl(widowsFileDir, linuxFileDir);
+
+        System.out.println(fileDir);
+
         return fileDir + fileName;
     }
 

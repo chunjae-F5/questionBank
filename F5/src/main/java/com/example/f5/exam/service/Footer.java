@@ -1,5 +1,6 @@
 package com.example.f5.exam.service;
 
+import com.example.f5.util.FileUrl;
 import com.itextpdf.io.image.ImageDataFactory;
 import com.itextpdf.kernel.colors.Color;
 import com.itextpdf.kernel.colors.DeviceRgb;
@@ -17,6 +18,7 @@ import com.itextpdf.layout.element.Paragraph;
 import com.itextpdf.layout.element.TabStop;
 import com.itextpdf.layout.properties.TabAlignment;
 import com.itextpdf.layout.properties.TextAlignment;
+import org.springframework.beans.factory.annotation.Value;
 
 import java.io.IOException;
 import java.net.MalformedURLException;
@@ -35,14 +37,32 @@ public class Footer implements IEventHandler {
 
     private Image logo;
 
+    private String PDF_URL = "pdf_file";
+    private String DEST;
+
+    @Value("${windows.file.pdfDir}")
+    private String widowsFileDir;
+
+    @Value("${linux.file.pdfDir}")
+    private String linuxFileDir;
+
     public Footer(Color subLineColor, float subLineWidth) {
         placeholder = new PdfFormXObject(new Rectangle(0, 0, side, side));
         this.subLineColor = subLineColor;
         this.subLineWidth = subLineWidth;
 
+        FileUrl fileUrl = new FileUrl();
+        DEST = fileUrl.selectUrl(widowsFileDir, linuxFileDir) + PDF_URL;
+        if (DEST.contains("C:")) {
+            DEST = DEST + "\\";
+
+        } else {
+            DEST = DEST + "/";
+        }
+
         try {
-            logo = new Image(ImageDataFactory.create("D:\\pdf_file\\f5.png"));
-        }catch (IOException e){
+            logo = new Image(ImageDataFactory.create(DEST + "f5.png"));
+        } catch (IOException e) {
             e.printStackTrace();
         }
     }
@@ -62,8 +82,8 @@ public class Footer implements IEventHandler {
         // Draw horizontal line
         pdfCanvas.setStrokeColor(subLineColor);
         pdfCanvas.setLineWidth(subLineWidth);
-        pdfCanvas.moveTo(pageSize.getLeft()+10, pageSize.getBottom() + 60);
-        pdfCanvas.lineTo(pageSize.getRight()-10, pageSize.getBottom() + 60);
+        pdfCanvas.moveTo(pageSize.getLeft() + 10, pageSize.getBottom() + 60);
+        pdfCanvas.lineTo(pageSize.getRight() - 10, pageSize.getBottom() + 60);
         pdfCanvas.stroke();
 
         float logoWidth = logo.getImageWidth() / 4;
@@ -71,7 +91,17 @@ public class Footer implements IEventHandler {
         float center = (pageSize.getLeft() + pageSize.getRight()) / 2;
 
         try {
-            Image logoImage = new Image(ImageDataFactory.create("D:\\pdf_file\\f5.png"));
+
+            FileUrl fileUrl = new FileUrl();
+            DEST = fileUrl.selectUrl(widowsFileDir, linuxFileDir) + PDF_URL;
+            if (DEST.contains("C:")) {
+                DEST = DEST + "\\";
+
+            } else {
+                DEST = DEST + "/";
+            }
+
+            Image logoImage = new Image(ImageDataFactory.create(DEST + "f5.png"));
             logoImage.scaleToFit(logoWidth, logoHeight);
 
             // 가운데에 이미지 배치
@@ -85,10 +115,10 @@ public class Footer implements IEventHandler {
 
             // 페이지 번호와 총 페이지 수
             Paragraph p = new Paragraph()
-                .add("Page ")
-                .add(String.valueOf(pageNumber))
-                .add(" of ")
-                .add(Integer.toString(pdf.getNumberOfPages()))
+                    .add("Page ")
+                    .add(String.valueOf(pageNumber))
+                    .add(" of ")
+                    .add(Integer.toString(pdf.getNumberOfPages()))
                     .setFontColor(fontColor);
             canvas.showTextAligned(p, x + 250, y, TextAlignment.CENTER);
 

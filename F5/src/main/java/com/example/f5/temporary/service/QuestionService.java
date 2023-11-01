@@ -65,7 +65,7 @@ public class QuestionService {
                 responseDto.setAnswerUrl(itemObject.get("answerUrl").getAsString());
                 responseDto.setExplainUrl(itemObject.get("explainUrl").getAsString());
 
-                if (itemObject.get("passageUrl") != null && !itemObject.get("passageUrl").isJsonNull()){
+                if (itemObject.get("passageUrl") != null && !itemObject.get("passageUrl").isJsonNull()) {
                     responseDto.setPassageUrl(itemObject.get("passageUrl").getAsString());
                 }
 

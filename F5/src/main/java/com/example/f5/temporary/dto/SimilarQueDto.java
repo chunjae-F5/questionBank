@@ -9,7 +9,7 @@ public class SimilarQueDto {
 
     @Setter
     @Getter
-    public static class Request{
+    public static class Request {
         private List<String> items;
     }
 }

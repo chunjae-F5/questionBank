@@ -32,7 +32,7 @@ public class ExamService {
             totalCount += requestDto.getLevelCnt().get(i);
         }
 
-        if (totalCount != itemArray.size()){
+        if (totalCount != itemArray.size()) {
             for (int i = 0; i < totalCount; i++) {
                 JsonElement itemElement = itemArray.get(i);
                 ExamDto.itemInfoResponse responseDto = new ExamDto.itemInfoResponse();
@@ -45,11 +45,11 @@ public class ExamService {
                 responseDto.setAnswerUrl(itemObject.get("answerUrl").getAsString());
                 responseDto.setExplainUrl(itemObject.get("explainUrl").getAsString());
 
-                if (itemObject.get("passageUrl") != null && !itemObject.get("passageUrl").isJsonNull()){
+                if (itemObject.get("passageUrl") != null && !itemObject.get("passageUrl").isJsonNull()) {
                     responseDto.setPassageUrl(itemObject.get("passageUrl").getAsString());
                 }
 
-                if (Integer.parseInt(itemObject.get("questionFormCode").getAsString()) <= 50){
+                if (Integer.parseInt(itemObject.get("questionFormCode").getAsString()) <= 50) {
                     responseDto.setQuestionFormName("객관식");
                 } else {
                     responseDto.setQuestionFormName("주관식");

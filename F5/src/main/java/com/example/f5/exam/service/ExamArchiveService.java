@@ -39,7 +39,7 @@ public class ExamArchiveService {
 
     public List<ExamArchiveListDTO> archiveList(String userId) {
 
-        List<ExamArchiveListDTO> archiveListDTOS= archiveSaveRepository.findByUserId(userId);
+        List<ExamArchiveListDTO> archiveListDTOS = archiveSaveRepository.findByUserId(userId);
 
         return archiveListDTOS;
     }

@@ -30,7 +30,7 @@ public class ExamArchiveController {
     }
 
     @GetMapping("/exam-archive/list")
-    public String getExamArchivePage(Model model, @SessionAttribute(name = "userId", required = false) String userId){
+    public String getExamArchivePage(Model model, @SessionAttribute(name = "userId", required = false) String userId) {
 
         List<ExamArchiveListDTO> archiveListDTOS = examArchiveService.archiveList(userId);
         model.addAttribute("archiveList", archiveListDTOS);
@@ -48,19 +48,19 @@ public class ExamArchiveController {
     public ResponseEntity<Resource> downloadPdf(@RequestParam int idx) throws UnsupportedEncodingException {
         Optional<Archive> downloadPdf = examArchiveService.loadArchiveFromDatabase(Long.valueOf(idx));
 
-            String pdfName = downloadPdf.get().getName();
-            String pdfUrl = downloadPdf.get().getQuestion();
+        String pdfName = downloadPdf.get().getName();
+        String pdfUrl = downloadPdf.get().getQuestion();
 
-            if (pdfUrl != null) {
-                HttpHeaders headers = new HttpHeaders();
-                headers.add(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename="+ URLEncoder.encode(pdfName,"UTF-8")+".pdf");
+        if (pdfUrl != null) {
+            HttpHeaders headers = new HttpHeaders();
+            headers.add(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=" + URLEncoder.encode(pdfName, "UTF-8") + ".pdf");
 
-                Resource resource = new FileSystemResource(pdfUrl);
+            Resource resource = new FileSystemResource(pdfUrl);
 
-                return ResponseEntity.ok().headers(headers).body(resource);
-            }else{
-                return ResponseEntity.notFound().build();
-            }
+            return ResponseEntity.ok().headers(headers).body(resource);
+        } else {
+            return ResponseEntity.notFound().build();
+        }
     }
 
     @GetMapping("/exam-archive/preview")
