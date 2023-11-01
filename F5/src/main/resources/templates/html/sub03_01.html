@@ -49,6 +49,22 @@
         window.location.href = "/sendDataForSave?itemIdArray=" + encodeURIComponent(itemIdArrayJSON);
     }
 </script>
+<script>
+    function hideAllDivs(className) {
+        const divs = document.querySelectorAll('.' + className);
+        divs.forEach(function(div) {
+            div.style.display = "none";
+        });
+    }
+
+    function showAllDivs(className) {
+        const divs = document.querySelectorAll('.' + className);
+        divs.forEach(function(div) {
+            div.style.display = "block";
+        });
+    }
+
+</script>
 
 <div id="wrap" class="full-pop-que">
     <div class="full-pop-wrap">
@@ -82,17 +98,18 @@
                             <span class="title">문제 목록</span>
                             <div class="right-area">
                                 <div class="select-wrap">
-                                    <button type="button" class="select-btn">문제만 보기</button>
+                                    <button type="button" class="select-btn">보기 유형 선택</button>
                                     <ul class="select-list" style="display: none;">
                                         <li>
-                                            <a href="javascript:;">문제+정답 보기</a>
+                                            <a href="javascript:;" onclick="hideAllDivs('explain'); hideAllDivs('answer')">문제만 보기</a>
                                         </li>
                                         <li>
-                                            <a href="javascript:;">문제+해설+정답 보기</a>
+                                            <a href="javascript:;" onclick="hideAllDivs('explain'); showAllDivs('answer')">문제+정답 보기</a>
                                         </li>
-                                        <li class="disabled">
-                                            <a href="javascript:;">편집단계에서만 적용되는 보기 옵션</a>
+                                        <li>
+                                            <a href="javascript:;" onclick="showAllDivs('explain'); showAllDivs('answer')">문제+해설+정답 보기</a>
                                         </li>
+
                                     </ul>
                                 </div>
                                 <div class="select-wrap">
@@ -111,18 +128,19 @@
                                 </div>
                             </div>
                         </div>
+
                         <div class="view-que-list scroll-inner"
-                             style="display: -webkit-box;-webkit-box-orient:vertical">
+                             style="display: -webkit-box;-webkit-box-orient:vertical" id="simQueAdd"><!--contents on-->
                                 <div class="sort-group" th:each="item, iterStat : ${itemList}"
                                                         th:data-summary-id="'summary-' + ${iterStat.count}"
                                                         th:item-id="${item.itemId}"
                                                         th:attr="data-item-id=${item.itemId}">
                                     <div class="view-que-box" th:if="${item.passageUrl != null}">
-                                        <div class="que-top">
-                                            <div class="title">
+                                        <!--<div class="que-top">
+                                            &lt;!&ndash;<div class="title">
                                                 <span class="num" th:text="${iterStat.count}"></span>
-                                            </div>
-                                        </div>
+                                            </div>&ndash;&gt;
+                                        </div>-->
                                         <div class="view-que">
                                             <img th:src="${item.passageUrl}" alt="Question Image">
                                         </div>
@@ -139,17 +157,21 @@
                                             </div>
                                             <div class="btn-wrap">
                                                 <button type="button" class="btn-error pop-btn" data-pop="error-report-pop"></button>
+<!--
+                                                <button type="button" class="btn-delete" th:attr="data-item-id=${item.itemId}" onclick="moveSortGroupToTarget(this); deleteColByItemId()"></button>
+-->
                                                 <button type="button" class="btn-delete" th:attr="data-item-id=${item.itemId}" onclick="moveSortGroupToTarget(this)"></button>
+
                                             </div>
                                         </div>
                                         <div class="view-que">
-                                            <div class="que-content" >
+                                            <div class="que-content" id="question">
                                                 <!--//문제 (문제, 객관식 번호~~)-->
                                                 <img th:src="${item.questionUrl}" alt="Question Image">
                                             </div>
                                             <div class="que-bottom">
                                                 <div class="data-area">
-                                                    <div class="que-info">
+                                                    <div class="que-info explain">
                                                         <p class="answer"><span class="label">해설</span></p>
                                                         <div class="data-answer-area">
                                                             <!-- 해설 이미지 -->
@@ -158,7 +180,7 @@
                                                     </div>
                                                 </div>
                                                 <div class="data-area type01">
-                                                    <div class="que-info">
+                                                    <div class="que-info answer">
                                                         <p class="answer"><span class="label type01">정답</span></p>
                                                         <div class="data-answer-area">
                                                             <!-- 정답 이미지 -->
@@ -176,9 +198,6 @@
                                 </div>
                             <br>
                         </div>
-<!--                        <div class="view-que-list scroll-inner contents" id="simQueAdd"></div>-->
-
-
                         <div class="bottom-box">
                             <div class="que-badge-group type01">
                                 <div class="que-badge-wrap">
@@ -216,6 +235,8 @@
                                 return difficultyCount;
                             }
                             console.log(countDifficulty());
+
+
                         </script>
                     </div>
                     <div class="cnt-box type01">
@@ -245,7 +266,7 @@
                                     <div class="tbody">
                                         <div class="scroll-inner">
                                             <div class="test ui-sortable" id="table-1">
-                                                    <div class="col sortable" th:each="item, iterStat : ${itemList}" th:data-summary-id="'summary-' + ${iterStat.count}">
+                                                    <div class="col sortable" th:each="item, iterStat : ${itemList}" th:data-summary-id="'summary-' + ${iterStat.count}" th:attr="data-item-id=${item.itemId}">
                                                         <a href="javascript:;">
                                                         <span class="dragHandle ui-sortable-handle">
                                                             <img th:src="@{/images/ico_move_type01.png}" alt="">
@@ -279,12 +300,33 @@
                                     <div class="que-badge-group">
                                         <div class="que-badge-wrap">
                                             <span class="que-badge gray">객관식</span>
-                                            <span class="num">35</span>
+                                            <span class="num" id="multiple-choice">0</span>
                                         </div>
                                         <div class="que-badge-wrap">
-                                            <span class="que-badge gray">주관식</span>
-                                            <span class="num">15</span>
+                                            <span class="que-badge gray" >주관식</span>
+                                            <span class="num" id="open-question">0</span>
                                         </div>
+
+                                        <script th:inline="javascript">
+                                            function countQuestionFrom() {
+                                                const questionFrom = {
+                                                    '객관식': 0,
+                                                    '주관식': 0
+                                                };
+
+                                                for (const item of [[${itemList}]]) {
+                                                    const form = item.questionFormName;
+                                                    if (form in questionFrom) {
+                                                        questionFrom[form]++;
+                                                    }
+                                                }
+                                                document.getElementById('open-question').textContent = questionFrom['주관식'];
+                                                document.getElementById('multiple-choice').textContent = questionFrom['객관식'];
+                                                return questionFrom;
+                                            }
+                                            console.log(countQuestionFrom());
+
+                                        </script>
                                     </div>
                                 </div>
                             </div>
@@ -302,7 +344,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="view-que-list scroll-inner right-panel" id="similar-items">
+                                <div class="view-que-list scroll-inner" id="similar-items">
                                     <div class="view-que-list no-data">
                                         <p>
                                             문제 목록에서 <i class="ic-no-data"></i> 유사문제 버튼을 선택해주세요.
@@ -318,9 +360,7 @@
                             <script th:inline="javascript">
                                 function moveSortGroupToTarget(button) {
                                     const itemId = button.getAttribute("data-item-id");
-
-                                    console.log(itemId);
-
+                                    const dataSummaryIdToMove = itemId;
                                     const sortGroups = document.querySelector('.sort-group[data-item-id="' + itemId + '"]');
                                     const targetDiv = document.getElementById("targetDiv");
 
@@ -336,8 +376,45 @@
                                             deleteButton.style.display = 'none'; // '삭제' 버튼 숨기기
                                         }
                                         targetDiv.appendChild(sortGroups);
+                                        const cols = document.querySelectorAll('.col.sortable');
+                                        for (const col of cols) {
+                                            const summaryId = col.getAttribute('data-item-id');
+
+                                            if (summaryId === dataSummaryIdToMove) {
+                                                col.parentNode.removeChild(col); // col 요소 삭제
+                                                break; // 첫 번째 일치하는 요소만 삭제하려면 루프를 중지합니다.
+                                            }
+                                        }
                                     }
                                 }
+                                /*function deleteColByItemId() {
+                                    const numSpan = document.querySelector('.num');
+                                    if (numSpan) {
+                                        const count = numSpan.textContent;
+                                        const itemIdToDelete = 'summary-' + count;
+
+                                        const cols = document.querySelectorAll('.col.sortable');
+
+                                        for (const col of cols) {
+                                            const summaryId = col.getAttribute('th:data-summary-id');
+                                            if (summaryId === itemIdToDelete) {
+                                                col.parentNode.removeChild(col); // col 요소 삭제
+                                                break; // 첫 번째 일치하는 요소만 삭제하려면 루프를 중지합니다.
+                                            }
+                                        }
+                                    }
+                                    const cols = document.querySelectorAll('.col.sortable');
+                                    for (const col of cols) {
+                                        const summaryId = col.getAttribute('th:data-summary-id');
+                                        if (summaryId === dataSummaryIdToMove) {
+                                            col.parentNode.removeChild(col); // col 요소 삭제
+                                            break; // 첫 번째 일치하는 요소만 삭제하려면 루프를 중지합니다.
+                                        }
+                                    }
+                                }*/
+
+
+
                             </script>
 
                         </div>
@@ -458,14 +535,13 @@
     </div>
 </div>
 </div>
-<script>
+</div>
+<script th:inline="javascript">
 
     const sessionSubjectName = sessionStorage.getItem('subjectName');
     document.getElementById('subjectName').textContent = sessionSubjectName;
 
-    $(function () {
-
-
+    /*$(function () {
         let _leg = $('.view-que').length;
         let arr = [];
 
@@ -483,11 +559,11 @@
 
                 let _idx = $(this).index();
 
-                for (var i = 0; i < _leg; i++) {
+                for (let i = 0; i < _leg; i++) {
                     arr.push($('.view-que').eq(i).offset().top - 280);
                 }
 
-                console.log(arr);
+                console.log("asdasd : "+arr);
 
                 $('.view-que-list').animate({
                     scrollTop: arr[_idx]
@@ -504,7 +580,25 @@
 
             })
         }
-    })
+    })*/
+
+    // 오른쪽 div 요약 요소를 선택
+    const rightDivs = document.querySelectorAll('.right-div');
+
+    // 각 요약 요소를 클릭했을 때 스크롤 이벤트 처리
+    rightDivs.forEach(function(rightDiv) {
+        rightDiv.addEventListener('click', function() {
+            // data-scroll-id 속성을 사용하여 연결된 왼쪽 div의 ID를 가져옴
+            const scrollId = rightDiv.getAttribute('data-scroll-id');
+            const leftDiv = document.getElementById(scrollId);
+
+            // 왼쪽 div로 스크롤
+            leftDiv.scrollIntoView({ behavior: 'smooth' });
+        });
+    });
+/*
+ <div class="col sortable" th:each="item, iterStat : ${itemList}" th:data-summary-id="'summary-' + ${iterStat.count}">
+*/
 </script>
 
 </body>
