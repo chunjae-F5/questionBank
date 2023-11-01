@@ -9,6 +9,7 @@ import com.example.f5.exam.entity.Question;
 import com.example.f5.exam.repository.ArchiveSaveRepository;
 import com.example.f5.exam.repository.ExamSaveRepository;
 import com.example.f5.exam.repository.QuestionSaveRepository;
+import com.example.f5.util.FileUrl;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.itextpdf.io.image.ImageDataFactory;
@@ -33,6 +34,7 @@ import lombok.RequiredArgsConstructor;
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.pdmodel.PDPage;
 import org.apache.pdfbox.rendering.PDFRenderer;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.stereotype.Service;
 
@@ -62,25 +64,32 @@ public class ExamSaveService {
 
     private final Gson gson;
 
-    public static final String DEST = "D:\\pdf_file\\";
+    private String PDF_URL = "pdf_file";
+
+    private String DEST;
+    @Value("${windows.file.pdfDir}")
+    private String widowsFileDir;
+
+    @Value("${linux.file.pdfDir}")
+    private String linuxFileDir;
 
     // 문제 테이블 저장
     public void questionSave(ExamSaveRequestDTO dtos) {
         List<Question> questions = new ArrayList<>();
 
-            List<ExamSaveRequestDTO.ProcessedData> processedDataList = dtos.getProcessedData();
-            if(processedDataList != null){
-                for(ExamSaveRequestDTO.ProcessedData processedData : processedDataList) {
-                    Question question = new Question();
-                    question.setNumber(processedData.getNumber());
-                    question.setType(processedData.getType());
-                    question.setForm(processedData.getQuestionFormName());
-                    question.setLevel(processedData.getDifficultyName());
-                    question.setQuestionFile(processedData.getQuestionUrl());
-                    question.setContentFile(processedData.getPassageUrl() != null ? processedData.getPassageUrl() : "");
+        List<ExamSaveRequestDTO.ProcessedData> processedDataList = dtos.getProcessedData();
+        if (processedDataList != null) {
+            for (ExamSaveRequestDTO.ProcessedData processedData : processedDataList) {
+                Question question = new Question();
+                question.setNumber(processedData.getNumber());
+                question.setType(processedData.getType());
+                question.setForm(processedData.getQuestionFormName());
+                question.setLevel(processedData.getDifficultyName());
+                question.setQuestionFile(processedData.getQuestionUrl());
+                question.setContentFile(processedData.getPassageUrl() != null ? processedData.getPassageUrl() : "");
 
-                    questions.add(question);
-                }
+                questions.add(question);
+            }
         }
 
         questionSaveRepository.saveAll(questions);
@@ -90,7 +99,7 @@ public class ExamSaveService {
     // 시험지 테이블 저장
     public void examSave(ExamSaveRequestDTO dtos) {
 
-        if(dtos != null){
+        if (dtos != null) {
             Exam exam = new Exam();
             int total = dtos.getChoiceAnswer() + dtos.getShortAnswer();
             exam.setHighest(0);
@@ -110,10 +119,19 @@ public class ExamSaveService {
     // pdf 생성
     public void generatePdf(ExamSaveRequestDTO requestDTOS, String userId, String username) throws IOException {
 
+        FileUrl fileUrl = new FileUrl();
+        DEST = fileUrl.selectUrl(widowsFileDir, linuxFileDir) + PDF_URL;
+        if (DEST.contains("C:")) {
+            DEST = DEST + "\\";
+
+        } else {
+            DEST = DEST + "/";
+        }
+
         // DTO에서 지문, 문제 url 각 배열에 담기
         List<String> passageUrls = new ArrayList<>();
         List<String> questionUrls = new ArrayList<>();
-        for(int i = 0; i < requestDTOS.getProcessedData().size(); i++){
+        for (int i = 0; i < requestDTOS.getProcessedData().size(); i++) {
             passageUrls.add(requestDTOS.getProcessedData().get(i).getPassageUrl().isEmpty() && requestDTOS.getProcessedData().get(i).getPassageUrl() == null ? "" : requestDTOS.getProcessedData().get(i).getPassageUrl());
             questionUrls.add(requestDTOS.getProcessedData().get(i).getQuestionUrl());
         }
@@ -137,8 +155,9 @@ public class ExamSaveService {
         Color subLineColor = new DeviceCmyk(0, 0, 0, 20);
         float subLineWidth = 1;
 
+
         // 한글 폰트 처리
-        PdfFont font = PdfFontFactory.createFont("D:/pdf_file/HYGothic-Medium-Regular.ttf", PdfFontFactory.EmbeddingStrategy.PREFER_EMBEDDED);
+        PdfFont font = PdfFontFactory.createFont(DEST + "HYGothic-Medium-Regular.ttf", PdfFontFactory.EmbeddingStrategy.PREFER_EMBEDDED);
 
         // Header
         Header headerHandler = new Header(day, date, examName, topLine, mainLineColor, mainLineWidth, subLineColor, subLineWidth);
@@ -149,7 +168,7 @@ public class ExamSaveService {
         pdf.addEventHandler(PdfDocumentEvent.END_PAGE, footerHandler);
 
         // Body
-        for(int i = 0; i< passageUrls.size(); i++){
+        for (int i = 0; i < passageUrls.size(); i++) {
 //            if(passageUrls.get(i).isEmpty() || passageUrls.get(i) == null){
 //
 //            }else{
@@ -191,7 +210,17 @@ public class ExamSaveService {
         return pdfName + extension;
     }
 
-    private String setPngName(){
+    private String setPngName() {
+
+        FileUrl fileUrl = new FileUrl();
+        DEST = fileUrl.selectUrl(widowsFileDir, linuxFileDir) + PDF_URL;
+        if (DEST.contains("C:")) {
+            DEST = DEST + "\\";
+
+        } else {
+            DEST = DEST + "/";
+        }
+
         return DEST + "image_" + UUID.randomUUID() + ".png";
     }
 
@@ -208,7 +237,7 @@ public class ExamSaveService {
         // Get the PdfCanvas for drawing
         PdfCanvas canvas = new PdfCanvas(page);
 
-        if(passageSvgUrl.isEmpty() || passageSvgUrl == null){
+        if (passageSvgUrl.isEmpty() || passageSvgUrl == null) {
             String adjustedQuestionSvgContent = adjustSvgContent(questionSvgUrl);
 
             InputStream adjustedQuestionSvgInputStream = new ByteArrayInputStream(adjustedQuestionSvgContent.getBytes(StandardCharsets.UTF_8));
@@ -216,7 +245,7 @@ public class ExamSaveService {
             ISvgConverterProperties questionProperties = new SvgConverterProperties().setBaseUri("");
             SvgConverter.drawOnCanvas(adjustedQuestionSvgInputStream, canvas, questionProperties);
 
-        }else{
+        } else {
             String adjustedPassageSvgContent = adjustSvgContent(passageSvgUrl);
             String adjustedQuestionSvgContent = adjustSvgContent(questionSvgUrl);
 
@@ -231,6 +260,7 @@ public class ExamSaveService {
         }
 
     }
+
     private String adjustSvgContent(String svgUrl) throws IOException {
         URL url = new URL(svgUrl);
         InputStream inputStream = url.openStream();
@@ -264,7 +294,6 @@ public class ExamSaveService {
     }
 
 
-
     // 시험지 저장 페이지 api요청
     public List<ExamSaveListDTO.ItemInfo> examSaveList(ExamSaveListRequestDTO itemIdList) throws IOException, InterruptedException {
 
@@ -286,15 +315,15 @@ public class ExamSaveService {
         // 요청 보내기
         HttpResponse<String> response = httpClient.send(request, HttpResponse.BodyHandlers.ofString());
 
-        if(response.statusCode()==200){
+        if (response.statusCode() == 200) {
             String responseBody = response.body();
             JsonObject responseJson = gson.fromJson(responseBody, JsonObject.class);
 
-            if(responseJson != null && "Y".equals(responseJson.get("successYn").getAsString())){
+            if (responseJson != null && "Y".equals(responseJson.get("successYn").getAsString())) {
                 List<ExamSaveListDTO.ItemInfo> itemInfoList = new ArrayList<>();
 
-                if(responseJson.has("itemList")){
-                    for(int i = 0; i < responseJson.get("itemList").getAsJsonArray().size(); i++){
+                if (responseJson.has("itemList")) {
+                    for (int i = 0; i < responseJson.get("itemList").getAsJsonArray().size(); i++) {
                         JsonObject itemObject = responseJson.get("itemList").getAsJsonArray().get(i).getAsJsonObject();
 
                         ExamSaveListDTO.ItemInfo itemInfo = new ExamSaveListDTO.ItemInfo();
@@ -323,13 +352,24 @@ public class ExamSaveService {
     public void archiveSave(ExamSaveRequestDTO requestDTOS, String userId) {
 //        String userId = "sky";
 
-        if(requestDTOS != null){
+        FileUrl fileUrl = new FileUrl();
+        DEST = fileUrl.selectUrl(widowsFileDir, linuxFileDir) + PDF_URL;
+        if (DEST.contains("C:")) {
+            DEST = DEST + "\\";
+
+        } else {
+            DEST = DEST + "/";
+        }
+
+        if (requestDTOS != null) {
+
+
             Archive archive = new Archive();
             archive.setUserId(userId);
             archive.setFlag("M");
             archive.setGrade("1");
             archive.setName(requestDTOS.getExamName());
-            archive.setTotal(requestDTOS.getShortAnswer()+ requestDTOS.getChoiceAnswer());
+            archive.setTotal(requestDTOS.getShortAnswer() + requestDTOS.getChoiceAnswer());
             archive.setQuestion(setPdfName(DEST, requestDTOS.getExamName(), userId));
             archive.setPreviewImg(setPngName());
             archiveSaveRepository.save(archive);

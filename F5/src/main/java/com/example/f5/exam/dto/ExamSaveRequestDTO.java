@@ -10,35 +10,38 @@ import java.util.List;
 @Setter
 public class ExamSaveRequestDTO {
 
-        private List<ExamSaveRequestDTO.ProcessedData> processedData;
-        private String examName;
-        @JsonProperty("highCnt")
-        private int high;
-        @JsonProperty("mediumCnt")
-        private int medium;
-        @JsonProperty("lowCnt")
-        private int low;
-        @JsonProperty("choiceCnt")
-        private int choiceAnswer;
-        @JsonProperty("shortCnt")
-        private int shortAnswer;
-        public ExamSaveRequestDTO(){}
+    private List<ProcessedData> processedData;
+    private String examName;
+    @JsonProperty("highCnt")
+    private int high;
+    @JsonProperty("mediumCnt")
+    private int medium;
+    @JsonProperty("lowCnt")
+    private int low;
+    @JsonProperty("choiceCnt")
+    private int choiceAnswer;
+    @JsonProperty("shortCnt")
+    private int shortAnswer;
 
-        @Getter
-        @Setter
-        public static class ProcessedData{
-                private int idx;
-                private int number;
-                private String type;
-                private String questionFormName;
-                private String difficultyName;
-                private String questionUrl;
-                private String passageUrl;
-                private int passageId;
+    public ExamSaveRequestDTO() {
+    }
 
-                public ProcessedData(){}
+    @Getter
+    @Setter
+    public static class ProcessedData {
+        private int idx;
+        private int number;
+        private String type;
+        private String questionFormName;
+        private String difficultyName;
+        private String questionUrl;
+        private String passageUrl;
+        private int passageId;
 
+        public ProcessedData() {
         }
+
+    }
 
 
 }
