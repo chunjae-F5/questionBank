@@ -10,8 +10,6 @@ public class FileUrl {
         String fileDir = "";
         String osName = System.getProperty("os.name").toLowerCase();
 
-        System.out.println(osName);
-
         if (osName.contains("win")) {
             fileDir = "C:\\";
         } else if (osName.contains("nux") || osName.contains("mac") || osName.contains("nix")) {
