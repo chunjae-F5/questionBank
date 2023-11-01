@@ -254,7 +254,7 @@
                                         <div class="scroll-inner">
                                             <div class="test ui-sortable" id="table-1">
                                                     <div class="col sortable" th:each="item, iterStat : ${itemList}" th:data-summary-id="'summary-' + ${iterStat.count}" th:attr="data-item-id=${item.itemId}">
-                                                        <a href="javascript:;">
+                                                        <a href="javascript:;" class="right-div-item">
                                                         <span class="dragHandle ui-sortable-handle">
                                                             <img th:src="@{/images/ico_move_type01.png}" alt="">
                                                         </span>
@@ -494,23 +494,18 @@
 </div>
 </div>
 </div>
-<script th:inline="javascript">
+<script>
+    $(document).ready(function() {
+        $('.right-div-item').on('click', function() {
+            const itemID = $(this).attr('th:attr'); // 이렇게 itemID를 가져오는 방법은 실제로 동작하는 코드에 맞게 수정해야 할 수도 있습니다.
+            const targetDiv = $('#simQueAdd'); // 왼쪽 div의 ID를 선택합니다.
 
-    const sessionSubjectName = sessionStorage.getItem('subjectName');
-    document.getElementById('subjectName').textContent = sessionSubjectName;
-
-    // 오른쪽 div 요약 요소를 선택
-    const rightDivs = document.querySelectorAll('.right-div');
-
-    // 각 요약 요소를 클릭했을 때 스크롤 이벤트 처리
-    rightDivs.forEach(function(rightDiv) {
-        rightDiv.addEventListener('click', function() {
-            // data-scroll-id 속성을 사용하여 연결된 왼쪽 div의 ID를 가져옴
-            const scrollId = rightDiv.getAttribute('data-scroll-id');
-            const leftDiv = document.getElementById(scrollId);
-
-            // 왼쪽 div로 스크롤
-            leftDiv.scrollIntoView({ behavior: 'smooth' });
+            if (itemID && targetDiv.length > 0) {
+                // 왼쪽 div로 스크롤 이동
+                targetDiv.animate({
+                    scrollTop: $(itemID).offset().top
+                }, 1000); // 스크롤 애니메이션 속도 (1000ms)
+            }
         });
     });
 </script>
