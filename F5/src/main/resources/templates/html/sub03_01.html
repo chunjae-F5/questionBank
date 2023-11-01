@@ -147,11 +147,11 @@
                                             </div>
                                             <div class="btn-wrap">
                                                 <button type="button" class="btn-error pop-btn" data-pop="error-report-pop"></button>
-                                                <button type="button" class="btn-delete" th:attr="data-item-id=${item.itemId}" onclick="moveSortGroupToTarget(this); countDifficulty(); countQuestionFrom()"></button>
+                                                <button type="button" class="btn-delete" th:attr="data-item-id=${item.itemId}" onclick="moveSortGroupToTarget(this);"></button>
 
                                             </div>
                                         </div>
-                                        <div class="view-que">
+                                        <div class="view-que view-queT">
                                             <div class="que-content" id="question">
                                                 <!--//문제 (문제, 객관식 번호~~)-->
                                                 <img th:src="${item.questionUrl}" alt="Question Image">
@@ -279,6 +279,50 @@
                                                         </a>
                                                     </div>
                                             </div>
+
+                                            <script>
+                                                $(function () {
+
+
+                                                    let _leg = $('.view-queT').length;
+                                                    let arr = [];
+
+                                                    viewListFunc();
+
+                                                    $(".view-que-list").change(function () {
+                                                        let _leg = $('.view-queT').length;
+                                                        let arr = [];
+
+                                                        viewListFunc();
+                                                    })
+
+                                                    function viewListFunc() {
+                                                        $('.col').on('click', function () {
+
+                                                            let _idx = $(this).index();
+
+                                                            for (var i = 0; i < _leg; i++) {
+                                                                arr.push($('.view-queT').eq(i).offset().top- 260);
+                                                            }
+
+                                                            console.log(arr);
+
+                                                            $('.view-que-list').animate({
+                                                                scrollTop: arr[_idx]
+                                                            }, 400);
+
+                                                            let _this = $(this);
+                                                            if (!_this.hasClass('active')) {
+                                                                _this.parents('.test.ui-sortable').find('.col').removeClass('active');
+                                                                _this.addClass('active');
+                                                                $('.view-que-box').removeClass('active');
+                                                                $('.view-que-box').eq(_idx).addClass('active');
+                                                            };
+
+                                                        })
+                                                    }
+                                                })
+                                            </script>
                                         </div>
                                     </div>
                                 </div>
@@ -493,22 +537,5 @@
     </div>
 </div>
 </div>
-</div>
-<script>
-    $(document).ready(function() {
-        $('.right-div-item').on('click', function() {
-            const itemID = $(this).attr('th:attr'); // 이렇게 itemID를 가져오는 방법은 실제로 동작하는 코드에 맞게 수정해야 할 수도 있습니다.
-            const targetDiv = $('#simQueAdd'); // 왼쪽 div의 ID를 선택합니다.
-
-            if (itemID && targetDiv.length > 0) {
-                // 왼쪽 div로 스크롤 이동
-                targetDiv.animate({
-                    scrollTop: $(itemID).offset().top
-                }, 1000); // 스크롤 애니메이션 속도 (1000ms)
-            }
-        });
-    });
-</script>
-
 </body>
 </html>
