@@ -286,7 +286,7 @@
             </div>
             <div class="pop-footer">
                 <button onclick="updatePopupDisplay()">초기화</button>
-                <button id="popSave" class="disabled" onclick="updateLevelCount()">저장</button>
+                <button id="popSave" class="disabled pop-close" onclick="updateLevelCount()">저장</button>
             </div>
         </div>
     </div>
@@ -526,7 +526,7 @@
 
     }
 
-    // 난이도 입력 동적으로 변경 기능을 추가해보자
+    // 팝업창에서 난이도 입력 동적으로 변경 기능을 추가해보자
 
     const lowestInput = document.querySelector('.lowestInput');
     const lowInput = document.querySelector('.lowInput');
@@ -566,18 +566,81 @@
 
     // 팝업창에서 저장 누르면 난이도 재분배 기능
     function updateLevelCount() {
-        // data-value에 값 저장
-        const lowestinput = document.querySelector('.lowestInput').value;
-        const lowInput = document.querySelector('.lowInput').value;
-        const mediumInput = document.querySelector('.mediumInput').value;
-        const highInput = document.querySelector('.highInput').value;
-        const highestInput = document.querySelector('.highestInput').value;
 
-        const buttonElement = document.querySelector('button[data-step="step1"]');
-        buttonElement.getAttribute('data-value') == lowestInput;
+        const lowestInput = parseFloat(document.querySelector('.lowestInput').value);
+        const lowInput = parseFloat(document.querySelector('.lowInput').value);
+        const mediumInput = parseFloat(document.querySelector('.mediumInput').value);
+        const highInput = parseFloat(document.querySelector('.highInput').value);
+        const highestInput = parseFloat(document.querySelector('.highestInput').value);
 
+        const replaceNaNWithZero = (value) => (isNaN(value) ? 0 : value);
+
+        const replacedLowestInput = replaceNaNWithZero(lowestInput);
+        const replacedLowInput = replaceNaNWithZero(lowInput);
+        const replacedMediumInput = replaceNaNWithZero(mediumInput);
+        const replacedHighInput = replaceNaNWithZero(highInput);
+        const replacedHighestInput = replaceNaNWithZero(highestInput);
+
+        const lowestElement = document.getElementById('lowest');
+        lowestElement.textContent = `최하(${replacedLowestInput})`;
+        lowestElement.setAttribute('data-value', replacedLowestInput);
+
+        const lowElement = document.getElementById('low');
+        lowElement.textContent = `하(${replacedLowInput})`;
+        lowElement.setAttribute('data-value', replacedLowInput);
+
+        const mediumElement = document.getElementById('medium');
+        mediumElement.textContent = `중(${replacedMediumInput})`;
+        mediumElement.setAttribute('data-value', replacedMediumInput);
+
+        const highElement = document.getElementById('high');
+        highElement.textContent = `상(${replacedHighInput})`;
+        highElement.setAttribute('data-value', replacedHighInput);
+
+        const highestElement = document.getElementById('highest');
+        highestElement.textContent = `최상(${replacedHighestInput})`;
+        highestElement.setAttribute('data-value', replacedHighestInput);
     }
 
+    function changeCountFromPopWrap() {
+        const rangeWrap = document.querySelector('.range-wrap');
+        let flexSpans = rangeWrap.querySelectorAll("span[style*='display: flex;']");
+
+        flexSpans.forEach(function (span, index) {
+            if (span.textContent.includes("(")) {
+                const matches = span.textContent.match(/\(([^)]+)\)/);
+                if (matches) {
+                    const contentInsideParentheses = matches[1];
+                    let replacement;
+
+                    // Use the updated data-value attributes from the buttons
+                    switch (index) {
+                        case 0:
+                            replacement = document.querySelector('button[data-step="step1"]').getAttribute('data-value');
+                            break;
+                        case 1:
+                            replacement = document.querySelector('button[data-step="step2"]').getAttribute('data-value');
+                            break;
+                        case 2:
+                            replacement = document.querySelector('button[data-step="step3"]').getAttribute('data-value');
+                            break;
+                        case 3:
+                            replacement = document.querySelector('button[data-step="step4"]').getAttribute('data-value');
+                            break;
+                        case 4:
+                            replacement = document.querySelector('button[data-step="step5"]').getAttribute('data-value');
+                            break;
+                        default:
+                            replacement = "0";
+                    }
+
+                    span.textContent = span.textContent.replace(`(${contentInsideParentheses})`, `(${replacement})`);
+                    span.setAttribute('data-value', replacement);
+                }
+            }
+        });
+
+    }
 
     const step2Button = document.querySelector('.btn-step.next');
 
@@ -701,11 +764,6 @@
         high = replaceIfStepExists(high);
         highest = replaceIfStepExists(highest);
 
-        // 여기서 팝업창 업데이트를 하면?
-        const lowestInput = document.querySelector('.lowest.num');
-        lowestInput.value = lowest;
-
-
         const activeButtons = document.querySelectorAll('.btn-line.active.evaluation');
 
         const activityCategoryList = [];
@@ -733,8 +791,7 @@
                 concatenatedValues += "subjective";
             }
         });
-
-
+        
         // 단원 id에 해당하는 value값 가져오는걸 만들어보자
 
         const topicChapterLists = [];
