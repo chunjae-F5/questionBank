@@ -23,16 +23,13 @@
 </head>
 <body>
 <script th:inline="javascript">
-    /* JavaScript code here */
-    var itemList = [[${itemList}]]; // 타임리프를 사용하여 데이터를 JavaScript 변수에 할당
-    var itemIdArray = [[${itemIdArray}]]; // 타임리프를 사용하여 데이터를 JavaScript 변수에 할당
+    const itemList = [[${itemList}]]; // 타임리프를 사용하여 데이터를 JavaScript 변수에 할당
 
-    console.log(itemList); // itemList 변수에 데이터가 저장됨
-    console.log(itemIdArray); // 콘솔에 표시 (테스트용)
 </script>
 <script th:inline="javascript">
     function sendDataToHaneul() {
-        const sortGroups = document.getElementsByClassName("sort-group");
+        const finalQueDiv = document.getElementsByClassName('finalQue')[0];
+        const sortGroups = finalQueDiv.getElementsByClassName('sort-group');
         const array = [];
 
         for (let i = 0; i < sortGroups.length; ++i) {
@@ -42,9 +39,7 @@
         }
         console.log(array);
 
-
-        // itemIdArray를 JSON 문자열로 변환
-        var itemIdArrayJSON = JSON.stringify(array);
+        const itemIdArrayJSON = JSON.stringify(array);
 
         window.location.href = "/sendDataForSave?itemIdArray=" + encodeURIComponent(itemIdArrayJSON);
     }
@@ -129,18 +124,13 @@
                             </div>
                         </div>
 
-                        <div class="view-que-list scroll-inner"
-                             style="display: -webkit-box;-webkit-box-orient:vertical" id="simQueAdd"><!--contents on-->
+                        <div class="view-que-list scroll-inner finalQue"
+                             style="display: -webkit-box;-webkit-box-orient:vertical" id="simQueAdd">
                                 <div class="sort-group" th:each="item, iterStat : ${itemList}"
                                                         th:data-summary-id="'summary-' + ${iterStat.count}"
                                                         th:item-id="${item.itemId}"
                                                         th:attr="data-item-id=${item.itemId}">
                                     <div class="view-que-box" th:if="${item.passageUrl != null}">
-                                        <!--<div class="que-top">
-                                            &lt;!&ndash;<div class="title">
-                                                <span class="num" th:text="${iterStat.count}"></span>
-                                            </div>&ndash;&gt;
-                                        </div>-->
                                         <div class="view-que">
                                             <img th:src="${item.passageUrl}" alt="Question Image">
                                         </div>
@@ -157,10 +147,7 @@
                                             </div>
                                             <div class="btn-wrap">
                                                 <button type="button" class="btn-error pop-btn" data-pop="error-report-pop"></button>
-<!--
-                                                <button type="button" class="btn-delete" th:attr="data-item-id=${item.itemId}" onclick="moveSortGroupToTarget(this); deleteColByItemId()"></button>
--->
-                                                <button type="button" class="btn-delete" th:attr="data-item-id=${item.itemId}" onclick="moveSortGroupToTarget(this)"></button>
+                                                <button type="button" class="btn-delete" th:attr="data-item-id=${item.itemId}" onclick="moveSortGroupToTarget(this); countDifficulty(); countQuestionFrom()"></button>
 
                                             </div>
                                         </div>
@@ -192,7 +179,7 @@
                                             </div>
                                         </div>
                                         <div class="que-info-last" th:text="${item.chapterName}">
-                                            <!--&lt;!&ndash; 대중소토픽&ndash;&gt;-->
+                                            <!-- 대중소토픽 -->
                                         </div>
                                     </div>
                                 </div>
@@ -325,7 +312,6 @@
                                                 return questionFrom;
                                             }
                                             console.log(countQuestionFrom());
-
                                         </script>
                                     </div>
                                 </div>
@@ -382,39 +368,11 @@
 
                                             if (summaryId === dataSummaryIdToMove) {
                                                 col.parentNode.removeChild(col); // col 요소 삭제
-                                                break; // 첫 번째 일치하는 요소만 삭제하려면 루프를 중지합니다.
+                                                break;
                                             }
                                         }
                                     }
                                 }
-                                /*function deleteColByItemId() {
-                                    const numSpan = document.querySelector('.num');
-                                    if (numSpan) {
-                                        const count = numSpan.textContent;
-                                        const itemIdToDelete = 'summary-' + count;
-
-                                        const cols = document.querySelectorAll('.col.sortable');
-
-                                        for (const col of cols) {
-                                            const summaryId = col.getAttribute('th:data-summary-id');
-                                            if (summaryId === itemIdToDelete) {
-                                                col.parentNode.removeChild(col); // col 요소 삭제
-                                                break; // 첫 번째 일치하는 요소만 삭제하려면 루프를 중지합니다.
-                                            }
-                                        }
-                                    }
-                                    const cols = document.querySelectorAll('.col.sortable');
-                                    for (const col of cols) {
-                                        const summaryId = col.getAttribute('th:data-summary-id');
-                                        if (summaryId === dataSummaryIdToMove) {
-                                            col.parentNode.removeChild(col); // col 요소 삭제
-                                            break; // 첫 번째 일치하는 요소만 삭제하려면 루프를 중지합니다.
-                                        }
-                                    }
-                                }*/
-
-
-
                             </script>
 
                         </div>
@@ -541,47 +499,6 @@
     const sessionSubjectName = sessionStorage.getItem('subjectName');
     document.getElementById('subjectName').textContent = sessionSubjectName;
 
-    /*$(function () {
-        let _leg = $('.view-que').length;
-        let arr = [];
-
-        viewListFunc();
-
-        $(".view-que-list").change(function () {
-            let _leg = $('.view-que').length;
-            let arr = [];
-
-            viewListFunc();
-        })
-
-        function viewListFunc() {
-            $('.col').on('click', function () {
-
-                let _idx = $(this).index();
-
-                for (let i = 0; i < _leg; i++) {
-                    arr.push($('.view-que').eq(i).offset().top - 280);
-                }
-
-                console.log("asdasd : "+arr);
-
-                $('.view-que-list').animate({
-                    scrollTop: arr[_idx]
-                }, 400);
-
-                let _this = $(this);
-                if (!_this.hasClass('active')) {
-                    _this.parents('.test.ui-sortable').find('.col').removeClass('active');
-                    _this.addClass('active');
-                    $('.view-que-box').removeClass('active');
-                    $('.view-que-box').eq(_idx).addClass('active');
-                }
-                ;
-
-            })
-        }
-    })*/
-
     // 오른쪽 div 요약 요소를 선택
     const rightDivs = document.querySelectorAll('.right-div');
 
@@ -596,9 +513,6 @@
             leftDiv.scrollIntoView({ behavior: 'smooth' });
         });
     });
-/*
- <div class="col sortable" th:each="item, iterStat : ${itemList}" th:data-summary-id="'summary-' + ${iterStat.count}">
-*/
 </script>
 
 </body>
