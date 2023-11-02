@@ -1882,6 +1882,13 @@ input[type=checkbox]:checked + label::before {
   height: 40px;
   line-height: 40px;
   padding: 0 20px;
+  display: block;
+  white-space: nowrap;
+  /* width: 250px; */
+  box-sizing: border-box;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
 }
 .full-pop-que .full-pop-wrap .view-box .view-bottom .cnt-box .view-que-list .que-info-last .chapter {
   color: #a7a7a7;
