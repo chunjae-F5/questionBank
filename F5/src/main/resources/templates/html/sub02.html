@@ -138,14 +138,14 @@
                                             <button type="button" class="btn-line total-questions" data-value="25"
                                                     disabled>25
                                             </button>
-                                            <button type="button" class="btn-line total-questions active" id="clicked"
+                                            <button type="button" class="btn-line total-questions" id="clicked"
                                                     data-value="30" disabled>30
                                             </button>
                                         </div>
                                         <div class="input-area">
                                             <span class="num">총 <input type="text" value="30"
                                                                        id="questionCount"
-                                                                       onchange="changeCount()"> 문제</span>
+                                                                       onchange="changeCount()" disabled> 문제</span>
                                             <div class="txt warn5">*5의 배수로 입력해주세요.</div>
                                         </div>
                                     </div>
@@ -422,6 +422,22 @@
         buttons.forEach(button => {
             button.disabled = cnt === 0;
         });
+
+        if (cnt != "0") {
+            $('#questionCount').removeAttr('disabled');
+        } else {
+            $('#questionCount').add('disabled');
+        }
+
+        // class에 active 추가
+
+            // const addCreateButton1 = document.getElementById('clicked');
+            // addCreateButton.classList.add('active');
+            //
+            // const addCreateButton2 = document.getElementById('teacherButton');
+
+
+
     }
 
 
