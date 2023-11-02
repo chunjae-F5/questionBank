@@ -23,7 +23,7 @@
 </head>
 <body>
 <script th:inline="javascript">
-    const itemList = [[${itemList}]]; // 타임리프를 사용하여 데이터를 JavaScript 변수에 할당
+    const itemList = [[${itemList}]];
 
 </script>
 <script th:inline="javascript">
@@ -84,7 +84,7 @@
             <div class="view-box">
                 <div class="view-top">
                     <div class="paper-info">
-                        <span id="subjectName">여기를 바꿔야함</span>
+                        <span id="subjectName"></span>
                     </div>
                     <button class="btn-default btn-research" id="refreshButton"><i class="research"></i>재검색</button>
                     <button class="btn-default pop-btn" data-pop="que-scope-pop">출제범위</button>
@@ -149,18 +149,18 @@
                                             <div class="title">
                                                 <span class="num" th:text="${iterStat.count}" id="num"></span> <!-- 1부터 시작하는 번호 부여 -->
                                                 <div class="que-badge-group">
-                                                    <span class="que-badge yellow" th:text="${item.difficultyName}"></span> <!--난이도 -->
-                                                    <span class="que-badge gray" th:text="${item.questionFormName}"></span> <!--객/주-->
-                                                    <span class="que-badge gray" th:text="${item.itemId}">문제 ID : </span> <!--객/주-->
+                                                    <span class="que-badge a yellow" th:text="${item.difficultyName}"></span> <!--난이도 -->
+                                                    <span class="que-badge b gray" th:text="${item.questionFormName}"></span> <!--객/주-->
+                                                    <!--<span class="que-badge gray" th:text="${item.itemId}">문제 ID : </span> &lt;!&ndash;객/주&ndash;&gt;-->
                                                 </div>
                                             </div>
                                             <div class="btn-wrap">
                                                 <button type="button" class="btn-error pop-btn" data-pop="error-report-pop"></button>
-                                                <button type="button" class="btn-delete" th:attr="data-item-id=${item.itemId}" onclick="moveSortGroupToTarget(this); countDifficulty(); countQuestionFrom()"></button>
+                                                <button type="button" class="btn-delete" th:attr="data-item-id=${item.itemId}" onclick="moveSortGroupToTarget(this); countQuestionFrom(); countDifficulty()"></button>
 
                                             </div>
                                         </div>
-                                        <div class="view-que">
+                                        <div class="view-que view-queT">
                                             <div class="que-content" id="question">
                                                 <!--//문제 (문제, 객관식 번호~~)-->
                                                 <img th:src="${item.questionUrl}" alt="Question Image">
@@ -190,6 +190,7 @@
                                         <div class="que-info-last" th:text="${item.chapterName}">
                                             <!-- 대중소토픽 -->
                                         </div>
+
                                     </div>
                                 </div>
                             <br>
@@ -213,26 +214,34 @@
                         </div>
                         <script th:inline="javascript">
                             function countDifficulty() {
-                                const difficultyCount = {
+                                const divElements = document.getElementsByClassName('finalQue');
+                                const counts = {
                                     '상': 0,
                                     '중': 0,
                                     '하': 0
                                 };
 
-                                for (const item of [[${itemList}]]) {
-                                    const difficulty = item.difficultyName;
-                                    if (difficulty in difficultyCount) {
-                                        difficultyCount[difficulty]++;
-                                    }
+                                for (const divElement of divElements) {
+                                    const difficultyNames = divElement.querySelectorAll('.que-badge.a');
+
+                                    difficultyNames.forEach(element => {
+                                        const difficultyName = element.textContent;
+                                        if (difficultyName === '상') {
+                                            counts['상']++;
+                                        } else if (difficultyName === '중') {
+                                            counts['중']++;
+                                        } else if (difficultyName === '하') {
+                                            counts['하']++;
+                                        }
+                                    });
                                 }
-                                document.getElementById('diff-high').textContent = difficultyCount['상'];
-                                document.getElementById('diff-medium').textContent = difficultyCount['중'];
-                                document.getElementById('diff-low').textContent = difficultyCount['하'];
-                                return difficultyCount;
+                                document.getElementById('diff-high').textContent = counts['상'];
+                                document.getElementById('diff-medium').textContent = counts['중'];
+                                document.getElementById('diff-low').textContent = counts['하'];
+
+                                return counts;
                             }
-                            console.log(countDifficulty());
-
-
+                            countDifficulty();
                         </script>
                     </div>
                     <div class="cnt-box type01">
@@ -263,7 +272,7 @@
                                         <div class="scroll-inner">
                                             <div class="test ui-sortable" id="table-1">
                                                     <div class="col sortable" th:each="item, iterStat : ${itemList}" th:data-summary-id="'summary-' + ${iterStat.count}" th:attr="data-item-id=${item.itemId}">
-                                                        <a href="javascript:;">
+                                                        <a href="javascript:;" class="right-div-item">
                                                         <span class="dragHandle ui-sortable-handle">
                                                             <img th:src="@{/images/ico_move_type01.png}" alt="">
                                                         </span>
@@ -288,6 +297,50 @@
                                                         </a>
                                                     </div>
                                             </div>
+
+                                            <script>
+                                                $(function () {
+
+
+                                                    let _leg = $('.view-queT').length;
+                                                    let arr = [];
+
+                                                    viewListFunc();
+
+                                                    $(".view-que-list").change(function () {
+                                                        let _leg = $('.view-queT').length;
+                                                        let arr = [];
+
+                                                        viewListFunc();
+                                                    })
+
+                                                    function viewListFunc() {
+                                                        $('.col').on('click', function () {
+
+                                                            let _idx = $(this).index();
+
+                                                            for (var i = 0; i < _leg; i++) {
+                                                                arr.push($('.view-queT').eq(i).offset().top- 262.5);
+                                                            }
+
+                                                            console.log(arr);
+
+                                                            $('.view-que-list').animate({
+                                                                scrollTop: arr[_idx]
+                                                            }, 400);
+
+                                                            let _this = $(this);
+                                                            if (!_this.hasClass('active')) {
+                                                                _this.parents('.test.ui-sortable').find('.col').removeClass('active');
+                                                                _this.addClass('active');
+                                                                $('.view-que-box').removeClass('active');
+                                                                $('.view-que-box').eq(_idx).addClass('active');
+                                                            };
+
+                                                        })
+                                                    }
+                                                })
+                                            </script>
                                         </div>
                                     </div>
                                 </div>
@@ -304,23 +357,33 @@
                                         </div>
 
                                         <script th:inline="javascript">
+
                                             function countQuestionFrom() {
-                                                const questionFrom = {
+                                                const divElements = document.getElementsByClassName('finalQue');
+                                                const counts = {
                                                     '객관식': 0,
                                                     '주관식': 0
                                                 };
 
-                                                for (const item of [[${itemList}]]) {
-                                                    const form = item.questionFormName;
-                                                    if (form in questionFrom) {
-                                                        questionFrom[form]++;
-                                                    }
+                                                for (const divElement of divElements) {
+                                                    const difficultyNames = divElement.querySelectorAll('.que-badge.b');
+
+                                                    difficultyNames.forEach(element => {
+                                                        const difficultyName = element.textContent;
+                                                        if (difficultyName === '객관식') {
+                                                            counts['객관식']++;
+                                                        } else if (difficultyName === '주관식') {
+                                                            counts['주관식']++;
+                                                        }
+                                                    });
                                                 }
-                                                document.getElementById('open-question').textContent = questionFrom['주관식'];
-                                                document.getElementById('multiple-choice').textContent = questionFrom['객관식'];
-                                                return questionFrom;
+
+                                                document.getElementById('open-question').textContent = counts['주관식'];
+                                                document.getElementById('multiple-choice').textContent = counts['객관식'];
+
+                                                return counts;
                                             }
-                                            console.log(countQuestionFrom());
+                                            countQuestionFrom();
                                         </script>
                                     </div>
                                 </div>
@@ -376,7 +439,7 @@
                                             const summaryId = col.getAttribute('data-item-id');
 
                                             if (summaryId === dataSummaryIdToMove) {
-                                                col.parentNode.removeChild(col); // col 요소 삭제
+                                                col.parentNode.removeChild(col);
                                                 break;
                                             }
                                         }
@@ -502,27 +565,34 @@
     </div>
 </div>
 </div>
-</div>
-<script th:inline="javascript">
-
+</body>
+<script>
     const sessionSubjectName = sessionStorage.getItem('subjectName');
     document.getElementById('subjectName').textContent = sessionSubjectName;
 
-    // 오른쪽 div 요약 요소를 선택
-    const rightDivs = document.querySelectorAll('.right-div');
+    function addDifficultyClassToBadges() {
+        const difficultyBadges = document.getElementsByClassName('que-badge a');
 
-    // 각 요약 요소를 클릭했을 때 스크롤 이벤트 처리
-    rightDivs.forEach(function(rightDiv) {
-        rightDiv.addEventListener('click', function() {
-            // data-scroll-id 속성을 사용하여 연결된 왼쪽 div의 ID를 가져옴
-            const scrollId = rightDiv.getAttribute('data-scroll-id');
-            const leftDiv = document.getElementById(scrollId);
+        for (const badge of difficultyBadges) {
+            const difficultyName = badge.textContent.trim(); // th:text 값 가져오기
 
-            // 왼쪽 div로 스크롤
-            leftDiv.scrollIntoView({ behavior: 'smooth' });
-        });
-    });
+            // 이전에 추가된 클래스를 모두 제거
+            badge.classList.remove('yellow', 'green', 'purple');
+
+            // difficultyName 값에 따라 적절한 클래스를 추가
+            if (difficultyName === '상') {
+                badge.classList.add('yellow');
+            } else if (difficultyName === '중') {
+                badge.classList.add('green');
+            } else if (difficultyName === '하') {
+                badge.classList.add('purple');
+            }
+        }
+    }
+
+    // 함수 호출
+    addDifficultyClassToBadges();
+
 </script>
 
-</body>
 </html>

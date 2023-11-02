@@ -40,6 +40,7 @@ public class ExamDto {
         private String questionFormCode;
         private String difficultyName;
         private String chapterName;
+        private int passageId;
         private String passageUrl;
         private String questionUrl;
         private String answerUrl;
