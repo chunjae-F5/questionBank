@@ -18,7 +18,7 @@
 </head>
 
 <body>
-<div id="wrap" class="full-pop-que">
+<div id="wrap" class="full-pop-que scroll-inner">
     <div class="full-pop-wrap">
         <div class="pop-header">
             <ul class="title">
@@ -238,7 +238,7 @@
             </div>
         </div>
         <div class="step-btn-wrap">
-            <button type="button" class="btn-step">출제 방법 선택</button>
+            <button type="button" class="btn-step" id="prevPageBtn">출제 방법 선택</button>
             <button type="button" class="btn-step next" data-pop="que-pop" onclick="submit()">STEP2 문항 편집</button>
             <!-- 230629 pop-btn 추가-->
         </div>
@@ -777,7 +777,7 @@
 
         sessionStorage.setItem("subjectName", subjectName);
 
-        fetch('http://localhost:8080/item-img/chapter/item-list', {
+        fetch('/item-img/chapter/item-list', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -789,6 +789,7 @@
                     console.log("ok")
                     return response.json();
                 } else {
+                    alert("더 많은 단원정보를 선택해 주세요!")
                     throw new Error('Failed to send JSON data');
                 }
             })
@@ -802,5 +803,15 @@
     document.getElementById('watchJson').addEventListener('click', function () {
 
     });
+
+    document.addEventListener('DOMContentLoaded', function() {
+        const prevPageBtn = document.getElementById("prevPageBtn");
+        if (prevPageBtn) {
+            prevPageBtn.addEventListener("click", function () {
+                    history.back();
+            });
+        }
+    });
+
 </script>
 </html>

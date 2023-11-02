@@ -12,6 +12,7 @@ import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -29,9 +30,9 @@ public class UserService {
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
 
-    private String fileDir;
+    private String DEST;
 
-    private String PDF_URL = "pdf_file\\";
+    private String User_URL = "F5ImgFile";
 
     @Value("${windows.file.dir}")
     private String widowsFileDir;
@@ -63,12 +64,18 @@ public class UserService {
     private String getFullPath(String fileName) {
 
         FileUrl fileUrl = new FileUrl();
+        DEST = fileUrl.selectUrl(widowsFileDir, linuxFileDir) + User_URL;
+        if (DEST.contains("C:")) {
+            DEST = DEST + "\\";
 
-        fileDir = fileUrl.selectUrl(widowsFileDir, linuxFileDir);
+        } else {
+            DEST = DEST + "/";
+        }
 
-        System.out.println(fileDir);
 
-        return fileDir + fileName;
+        System.out.println(DEST);
+
+        return DEST + fileName;
     }
 
     /*회원가입*/
@@ -100,7 +107,10 @@ public class UserService {
         user.setName(form.getUsername());
         user.setEmail(form.getEmail());
         userRepository.save(user);
-        return ResponseEntity.ok("User registered successfully!");
+//        return ResponseEntity.ok("User registered successfully!");
+        return ResponseEntity.status(HttpStatus.FOUND)
+                .header("Location", "/")
+                .body("User registered successfully!");
     }
 
     public ResponseEntity<String> login(UserDto.LoginResponseDto form, HttpServletRequest httpServletRequest) {
