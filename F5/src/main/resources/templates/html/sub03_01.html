@@ -59,9 +59,18 @@
         });
     }
 
+    document.addEventListener('DOMContentLoaded', function() {
+        const prevPageBtn = document.getElementById("prevPageBtn");
+        if (prevPageBtn) {
+            prevPageBtn.addEventListener("click", function () {
+                history.back();
+            });
+        }
+    });
+
 </script>
 
-<div id="wrap" class="full-pop-que">
+<div id="wrap" class="full-pop-que scroll-inner">
     <div class="full-pop-wrap">
         <div class="pop-header">
             <ul class="title">
@@ -316,7 +325,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="contents on">
+                            <div class="contents">
                                 <div class="cnt-top">
                                     <span class="title"><div id="quenum-display"></div></span>
                                     <div class="right-area">
@@ -381,7 +390,7 @@
             </div>
         </div>
         <div class="step-btn-wrap">
-            <button type="button" class="btn-step">STEP 1 단원 선택</button>
+            <button type="button" class="btn-step" id="prevPageBtn">STEP 1 단원 선택</button>
             <button type="button" class="btn-step next" onclick="sendDataToHaneul()">STEP 3 시험지 저장</button>
         </div>
     </div>

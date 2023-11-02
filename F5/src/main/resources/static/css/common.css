@@ -100,8 +100,10 @@ html {
 }
 
 body {
-  overflow-y: hidden;
+  /*overflow-y: hidden;*/
+  overflow: visible;
 }
+
 
 .inner {
   width: 1320px;
@@ -113,7 +115,7 @@ body {
 }
 
 .scroll-inner {
-  overflow: overlay;
+  overflow: scroll;
 }
 
 .scroll-inner::-webkit-scrollbar {
@@ -1507,7 +1509,8 @@ input[type=checkbox]:checked + label::before {
   padding: 20px 0;
 }
 .full-pop-que .full-pop-wrap .view-box .view-bottom.type02 .tab-list-type01 .table .scroll-inner {
-  height: 455px;
+  height: 400px;
+  /*height: 455px;*/
 }
 .full-pop-que .full-pop-wrap .view-box .view-bottom.type02 .tab-list-type01 .table span {
   padding: 20px 0;
