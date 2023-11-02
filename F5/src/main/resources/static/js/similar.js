@@ -160,7 +160,7 @@ function displaySimilarItems(similarItems, selectedDifficulty) {
                 queBottomDiv.className = 'que-bottom';
                 queBottomDiv.innerHTML = `
                     <div class="btn-wrap">
-                        <button type="button" class="btn-default btn-add" data-item-id=${item.itemId} onclick="moveSortGroupToSource(this, '${item.itemId}'); countQuestionFrom(); countDifficulty()" ><i class="add-type02"></i> 추가</button>
+                        <button type="button" class="btn-default btn-add" data-item-id=${item.itemId} onclick="moveSortGroupToSource(this, '${item.itemId}');" ><i class="add-type02"></i> 추가</button>
                     </div>
                 `;
 
@@ -215,8 +215,6 @@ function moveSortGroupToAddDel(button, itemId) {
 
         addButton.addEventListener('click', function() {
             moveSortGroupToSource(this, itemId);
-            countQuestionFrom();
-            countDifficulty();
         });
 
         sortGroupElement.querySelector('.que-bottom').appendChild(addButton);
@@ -265,9 +263,6 @@ function moveSortGroupToSource(button, itemId) {
         // 왼쪽 패널에 유사 문항을 추가
         const leftPanel = document.getElementById('simQueAdd');
         leftPanel.appendChild(clonedSortGroup);
-
-        countQuestionFrom();
-        countDifficulty();
 
         sortGroupElement.remove();
         add_count++;
