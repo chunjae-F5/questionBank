@@ -12,21 +12,19 @@ import com.example.f5.exam.repository.QuestionSaveRepository;
 import com.example.f5.util.FileUrl;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
-import com.itextpdf.io.image.ImageDataFactory;
 import com.itextpdf.kernel.colors.Color;
 import com.itextpdf.kernel.colors.DeviceCmyk;
 import com.itextpdf.kernel.events.PdfDocumentEvent;
 import com.itextpdf.kernel.font.PdfFont;
 import com.itextpdf.kernel.font.PdfFontFactory;
 import com.itextpdf.kernel.geom.PageSize;
-import com.itextpdf.kernel.geom.Rectangle;
 import com.itextpdf.kernel.pdf.PdfDocument;
 import com.itextpdf.kernel.pdf.PdfPage;
-import com.itextpdf.kernel.pdf.PdfReader;
 import com.itextpdf.kernel.pdf.PdfWriter;
 import com.itextpdf.kernel.pdf.canvas.PdfCanvas;
 import com.itextpdf.layout.Document;
-import com.itextpdf.layout.element.Image;
+import com.itextpdf.layout.element.Paragraph;
+import com.itextpdf.layout.properties.TextAlignment;
 import com.itextpdf.svg.converter.SvgConverter;
 import com.itextpdf.svg.processors.ISvgConverterProperties;
 import com.itextpdf.svg.processors.impl.SvgConverterProperties;
@@ -35,11 +33,9 @@ import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.pdmodel.PDPage;
 import org.apache.pdfbox.rendering.PDFRenderer;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.core.io.ClassPathResource;
 import org.springframework.stereotype.Service;
 
 import javax.imageio.ImageIO;
-import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.*;
 import java.net.URI;
@@ -52,6 +48,8 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
 import java.util.List;
+
+import static com.itextpdf.kernel.geom.PageSize.A4;
 
 
 @Service
@@ -144,6 +142,7 @@ public class ExamSaveService {
         String date = String.valueOf(LocalDate.now());
         String topLine = totQuestion + "문제 | " + userName + " | " + name;
         String day = "일일";
+        String subjectName = requestDTOS.getSubjectName();
 
         // PDF객체 생성
         String pdfFilePath = setPdfName(DEST, requestDTOS.getExamName(), userId);
@@ -155,9 +154,10 @@ public class ExamSaveService {
         Color subLineColor = new DeviceCmyk(0, 0, 0, 20);
         float subLineWidth = 1;
 
+        Color fontGray = new DeviceCmyk(0, 0, 0, 80);
 
         // 한글 폰트 처리
-        PdfFont font = PdfFontFactory.createFont(DEST + "HYGothic-Medium-Regular.ttf", PdfFontFactory.EmbeddingStrategy.PREFER_EMBEDDED);
+        PdfFont font = PdfFontFactory.createFont(DEST + "HYGothic-Medium-Regular.ttf", PdfFontFactory.EmbeddingStrategy.PREFER_NOT_EMBEDDED);
 
         // Header
         Header headerHandler = new Header(day, date, examName, topLine, mainLineColor, mainLineWidth, subLineColor, subLineWidth);
@@ -168,16 +168,21 @@ public class ExamSaveService {
         pdf.addEventHandler(PdfDocumentEvent.END_PAGE, footerHandler);
 
         // Body
-        for (int i = 0; i < passageUrls.size(); i++) {
-//            if(passageUrls.get(i).isEmpty() || passageUrls.get(i) == null){
-//
-//            }else{
-//
-//            }
-            convertSvgToPdf(pdf, document, passageUrls.get(i), questionUrls.get(i));
+        for (int i = 0; i < questionUrls.size(); i++) {
+            int number = requestDTOS.getProcessedData().get(i).getNumber();
+            String level = requestDTOS.getProcessedData().get(i).getDifficultyName();
+            String type = requestDTOS.getProcessedData().get(i).getQuestionFormName();
+
+            System.out.println("number : " + number);
+
+            if(passageUrls.get(i).isEmpty() || passageUrls.get(i) == null){
+                convertSvgToPdf(pdf, document, questionUrls.get(i), i, number, font, level, type, mainLineColor, fontGray);
+            }else{
+                convertSvgToPassagePdf(pdf, document, passageUrls.get(i), questionUrls.get(i), i, number, font, level, type, mainLineColor, fontGray);
+            }
+
         }
 
-//
         document.close();
         System.out.println("pdf create success!");
 
@@ -198,6 +203,14 @@ public class ExamSaveService {
 
     }
 
+    // 텍스트 추가 메서드
+    private static void addTextToPdf(Document doc, String text, PdfFont font, Color color, float x, float y, int fontSize) {
+        Paragraph paragraph = new Paragraph(text);
+        paragraph.setFont(font).setFontColor(color);
+        paragraph.setFontSize(fontSize); // 글자 크기 조정
+        paragraph.setMargin(0); // 여백 제거
+        doc.showTextAligned(paragraph, x, y, TextAlignment.LEFT);
+    }
 
     // PDF 파일 이름 변경
     private String setPdfName(String dest, String examName, String userId) {
@@ -224,72 +237,155 @@ public class ExamSaveService {
         return DEST + "image_" + UUID.randomUUID() + ".png";
     }
 
-    private void convertSvgToPdf(PdfDocument pdf, Document document, String passageSvgUrl, String questionSvgUrl) throws IOException {
+    private void convertSvgToPdf(PdfDocument pdf, Document document, String questionSvgUrl, int i, int number, PdfFont font, String level, String type, Color mainLineColor, Color fontGray) throws IOException {
+        PdfPage page;
+        if (i % 2 == 0) {
+            page = pdf.addNewPage(A4);
+        }else{
+            page = pdf.getLastPage();
+        }
+        // A4 사이즈의 새로운 페이지 생성
+//        PdfPage page = pdf.addNewPage(PageSize.A4);
+
+        // 페이지의 회전 설정 (Portrait 또는 Landscape)
+//        page.setRotation(0);
+
+        // PDF에 그림을 그리기 위한 PdfCanvas 가져오기
+        PdfCanvas canvas = new PdfCanvas(page);
+
+        // 왼쪽 이미지 배치 위치 좌표
+        float leftX = 30;
+        float leftY = 230;
+
+        // 오른쪽 이미지 배치 위치 좌표
+        float rightX = 327.5F;
+        float rightY = 230;
+
+        // 이미지 너비와 높이 설정 (필요에 따라 조정)
+//        float imageWidth = 200f;
+//        float imageHeight = 150f;
+
+        // 질문 이미지에 대한 SVG 콘텐츠를 조정
+        String adjustedQuestionSvgContent = adjustSvgContent(questionSvgUrl);
+
+        // 조정된 질문 이미지를 InputStream으로 변환
+        InputStream adjustedQuestionSvgInputStream = new ByteArrayInputStream(adjustedQuestionSvgContent.getBytes(StandardCharsets.UTF_8));
+
+        // 질문 이미지를 PDF 캔버스에 그리기
+        ISvgConverterProperties questionProperties = new SvgConverterProperties().setBaseUri("");
+        if (i % 2 == 0) {
+            addTextToPdf(document, "0"+number, font, mainLineColor, leftX, leftY+370, 14);
+            addTextToPdf(document, level, font, fontGray, leftX + 30, leftY+370, 10);
+            addTextToPdf(document, type, font, fontGray, leftX + 50, leftY+370, 10);
+
+            SvgConverter.drawOnCanvas(adjustedQuestionSvgInputStream, canvas, leftX, leftY, questionProperties);
+        } else {
+            addTextToPdf(document, "0"+number, font, mainLineColor, rightX, rightY+370, 14);
+            addTextToPdf(document, level, font, fontGray, rightX + 30, rightY+370, 10);
+            addTextToPdf(document, type, font, fontGray, rightX + 50, rightY+370, 10);
+
+            SvgConverter.drawOnCanvas(adjustedQuestionSvgInputStream, canvas, rightX, rightY, questionProperties);
+        }
+
+    }
+
+
+    private void convertSvgToPassagePdf(PdfDocument pdf, Document document, String passageSvgUrl, String questionSvgUrl, int i, int number, PdfFont font, String level, String type, Color mainLineColor, Color fontGray) throws IOException {
         // Create a new A4-sized page
 //        document.add(new AreaBreak(AreaBreakType.NEXT_PAGE));
 
-        // Create a new page for drawing
-        PdfPage page = pdf.addNewPage(PageSize.A4);
+        PdfPage page;
+        if (i % 2 == 0) {
+            page = pdf.addNewPage(A4);
+        }else{
+            page = pdf.getLastPage();
+        }
 
-        // Set page rotation (Portrait or Landscape)
-//        page.setRotation(90);
+        // A4 사이즈의 새로운 페이지 생성
+//        PdfPage page = pdf.addNewPage(PageSize.A4);
 
-        // Get the PdfCanvas for drawing
+        // 페이지의 회전 설정 (Portrait 또는 Landscape)
+        page.setRotation(0);
+
+        // PDF에 그림을 그리기 위한 PdfCanvas 가져오기
         PdfCanvas canvas = new PdfCanvas(page);
 
-        if (passageSvgUrl.isEmpty() || passageSvgUrl == null) {
-            String adjustedQuestionSvgContent = adjustSvgContent(questionSvgUrl);
+        // 왼쪽 이미지 배치 위치 좌표
+        float leftX = 30;
+        float leftY = 230;
 
-            InputStream adjustedQuestionSvgInputStream = new ByteArrayInputStream(adjustedQuestionSvgContent.getBytes(StandardCharsets.UTF_8));
+        // 오른쪽 이미지 배치 위치 좌표
+        float rightX = 327.5F;
+        float rightY = 230;
 
+//        float imageYY = 300;
+
+        // 이미지 너비와 높이 설정 (필요에 따라 조정)
+//        float imageWidth = 200f;
+//        float imageHeight = 150f;
+
+
+        // 본문 이미지와 질문 이미지의 SVG 콘텐츠 조정
+        String adjustedPassageSvgContent = adjustSvgContent(passageSvgUrl);
+        String adjustedQuestionSvgContent = adjustSvgContent(questionSvgUrl);
+
+        // 조정된 본문 이미지와 질문 이미지를 InputStream으로 변환
+        InputStream adjustedPassageSvgInputStream = new ByteArrayInputStream(adjustedPassageSvgContent.getBytes(StandardCharsets.UTF_8));
+        InputStream adjustedQuestionSvgInputStream = new ByteArrayInputStream(adjustedQuestionSvgContent.getBytes(StandardCharsets.UTF_8));
+
+        ISvgConverterProperties passageProperties = new SvgConverterProperties().setBaseUri("");
+        if( i % 2 == 0) {
+            // 본문 이미지를 PDF 캔버스에 그리기
+            SvgConverter.drawOnCanvas(adjustedPassageSvgInputStream, canvas, leftX, leftY, passageProperties);
+
+            addTextToPdf(document, "0"+number, font, mainLineColor, leftX, leftY+370, 14);
+            addTextToPdf(document, level, font, fontGray, leftX + 30, leftY+370, 10);
+            addTextToPdf(document, type, font, fontGray, leftX + 50, leftY+370, 10);
+            // 질문 이미지를 PDF 캔버스에 그리기
+            float leftYY = leftY - 200;
             ISvgConverterProperties questionProperties = new SvgConverterProperties().setBaseUri("");
-            SvgConverter.drawOnCanvas(adjustedQuestionSvgInputStream, canvas, questionProperties);
+            SvgConverter.drawOnCanvas(adjustedQuestionSvgInputStream, canvas, leftX, leftYY, questionProperties);
+        }else{
+            // 본문 이미지를 PDF 캔버스에 그리기
+            SvgConverter.drawOnCanvas(adjustedPassageSvgInputStream, canvas, rightX, rightY, passageProperties);
 
-        } else {
-            String adjustedPassageSvgContent = adjustSvgContent(passageSvgUrl);
-            String adjustedQuestionSvgContent = adjustSvgContent(questionSvgUrl);
-
-            InputStream adjustedPassageSvgInputStream = new ByteArrayInputStream(adjustedPassageSvgContent.getBytes(StandardCharsets.UTF_8));
-            InputStream adjustedQuestionSvgInputStream = new ByteArrayInputStream(adjustedQuestionSvgContent.getBytes(StandardCharsets.UTF_8));
-            ISvgConverterProperties passageProperties = new SvgConverterProperties().setBaseUri("");
-            SvgConverter.drawOnCanvas(adjustedPassageSvgInputStream, canvas, passageProperties);
-
+            addTextToPdf(document, "0"+number, font, mainLineColor, rightX, rightY+370, 14);
+            addTextToPdf(document, level, font, fontGray, rightX + 30, rightY+370, 10);
+            addTextToPdf(document, type, font, fontGray, rightX + 50, rightY+370, 10);
+            // 질문 이미지를 PDF 캔버스에 그리기
+            float rightYY = rightY - 200;
             ISvgConverterProperties questionProperties = new SvgConverterProperties().setBaseUri("");
-            SvgConverter.drawOnCanvas(adjustedQuestionSvgInputStream, canvas, questionProperties);
-
+            SvgConverter.drawOnCanvas(adjustedQuestionSvgInputStream, canvas, rightX, rightYY, questionProperties);
         }
 
     }
 
     private String adjustSvgContent(String svgUrl) throws IOException {
+        // SVG 이미지 URL에서 InputStream을 열기
         URL url = new URL(svgUrl);
         InputStream inputStream = url.openStream();
 
+        // SVG 콘텐츠를 읽기 위한 BufferedReader 생성
         BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream, StandardCharsets.UTF_8));
         StringBuilder svgContent = new StringBuilder();
         String line;
 
+        // SVG 콘텐츠를 읽어서 문자열로 저장
         while ((line = reader.readLine()) != null) {
             svgContent.append(line);
         }
-
+        // InputStream 닫기
         inputStream.close();
 
-        // Adjust the width and height in the SVG content as needed
-//        return svgContent.toString()
-//                .replaceFirst("width=\"\\s+\"", "width=\"50%\"")
-//                .replaceFirst("height=\"\\s+\"", "height=\"auto\"");
+        // SVG 콘텐츠에서 너비와 높이 조정 (필요한대로)
+        PageSize pageSize = A4;
+        float width = pageSize.getWidth() / 2;
+        float height = pageSize.getHeight() - 250;
 
-        PageSize pageSize = PageSize.A4;
-
-        // Calculate the width and height for the SVG based on the page size
-        float width = pageSize.getWidth() / 2; // Adjust as needed
-//        float height = (width / pageWidth) * pageHeight;
-
-        // Replace width and height in the SVG content
+        // SVG 콘텐츠의 너비 속성 조정
         return svgContent.toString()
-                .replaceAll("width=\"[0-9.]+\"", "width=\"" + width + "\"");
-//                .replaceAll("height=\"[0-9.]+\"", "height=\"" + height + "\"");
+                .replaceAll("width=\"[0-9.]+\"", "width=\"" + width + "\"")
+                .replaceAll("height=\"[0-9.]+\"", "height=\"" + height + "\"");
 
     }
 
