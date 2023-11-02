@@ -12,6 +12,7 @@ import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -28,7 +29,6 @@ public class UserService {
     private final AcademyRepository academyRepository;
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
-
 
     /*회원가입*/
     public ResponseEntity<String> register(UserDto.RegisterResponseDto form) {
@@ -59,7 +59,10 @@ public class UserService {
         user.setName(form.getUsername());
         user.setEmail(form.getEmail());
         userRepository.save(user);
-        return ResponseEntity.ok("User registered successfully!");
+//        return ResponseEntity.ok("User registered successfully!");
+        return ResponseEntity.status(HttpStatus.FOUND)
+                .header("Location", "/")
+                .body("User registered successfully!");
     }
 
     public ResponseEntity<String> login(UserDto.LoginResponseDto form, HttpServletRequest httpServletRequest) {

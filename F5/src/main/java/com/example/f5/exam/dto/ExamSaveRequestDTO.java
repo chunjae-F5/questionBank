@@ -22,6 +22,8 @@ public class ExamSaveRequestDTO {
     private int choiceAnswer;
     @JsonProperty("shortCnt")
     private int shortAnswer;
+    @JsonProperty("subjectName")
+    private String subjectName;
 
     public ExamSaveRequestDTO() {
     }

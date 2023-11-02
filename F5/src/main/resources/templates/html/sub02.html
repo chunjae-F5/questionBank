@@ -18,7 +18,7 @@
 </head>
 
 <body>
-<div id="wrap" class="full-pop-que">
+<div id="wrap" class="full-pop-que scroll-inner">
     <div class="full-pop-wrap">
         <div class="pop-header">
             <ul class="title">
@@ -43,7 +43,8 @@
                                 <div class="unit-cnt scroll-inner">
                                     <div class="title-top">
                                         <span>단원정보</span>
-                                        <input type="checkbox" id="chk01_00" class="allCheck">
+                                        <input type="checkbox" id="chk01_00" class="allCheck que-allCheck depth01"
+                                               onclick="getCheck()">
                                         <label for="chk01_00">전체선택</label>
                                     </div>
                                     <ul>
@@ -122,22 +123,26 @@
                                     </div>
                                     <div class="count-area">
                                         <div class="btn-wrap">
-                                            <button type="button" class="btn-line total-questions" data-value="10">10
+                                            <button type="button" class="btn-line total-questions" data-value="10"
+                                                    disabled>10
                                             </button>
-                                            <button type="button" class="btn-line total-questions" data-value="15">15
+                                            <button type="button" class="btn-line total-questions" data-value="15"
+                                                    disabled>15
                                             </button>
-                                            <button type="button" class="btn-line total-questions" data-value="20">20
+                                            <button type="button" class="btn-line total-questions" data-value="20"
+                                                    disabled>20
                                             </button>
-                                            <button type="button" class="btn-line total-questions" data-value="25">25
+                                            <button type="button" class="btn-line total-questions" data-value="25"
+                                                    disabled>25
                                             </button>
-                                            <button type="button" class="btn-line total-questions active" id="clicked"
-                                                    data-value="30">30
+                                            <button type="button" class="btn-line total-questions" id="clicked"
+                                                    data-value="30" disabled>30
                                             </button>
                                         </div>
                                         <div class="input-area">
                                             <span class="num">총 <input type="text" value="30"
                                                                        id="questionCount"
-                                                                       onchange="changeCount()"> 문제</span>
+                                                                       onchange="changeCount()" disabled> 문제</span>
                                             <div class="txt warn5">*5의 배수로 입력해주세요.</div>
                                         </div>
                                     </div>
@@ -149,26 +154,28 @@
                                         </div>
                                     </div>
                                     <div class="btn-wrap">
-                                        <button type="button" class="btn-line active" data-status="teacher"
-                                                id="teacherButton">교사용(교사용 DVD, 지도서, 신규 개발 등)
+                                        <button type="button" class="btn-line" data-status="teacher"
+                                                id="teacherButton" disabled>교사용(교사용 DVD, 지도서, 신규 개발 등)
                                         </button>
-                                        <button type="button" class="btn-line" data-status="student" id="studentButton">
+                                        <button type="button" class="btn-line" data-status="student" id="studentButton"
+                                                disabled>
                                             학생용(자습서, 평가문제집 등)
                                         </button>
                                     </div>
                                 </div>
                                 <div class="box">
                                     <div class="title-wrap">
-                                        <span class="tit-text active">평가 영역</span>
+                                        <span class="tit-text">평가 영역</span>
                                         <div class="right-area">
                                         </div>
                                     </div>
                                     <div class="btn-wrap multi">
                                         <div th:each="evaluationItem, evalIndex : ${evaluationList}">
-                                            <button type="button" class="btn-line active evaluation" style="width: 7rem"
+                                            <button type="button" class="btn-line evaluation" style="width: 7rem"
                                                     th:if="${evalIndex.even}"
                                                     th:text="${evaluationItem}"
                                                     th:value="${evaluationList[evalIndex.index - 1]}"
+                                                    disabled
                                             ></button>
                                         </div>
                                     </div>
@@ -180,8 +187,8 @@
                                         </div>
                                     </div>
                                     <div class="btn-wrap multi">
-                                        <button type="button" class="btn-line active questionForm">객관식</button>
-                                        <button type="button" class="btn-line active questionForm">주관식</button>
+                                        <button type="button" class="btn-line questionForm" disabled>객관식</button>
+                                        <button type="button" class="btn-line questionForm" disabled>주관식</button>
                                     </div>
                                 </div>
                                 <div class="box">
@@ -189,42 +196,50 @@
                                         <span class="tit-text">난이도 구성</span>
                                     </div>
                                     <div class="step-wrap">
-                                        <button type="button" class="btn-line type02 color01" data-step="step1"
+                                        <button type="button" class="btn-line type02 color01"
+                                                data-step="step1"
                                                 data-value="step1"
-                                                onclick="divide(this)">최하
+                                                onclick="divide(this); buttonClick(this)" style="display:none;"
+                                                disabled>최하
                                         </button>
-                                        <button type="button" class="btn-line type02 color02 active" data-step="step2"
+                                        <button type="button" class="btn-line type02 color02 active"
+                                                data-step="step2"
                                                 data-value="step2"
-                                                onclick="divide(this)">하
+                                                onclick="divide(this); buttonClick(this)" disabled>하
                                         </button>
-                                        <button type="button" class="btn-line type02 color03 active" data-step="step3"
+                                        <button type="button" class="btn-line type02 color03 active"
+                                                data-step="step3"
                                                 data-value="step3"
-                                                onclick="divide(this)">중
+                                                onclick="divide(this); buttonClick(this)" disabled>중
                                         </button>
-                                        <button type="button" class="btn-line type02 color04 active" data-step="step4"
+                                        <button type="button" class="btn-line type02 color04 active"
+                                                data-step="step4"
                                                 data-value="step4"
-                                                onclick="divide(this)">상
+                                                onclick="divide(this); buttonClick(this)" disabled>상
                                         </button>
-                                        <button type="button" class="btn-line type02 color05" data-step="step5"
+                                        <button type="button" class="btn-line type02 color05"
+                                                data-step="step5"
                                                 data-value="step5"
-                                                onclick="divide(this)">최상
+                                                onclick="divide(this); buttonClick(this)" style="display:none;"
+                                                disabled>최상
                                         </button>
                                     </div>
                                 </div>
                                 <div class="box">
                                     <div class="title-wrap">
 											<span class="tit-text">난이도별 문제 수
-												<button type="button" class="btn-icon2 pop-btn"
-                                                        data-pop="que-range-pop"><i
+												<button type="button" class="btn-line btn-icon2 pop-btn"
+                                                        data-pop="que-range-pop" disabled style="border: none"><i
                                                         class="setting" onclick="updatePopupDisplay()"></i></button>
 											</span>
                                     </div>
                                     <div class="range-wrap">
-                                        <span id="lowest" class="range color01" data-step="step1">최하(n)</span>
+                                        <span id="lowest" class="range color01" data-step="step1" style="display:none;">최하(n)</span>
                                         <span id="low" class="range color02" data-step="step2">하(n)</span>
                                         <span id="medium" class="range color03" data-step="step3">중(n)</span>
                                         <span id="high" class="range color04" data-step="step4">상(n)</span>
-                                        <span id="highest" class="range color05" data-step="step5">최상(n)</span>
+                                        <span id="highest" class="range color05" data-step="step5"
+                                              style="display:none;">최상(n)</span>
                                     </div>
                                 </div>
                             </div>
@@ -237,7 +252,7 @@
             </div>
         </div>
         <div class="step-btn-wrap">
-            <button type="button" class="btn-step">출제 방법 선택</button>
+            <button type="button" class="btn-step" id="prevPageBtn">출제 방법 선택</button>
             <button type="button" class="btn-step next" data-pop="que-pop" onclick="submit()">STEP2 문항 편집</button>
             <!-- 230629 pop-btn 추가-->
         </div>
@@ -371,9 +386,17 @@
             count++;
         }
         console.log(count);
+
+        setTimeout(buttonClick, 0);
+
     }
 
-    // console.log('초기 카운트: ' + count);
+    function buttonClick() {
+        const countButton = document.querySelector('.total-questions.active');
+        const buttonClick = new Event('click');
+        countButton.dispatchEvent(buttonClick);
+
+    }
 
     btns.forEach(function (btn) {
         btn.addEventListener("click", function () {
@@ -390,6 +413,29 @@
 
 
     // 체크박스에 체크 되어야지 버튼이 활성화 되도록 하기
+    function getCheck() {
+        const query = 'input[type=checkbox]:checked';
+        const selectedElements = document.querySelectorAll(query);
+        const cnt = selectedElements.length;
+
+        console.log(cnt);
+
+        const buttons = document.querySelectorAll('.btn-line');
+        buttons.forEach(button => {
+            button.disabled = cnt === 0;
+        });
+
+        if (cnt != "0") {
+            $('#questionCount').removeAttr('disabled');
+            $('#teacherButton').addClass('active');
+            $('.evaluation').addClass('active');
+            $('.questionForm').addClass('active');
+
+        } else {
+            $('#questionCount').add('disabled');
+        }
+    }
+
 
     function updateStyles() {
         let inputValue = parseInt(questionCountInput.value);
@@ -771,7 +817,7 @@
 
         sessionStorage.setItem("subjectName", subjectName);
 
-        fetch('http://localhost:8080/item-img/chapter/item-list', {
+        fetch('/item-img/chapter/item-list', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -783,6 +829,7 @@
                     console.log("ok")
                     return response.json();
                 } else {
+                    alert("더 많은 단원정보를 선택해 주세요!")
                     throw new Error('Failed to send JSON data');
                 }
             })
@@ -792,9 +839,18 @@
 
     }
 
-
     document.getElementById('watchJson').addEventListener('click', function () {
 
     });
+
+    document.addEventListener('DOMContentLoaded', function () {
+        const prevPageBtn = document.getElementById("prevPageBtn");
+        if (prevPageBtn) {
+            prevPageBtn.addEventListener("click", function () {
+                history.back();
+            });
+        }
+    });
+
 </script>
 </html>
