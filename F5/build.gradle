@@ -25,13 +25,24 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
     implementation 'org.springframework.boot:spring-boot-starter-validation'
     implementation 'org.springframework.boot:spring-boot-starter-web'
+    implementation 'com.itextpdf:layout:7.2.3'
+    implementation 'org.jetbrains:annotations:24.0.0'
     compileOnly 'org.projectlombok:lombok'
     developmentOnly 'org.springframework.boot:spring-boot-devtools'
     runtimeOnly 'org.mariadb.jdbc:mariadb-java-client'
     annotationProcessor 'org.projectlombok:lombok'
+    implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
+    implementation group: 'com.google.code.gson', name: 'gson', version: '2.9.0'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
-}
+    implementation 'org.springframework.boot:spring-boot-starter-data-rest'
+    implementation 'com.itextpdf:itext7-core:7.2.1'
+    implementation 'com.itextpdf:itext-core:8.0.1'
+//    implementation 'com.itextpdf:itext7-core:7.0.4'
 
-tasks.named('test') {
-    useJUnitPlatform()
+    implementation 'org.apache.pdfbox:pdfbox:2.0.29'
+    implementation 'org.apache.pdfbox:pdfbox-tools:2.0.29'
+
+
+    implementation 'org.apache.xmlgraphics:batik-transcoder:1.17'
+    implementation 'commons-fileupload:commons-fileupload:1.4'
 }

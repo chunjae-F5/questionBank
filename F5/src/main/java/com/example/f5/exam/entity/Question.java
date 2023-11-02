@@ -2,25 +2,20 @@ package com.example.f5.exam.entity;
 
 import com.example.f5.util.BaseTimeEntity;
 import jakarta.persistence.*;
-import jakarta.validation.constraints.Max;
 import lombok.Getter;
+import lombok.Setter;
 import org.hibernate.annotations.Comment;
 
 @Entity
 @Getter
+@Setter
 public class Question extends BaseTimeEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int idx;
 
-    @ManyToOne
-    @JoinColumn(name = "content_idx")
-    @Comment(value = "지문")
-    private Content contentIdx;
-
     @Column(name = "number", nullable = false)
-    @Max(value = 50)
     @Comment(value = "문제번호")
     private int number;   //문제번호
 
@@ -35,6 +30,10 @@ public class Question extends BaseTimeEntity {
     @Column(name = "level", nullable = false, length = 10)
     @Comment(value = "ex) 상 (중, 하)")
     private String level;
+
+    @Column(name = "content_file", nullable = false)
+    @Comment(value = "지문 이미지 경로")
+    private String contentFile;
 
     @Column(name = "question_file", nullable = false)
     @Comment(value = "문제 사진 경로 url")

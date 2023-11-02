@@ -3,10 +3,12 @@ package com.example.f5.user.entity;
 import com.example.f5.util.BaseTimeEntity;
 import jakarta.persistence.*;
 import lombok.Getter;
+import lombok.Setter;
 import org.hibernate.annotations.Comment;
 
 @Entity
 @Getter
+@Setter
 public class User extends BaseTimeEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -30,5 +32,5 @@ public class User extends BaseTimeEntity {
 
     @Column(name = "delete_yn", nullable = false)
     @Comment(value = "탈퇴여부")
-    private boolean deletedYN;
+    private boolean deletedYN = false;
 }

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="ko">
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
 
 <head>
 	<meta charset="UTF-8">
@@ -8,17 +8,37 @@
 	<title>T셀파 문제은행</title>
 	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@8/swiper-bundle.min.css" />
 	<link rel="stylesheet" href="https://code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css">
-	<link rel="stylesheet" href="../inc/css/font.css">
-	<link rel="stylesheet" href="../inc/css/reset.css">
-	<link rel="stylesheet" href="../inc/css/common.css">
+	<link rel="stylesheet" th:href="@{/css/font.css}">
+	<link rel="stylesheet" th:href="@{/css/reset.css}">
+	<link rel="stylesheet" th:href="@{/css/common.css}">
 	<script src="https://code.jquery.com/jquery-1.12.4.min.js"
-		integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ=" crossorigin="anonymous"></script>
+			integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ" crossorigin="anonymous"></script>
 	<script src="https://code.jquery.com/ui/1.13.1/jquery-ui.js"></script>
 	<script src="https://cdn.jsdelivr.net/npm/swiper@8/swiper-bundle.min.js"></script>
-	<script src="../inc/js/common.js"></script>
+	<script th:src="@{/js/common.js}"></script>
 </head>
 
 <body>
+
+<!--<script>-->
+<!--	// URL에서 'itemId'와 'count' 매개변수를 가져옵니다.-->
+<!--	var urlParams = new URLSearchParams(window.location.search);-->
+<!--	var itemId = urlParams.get('itemId');-->
+<!--	var count = urlParams.get('count');-->
+
+<!--	if (itemId && count) {-->
+<!--		// URL에서 전달받은 'itemId'와 'count'를 디코딩합니다.-->
+<!--		itemId = decodeURIComponent(itemId);-->
+<!--		count = decodeURIComponent(count);-->
+
+<!--		// 데이터를 콘솔에 출력합니다.-->
+<!--		console.log('Received itemId:', itemId);-->
+<!--		console.log('Received count:', count);-->
+<!--	} else {-->
+<!--		console.log('No itemId and count found in the URL.');-->
+<!--	}-->
+<!--</script>-->
+
 	<div id="wrap" class="full-pop-que">
 		<div class="full-pop-wrap">
 			<div class="pop-header">
@@ -36,9 +56,16 @@
 							<span>수학 1</span>
 							이준열(2015)
 						</div>
-						<button class="btn-default btn-research"><i class="research"></i>재검색</button>
+						<button class="btn-default btn-research" id="refreshButton"><i class="research"></i>재검색</button>
 						<button class="btn-default pop-btn" data-pop="que-scope-pop">출제범위</button>
 					</div>
+					<script>
+						const refreshButton = document.getElementById('refreshButton');
+
+						refreshButton.addEventListener('click', function() {
+							location.reload(); // 현재 페이지를 새로고침
+						});
+					</script>
 					<div class="view-bottom type01">
 						<div class="cnt-box">
 							<div class="cnt-top">
@@ -74,7 +101,7 @@
 									</div>
 								</div>
 							</div>
-							<div class="view-que-list scroll-inner" style="display: -webkit-box;-webkit-box-orient:vertical">
+							<div class="view-que-list scroll-inner left-panel" style="display: -webkit-box;-webkit-box-orient:vertical">
 								<div class="sort-group">
 									<div class="view-que-box">
 										<div class="que-top">
@@ -85,9 +112,9 @@
 													<span class="que-badge gray">주관식</span>
 												</div>
 											</div>
-											<div class="btn-wrap">
+											<div class="btn-wrap item">
 												<button type="button" class="btn-error pop-btn" data-pop="error-report-pop"></button>
-												<button type="button" class="btn-delete"></button>
+												<button type="button" class="btn-delete delete" data-quenum="1" data-itemid="494588"></button>
 											</div>
 										</div>
 										<div class="view-que">
@@ -121,7 +148,10 @@
 															<!-- e: 정답 데이터 영역 -->
 														</div>
 													</div>
-													<button type="button" class="btn-similar-que btn-default"><i class="similar"></i> 유사 문제</button>
+													<div class="button-container">
+														<button type="button" class="btn-similar-que btn-default similar-items-button"><i class="similar"></i> 유사 문제</button>
+													</div>
+<!--													<button type="button" class="btn-similar-que btn-default similar-items-button" data-quenum="1" data-itemid="494588"><i class="similar"></i> 유사 문제</button>-->
 												</div>
 											</div>
 
@@ -184,7 +214,10 @@
 															<!-- e: 정답 데이터 영역 -->
 														</div>
 													</div>
-													<button type="button" class="btn-similar-que btn-default"><i class="similar"></i> 유사 문제</button>
+													<div class="button-container">
+														<button type="button" class="btn-similar-que btn-default similar-items-button"><i class="similar"></i> 유사 문제</button>
+													</div>
+<!--													<button type="button" class="btn-similar-que btn-default similar-items-button" data-quenum="2" data-itemid="494590"><i class="similar"></i> 유사 문제</button>-->
 												</div>
 											</div>
 
@@ -226,7 +259,10 @@
 												</ul>
 											</div>
 											<div class="que-bottom">
-												<button type="button" class="btn-similar-que btn-default"><i class="similar"></i> 유사 문제</button>
+												<div class="button-container">
+													<button type="button" class="btn-similar-que btn-default similar-items-button"><i class="similar"></i> 유사 문제</button>
+												</div>
+<!--												<button type="button" class="btn-similar-que btn-default similar-items-button" data-quenum="3" data-itemid="494595"><i class="similar"></i> 유사 문제</button>-->
 											</div>
 										</div>
 										<div class="que-info-last">
@@ -325,6 +361,50 @@
 									</div>
 								</div>
 							</div>
+							<script>
+								// '유사 문항' 버튼을 찾습니다.
+								var similarButton = document.querySelector('.similar-items-button');
+
+								// '유사 문항' 버튼 클릭 이벤트 리스너를 추가합니다.
+								similarButton.addEventListener('click', function() {
+									// URL에서 'itemId'와 'count' 매개변수를 가져옵니다.
+									var urlParams = new URLSearchParams(window.location.search);
+									var itemId = urlParams.get('itemId');
+									var count = urlParams.get('count');
+
+									if (itemId && count) {
+										// URL에서 전달받은 'itemId'와 'count'를 디코딩합니다.
+										itemId = decodeURIComponent(itemId);
+										count = decodeURIComponent(count);
+
+										// 데이터를 콘솔에 출력합니다.
+										console.log('Received itemId:', itemId);
+										console.log('Received count:', count);
+
+										// 'button-container' 요소를 찾습니다.
+										var buttonContainer = document.getElementById('button-container');
+
+										// 버튼을 생성하고 'data-quenum'와 'data-itemid' 속성을 설정합니다.
+										var similarButton = document.createElement('button');
+										// similarButton.type = 'button';
+										// similarButton.className = 'btn-similar-que btn-default similar-items-button';
+										similarButton.setAttribute('data-quenum', count);
+										similarButton.setAttribute('data-itemid', itemId);
+										// similarButton.innerHTML = '<i class="similar"></i> 유사 문제';
+
+										let temId = similarButton.getAttribute('data-itemid');
+										let num = similarButton.getAttribute('data-quenum');
+
+										console.log('temId:', temId);
+										console.log('num:', num);
+
+										// 생성한 버튼을 'button-container' 안에 추가합니다.
+										buttonContainer.appendChild(similarButton);
+									} else {
+										console.log('No itemId and count found in the URL.');
+									}
+								});
+							</script>
 							<div class="bottom-box">
 								<div class="que-badge-group type01">
 									<div class="que-badge-wrap">
@@ -361,147 +441,61 @@
 								</div>
 								<div class="contents on">
 									<div class="cnt-top">
-										<span class="title">2번 유사 문제</span>
+										<span class="title"><div id="quenum-display"></div></span>
 										<div class="right-area">
 											<div class="select-wrap">
-												<button type="button" class="select-btn">난이도 전체</button>
-												<ul class="select-list">
-													<li><a href="javascript:;">상</a></li>
-													<li><a href="javascript:;">중</a></li>
-													<li><a href="javascript:;">하</a></li>
-												</ul>
+												<select id="difficulty">
+													<option data-difficulty="전체">난이도 전체</option>
+													<option data-difficulty="상">상</option>
+													<option data-difficulty="중">중</option>
+													<option data-difficulty="하">하</option>
+												</select>
 											</div>
 										</div>
 									</div>
-									<div class="view-que-list scroll-inner">
-										<div class="sort-group">
-											<div class="view-que-box">
-												<div class="que-top">
-													<div class="title">
-														<span class="num">1</span>
-														<div class="que-badge-group">
-															<span class="que-badge yellow">상</span>
-															<span class="que-badge gray">객관식</span>
-														</div>
-													</div>
-													<div class="btn-wrap">
-														<div class="btn-wrap">
-															<div class="tooltip-wrap">
-																<button type="button" class="btn-error pop-btn" data-pop="error-report-pop"></button>
-															</div>
-														</div>
-													</div>
-												</div>
-												<div class="view-que">
-													<div class="que-content">
-														<p class="txt">7×2×2와 5×5×5×5를 각각 거듭제곱을 사용하여 나타낼 때, 2의 거듭제곱의 지수와 5의 거듭제곱의 밑의 곱은?</p>
-														<ul>
-															<ol><em>①</em><span>5, 7</span></ol>
-															<ol><em>②</em><span>5, 9</span></ol>
-															<ol><em>③</em><span>7, 5</span></ol>
-															<ol><em>④</em><span>7, 9</span></ol>
-															<ol><em>⑤</em><span>7, 10</span></ol>
-														</ul>
-													</div>
-													<div class="que-bottom">
-														<div class="btn-wrap">
-															<button type="button" class="btn-default"><i class="add-type02"></i>추가</button>
-															<button type="button" class="btn-default"><i class="replace"></i>교체</button>
-														</div>
-													</div>
-												</div>
-												<div class="que-info-last">
-													<p class="chapter">자연수의 성질&gt;소인수분해&gt;거듭제곱&gt;거듭제곱으로표현</p>
-												</div>
-											</div>
-										</div>
-										<div class="sort-group">
-											<div class="view-que-box">
-												<div class="que-top">
-													<div class="title">
-														<span class="num">2</span>
-														<div class="que-badge-group">
-															<span class="que-badge green">중</span>
-															<span class="que-badge gray">객관식</span>
-														</div>
-													</div>
-													<div class="btn-wrap">
-														<div class="btn-wrap">
-															<div class="tooltip-wrap">
-																<button type="button" class="btn-error pop-btn" data-pop="error-report-pop"></button>
-															</div>
-														</div>
-													</div>
-												</div>
-												<div class="view-que">
-													<div class="que-content">
-														<p class="txt">10, 41과 같이 각각의 자리의 숫자가 모두 제곱수인 두 자리의 자연수는 모두 몇 개인지 고르면?</p>
-														<ul>
-															<ol><em>①</em><span>5, 7</span></ol>
-															<ol><em>②</em><span>5, 9</span></ol>
-															<ol><em>③</em><span>7, 5</span></ol>
-															<ol><em>④</em><span>7, 9</span></ol>
-															<ol><em>⑤</em><span>7, 10</span></ol>
-														</ul>
-													</div>
-													<div class="que-bottom">
-														<div class="btn-wrap">
-															<button type="button" class="btn-default"><i class="add-type02"></i>추가</button>
-															<button type="button" class="btn-default"><i class="replace"></i>교체</button>
-														</div>
-													</div>
-												</div>
-												<div class="que-info-last">
-													<p class="chapter">자연수의 성질&gt;소인수분해&gt;거듭제곱&gt;거듭제곱으로표현</p>
-												</div>
-											</div>
-										</div>
-										<div class="sort-group">
-											<div class="view-que-box">
-												<div class="que-top">
-													<div class="title">
-														<span class="num">3</span>
-														<div class="que-badge-group">
-															<span class="que-badge purple">하</span>
-															<span class="que-badge gray">객관식</span>
-														</div>
-													</div>
-													<div class="btn-wrap">
-														<div class="btn-wrap">
-															<div class="tooltip-wrap">
-																<button type="button" class="btn-error pop-btn" data-pop="error-report-pop"></button>
-															</div>
-														</div>
-													</div>
-												</div>
-												<div class="view-que">
-													<div class="que-content">
-														<p class="txt">7×2×2와 5×5×5×5를 각각 거듭제곱을 사용하여 나타낼 때, 2의 거듭제곱의 지수와 5의 거듭제곱의 밑의 곱은?</p>
-														<ul>
-															<ol><em>①</em><span>5, 7</span></ol>
-															<ol><em>②</em><span>5, 9</span></ol>
-															<ol><em>③</em><span>7, 5</span></ol>
-															<ol><em>④</em><span>7, 9</span></ol>
-															<ol><em>⑤</em><span>7, 10</span></ol>
-														</ul>
-													</div>
-													<div class="que-bottom">
-														<div class="btn-wrap">
-															<button type="button" class="btn-default"><i class="add-type02"></i>추가</button>
-															<button type="button" class="btn-default"><i class="replace"></i>교체</button>
-														</div>
-													</div>
-												</div>
-												<div class="que-info-last">
-													<p class="chapter">자연수의 성질&gt;소인수분해&gt;거듭제곱&gt;거듭제곱으로표현</p>
-												</div>
-											</div>
+									<div class="view-que-list scroll-inner right-panel" id="similar-items">
+										<div class="view-que-list no-data">
+											<p>
+												문제 목록에서 <i class="ic-no-data"></i> 유사문제 버튼을 선택해주세요.
+											</p>
 										</div>
 									</div>
 								</div>
+								<script th:src="@{/js/similar.js}"></script>
 								<div class="contents">
-									탭 컨텐츠 (3)
+									<div class="contents on">
+										<div class="view-que-list scroll-inner">
+											<div class="delete-panel"></div>
+										</div>
+									</div>
 								</div>
+
+<!--								<script>-->
+<!--									// "삭제" 버튼 클릭 이벤트 처리-->
+<!--									const leftPanel = document.querySelector('.item');-->
+<!--									const rightPanel = document.querySelector('.delete-panel');-->
+
+<!--									leftPanel.addEventListener('click', (event) => {-->
+<!--										if (event.target.classList.contains('btn-delete')) {-->
+<!--											const item = event.target.parentNode; // 클릭한 "삭제" 버튼의 부모 요소인 문항-->
+<!--											if (leftPanel.contains(item)) {-->
+<!--												leftPanel.removeChild(item); // 왼쪽에서 삭제-->
+<!--												rightPanel.appendChild(item); // 오른쪽으로 이동-->
+<!--											}-->
+<!--										}-->
+<!--									});-->
+
+<!--									rightPanel.addEventListener('click', (event) => {-->
+<!--										if (event.target.classList.contains('btn-delete')) {-->
+<!--											const item = event.target.parentNode; // 클릭한 "삭제" 버튼의 부모 요소인 문항-->
+<!--											if (rightPanel.contains(item)) {-->
+<!--												rightPanel.removeChild(item); // 오른쪽에서 삭제-->
+<!--												leftPanel.appendChild(item); // 왼쪽으로 이동-->
+<!--											}-->
+<!--										}-->
+<!--									});-->
+<!--								</script>-->
+
 							</div>
 						</div>
 					</div>
@@ -620,11 +614,9 @@
 				</div>
 			</div>
 		</div>
-
+	</div>
 		<script>
 			$(function () {
-
-
 				let _leg = $('.view-que').length;
 				let arr = [];
 

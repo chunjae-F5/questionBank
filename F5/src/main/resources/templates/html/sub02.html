@@ -1,412 +1,817 @@
 <!DOCTYPE html>
-<html lang="ko">
-
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
 <head>
-	<meta charset="UTF-8">
-	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>T셀파 문제은행</title>
-	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@8/swiper-bundle.min.css" />
-	<link rel="stylesheet" href="https://code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css">
-	<link rel="stylesheet" href="../inc/css/font.css">
-	<link rel="stylesheet" href="../inc/css/reset.css">
-	<link rel="stylesheet" href="../inc/css/common.css">
-	<script src="https://code.jquery.com/jquery-1.12.4.min.js"
-		integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ=" crossorigin="anonymous"></script>
-	<script src="https://code.jquery.com/ui/1.13.1/jquery-ui.js"></script>
-	<script src="https://cdn.jsdelivr.net/npm/swiper@8/swiper-bundle.min.js"></script>
-	<script src="../inc/js/common.js"></script>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>T셀파 문제은행</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@8/swiper-bundle.min.css"/>
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css">
+    <link rel="stylesheet" th:href="@{/css/font.css}">
+    <link rel="stylesheet" th:href="@{/css/reset.css}">
+    <link rel="stylesheet" th:href="@{/css/common.css}">
+    <script src="https://code.jquery.com/jquery-1.12.4.min.js"
+            integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ=" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/ui/1.13.1/jquery-ui.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/swiper@8/swiper-bundle.min.js"></script>
+    <script th:src="@{/js/common.js}"></script>
 </head>
 
 <body>
-	<div id="wrap" class="full-pop-que">
-		<div class="full-pop-wrap">
-			<div class="pop-header">
-				<ul class="title">
-					<li class="active">STEP 1 단원선택</li>
-					<li>STEP 2 문항 편집</li>
-					<li>STEP 3 시험지 저장</li>
-				</ul>
-				<button type="button" class="del-btn"></button>
-			</div>
-			<div class="pop-content">
-				<div class="view-box">
-					<div class="view-top">
-						<div class="paper-info">
-							<span>국어 1-1</span>
-							노미숙(2015)
-						</div>
-					</div>
-					<div class="view-bottom">
-						<div class="view-box-wrap">
-							<div class="unit-box-wrap">
-								<div class="unit-box">
-									<div class="unit-cnt scroll-inner">
-										<div class="title-top">
-											<span>단원정보</span>
-											<input type="checkbox" id="chk01_00" class="allCheck">
-											<label for="chk01_00">전체선택</label>
-										</div>
-										<ul>
-											<li>
-												<div class="check-group title">
-													<div class="title-chk">
-														<input type="checkbox" id="chk01_01" class="que-allCheck depth01">
-														<label for="chk01_01">
-															<button type="button" class="dep-btn active">1. 새로운 시작</button>
-														</label>
-													</div>
-												</div>
-												<div class="depth02">
-													<div class="check-group">
-														<input type="checkbox" id="chk01_02" class="que-allCheck depth01">
-														<label for="chk01_02">
-															<button type="button" class="dep-btn active">(1) 시의 아름다움</button>
-														</label>
-													</div>
-													<div class="depth03">
-														<div class="check-group">
-															<input type="checkbox" id="chk01_03" class="que-allCheck depth01">
-															<label for="chk01_03">
-																<button type="button" class="dep-btn active">[1] 소주제</button>
-															</label>
-														</div>
-														<div class="depth04">
-															<div class="check-group">
-																<input type="checkbox" id="chk01_04" class="que-allCheck depth01">
-																<label for="chk01_04">
-																	<button type="button" class="dep-btn active">거듭제곱</button>
-																</label>
-															</div>
-															<div class="depth05">
-																<div class="check-group">
-																	<input type="checkbox" id="chk01_05">
-																	<label for="chk01_05">
-																		<span>거듭제곱으로 표현</span>
-																	</label>
-																</div>
-															</div>
-															<div class="check-group">
-																<input type="checkbox" id="chk01_06">
-																<label for="chk01_06">
-																	<span>소수와 합성수</span>
-																</label>
-															</div>
-															<div class="check-group">
-																<input type="checkbox" id="chk01_07">
-																<label for="chk01_07">
-																	<span>소인수분해</span>
-																</label>
-															</div>
-															<div class="check-group">
-																<input type="checkbox" id="chk01_08">
-																<label for="chk01_08">
-																	<span>소인수분해를 이용하여 약수 구하기</span>
-																</label>
-															</div>
-															<div class="check-group">
-																<input type="checkbox" id="chk01_09">
-																<label for="chk01_09">
-																	<span>최대공약수와 최소공배수</span>
-																</label>
-															</div>
-														</div>
-													</div>
-													<div class="check-group">
-														<input type="checkbox" id="chk01_10">
-														<label for="chk01_10">
-															<span>(2) 산문의 향기</span>
-														</label>
-													</div>
-												</div>
-											</li>
-											<li>
-												<div class="check-group title">
-													<div class="title-chk">
-														<input type="checkbox" id="chk02_01" class="que-allCheck depth01">
-														<label for="chk02_01">
-															<button type="button" class="dep-btn">2. 세상과 함께 자라는 꿈 </button>
-														</label>
-													</div>
-												</div>
-											</li>
-										</ul>
-									</div>
-								</div>
-							</div>
-							<div class="type-box-wrap">
-								<div class="type-box scroll-inner">
-									<div class="title-top">
-										<span>출제옵션</span>
-									</div>
-									<div class="box">
-										<div class="title-wrap">
-											<span class="tit-text">문제 수<em>최대 30문제</em></span>
-										</div>
-										<div class="count-area">
-											<div class="btn-wrap">
-												<button type="button" class="btn-line">10</button>
-												<button type="button" class="btn-line">15</button>
-												<button type="button" class="btn-line">20</button>
-												<button type="button" class="btn-line">25</button>
-												<button type="button" class="btn-line active">30</button>
-											</div>
-											<div class="input-area">
-												<span class="num">총 <input type="text" value="30"> 문제</span>
-												<div class="txt">*5의 배수로 입력해주세요. </div>
-											</div>
+<div id="wrap" class="full-pop-que scroll-inner">
+    <div class="full-pop-wrap">
+        <div class="pop-header">
+            <ul class="title">
+                <li class="active">STEP 1 단원선택</li>
+                <li>STEP 2 문항 편집</li>
+                <li>STEP 3 시험지 저장</li>
+            </ul>
+            <button type="button" class="del-btn"></button>
+        </div>
+        <div class="pop-content">
+            <div class="view-box">
+                <div class="view-top">
+                    <div class="paper-info">
+                        <span id="subjectId" th:text="${itemList.getSubjectName}"
+                              th:data-subjectId="${itemList.getSubjectId()}"></span>
+                    </div>
+                </div>
+                <div class="view-bottom">
+                    <div class="view-box-wrap">
+                        <div class="unit-box-wrap">
+                            <div class="unit-box">
+                                <div class="unit-cnt scroll-inner">
+                                    <div class="title-top">
+                                        <span>단원정보</span>
+                                        <input type="checkbox" id="chk01_00" class="allCheck">
+                                        <label for="chk01_00">전체선택</label>
+                                    </div>
+                                    <ul>
+                                        <li th:each="item, itemStat : ${itemList.chapters}">
+                                            <!-- 대단원 -->
+                                            <div class="check-group title on">
+                                                <!--check-group 클래스가 생성 되었을 때-->
+                                                <div class="title-chk"><input type="checkbox"
+                                                                              class="que-allCheck depth01 largeChapterId"
+                                                                              th:id="${'chk01_' + itemStat}"
+                                                                              th:value="${item.largeChapterId}">
 
-										</div>
-									</div>
-									<div class="box">
-										<div class="title-wrap">
-											<span class="tit-text">출처</span>
-											<div class="right-area">
-											</div>
-										</div>
-										<div class="btn-wrap multi">
-											<button type="button" class="btn-line">교사용(교사용 DVD, 지도서, 신규 개발 등)</button>
-											<button type="button" class="btn-line">학생용(자습서, 평가문제집 등)</button>
-										</div>
-									</div>
-									<div class="box">
-										<div class="title-wrap">
-											<span class="tit-text">평가 영역</span>
-											<div class="right-area">
-											</div>
-										</div>
-										<div class="btn-wrap multi">
-											<button type="button" class="btn-line">자료 해석</button>
-											<button type="button" class="btn-line">이해</button>
-											<button type="button" class="btn-line">적용</button>
-										</div>
-										<div class="btn-wrap multi">
-											<button type="button" class="btn-line">지식</button>
-											<button type="button" class="btn-line">결론도출</button>
-										</div>
-									</div>
-									<div class="box">
-										<div class="title-wrap">
-											<span class="tit-text">문제 형태</span>
-											<div class="right-area">
-											</div>
-										</div>
-										<div class="btn-wrap multi">
-											<button type="button" class="btn-line">객관식</button>
-											<button type="button" class="btn-line">주관식</button>
-										</div>
-									</div>
-									<div class="box">
-										<div class="title-wrap">
-											<span class="tit-text">난이도 구성</span>
-										</div>
-										<div class="step-wrap">
-											<button type="button" class="btn-line type02 color01" data-step="stap1">최하</button>
-											<button type="button" class="btn-line type02 color02" data-step="stap2">하</button>
-											<button type="button" class="btn-line type02 color03" data-step="stap3">중</button>
-											<button type="button" class="btn-line type02 color04" data-step="stap4">상</button>
-											<button type="button" class="btn-line type02 color05" data-step="stap5">최상</button>
-										</div>
-									</div>
-									<div class="box">
-										<div class="title-wrap">
+                                                    <label th:for="${'chk01_' + itemStat}">
+                                                        <button type="button" class="dep-btn active"
+                                                                th:text="${item.largeChapterName}"></button>
+                                                    </label>
+                                                </div>
+                                            </div>
+                                            <div class="depth02">
+                                                <!-- 중단원 -->
+                                                <div th:each="mediumItem, mediumItemStat : ${item.mediumChapters}">
+                                                    <div class="check-group on">
+                                                        <input type="checkbox"
+                                                               class="que-allCheck depth01 mediumChapterId"
+                                                               th:id="${'chk02_' + mediumItemStat}"
+                                                               th:value="${mediumItem.mediumChapterId}">
+
+                                                        <label th:for="${'chk02_' + mediumItemStat}">
+                                                            <button type="button" class="dep-btn"
+                                                                    th:text="${mediumItem.mediumChapterName}"></button>
+                                                        </label>
+                                                    </div>
+                                                    <div class="depth03" style="display: block">
+                                                        <!--소단원-->
+                                                        <div th:each="smallItem, smallItemStat : ${mediumItem.smallChapters}">
+                                                            <div class="check-group on">
+                                                                <input type="checkbox"
+                                                                       class="que-allCheck depth01 smallChapterId"
+                                                                       th:id="${'chk03_' + smallItemStat}"
+                                                                       th:value="${smallItem.smallChapterId}">
+
+                                                                <label th:for="${'chk03_' + smallItemStat}">
+                                                                    <button type="button" class="dep-btn"
+                                                                            th:text="${smallItem.smallChapterName}"></button>
+                                                                </label>
+                                                            </div>
+                                                            <div class="depth04" style="display: block">
+                                                                <!-- 토픽 -->
+                                                                <div th:each="topicItem, topicItemStat : ${smallItem.topicChapters}"
+                                                                     class="check-group on">
+                                                                    <input type="checkbox"
+                                                                           th:id="${'chk04_' + topicItemStat}"
+                                                                           class="topicChapterId"
+                                                                           th:value="${topicItem.topicChapterId}">
+                                                                    <label th:for="${'chk04_' + topicItemStat}">
+                                                                        <span th:text="${topicItem.topicChapterName}"></span>
+                                                                    </label>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="type-box-wrap">
+                            <div class="type-box scroll-inner">
+                                <div class="title-top">
+                                    <span>출제옵션</span>
+                                </div>
+                                <div class="box">
+                                    <div class="title-wrap">
+                                        <span class="tit-text">문제 수<em>최대 30문제</em></span>
+                                    </div>
+                                    <div class="count-area">
+                                        <div class="btn-wrap">
+                                            <button type="button" class="btn-line total-questions" data-value="10">10
+                                            </button>
+                                            <button type="button" class="btn-line total-questions" data-value="15">15
+                                            </button>
+                                            <button type="button" class="btn-line total-questions" data-value="20">20
+                                            </button>
+                                            <button type="button" class="btn-line total-questions" data-value="25">25
+                                            </button>
+                                            <button type="button" class="btn-line total-questions active" id="clicked"
+                                                    data-value="30">30
+                                            </button>
+                                        </div>
+                                        <div class="input-area">
+                                            <span class="num">총 <input type="text" value="30"
+                                                                       id="questionCount"
+                                                                       onchange="changeCount()"> 문제</span>
+                                            <div class="txt warn5">*5의 배수로 입력해주세요.</div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="box">
+                                    <div class="title-wrap">
+                                        <span class="tit-text">출처</span>
+                                        <div class="right-area">
+                                        </div>
+                                    </div>
+                                    <div class="btn-wrap">
+                                        <button type="button" class="btn-line active" data-status="teacher"
+                                                id="teacherButton">교사용(교사용 DVD, 지도서, 신규 개발 등)
+                                        </button>
+                                        <button type="button" class="btn-line" data-status="student" id="studentButton">
+                                            학생용(자습서, 평가문제집 등)
+                                        </button>
+                                    </div>
+                                </div>
+                                <div class="box">
+                                    <div class="title-wrap">
+                                        <span class="tit-text active">평가 영역</span>
+                                        <div class="right-area">
+                                        </div>
+                                    </div>
+                                    <div class="btn-wrap multi">
+                                        <div th:each="evaluationItem, evalIndex : ${evaluationList}">
+                                            <button type="button" class="btn-line active evaluation" style="width: 7rem"
+                                                    th:if="${evalIndex.even}"
+                                                    th:text="${evaluationItem}"
+                                                    th:value="${evaluationList[evalIndex.index - 1]}"
+                                            ></button>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="box">
+                                    <div class="title-wrap">
+                                        <span class="tit-text">문제 형태</span>
+                                        <div class="right-area">
+                                        </div>
+                                    </div>
+                                    <div class="btn-wrap multi">
+                                        <button type="button" class="btn-line active questionForm">객관식</button>
+                                        <button type="button" class="btn-line active questionForm">주관식</button>
+                                    </div>
+                                </div>
+                                <div class="box">
+                                    <div class="title-wrap">
+                                        <span class="tit-text">난이도 구성</span>
+                                    </div>
+                                    <div class="step-wrap">
+                                        <button type="button" class="btn-line type02 color01" data-step="step1"
+                                                data-value="step1"
+                                                onclick="divide(this)">최하
+                                        </button>
+                                        <button type="button" class="btn-line type02 color02 active" data-step="step2"
+                                                data-value="step2"
+                                                onclick="divide(this)">하
+                                        </button>
+                                        <button type="button" class="btn-line type02 color03 active" data-step="step3"
+                                                data-value="step3"
+                                                onclick="divide(this)">중
+                                        </button>
+                                        <button type="button" class="btn-line type02 color04 active" data-step="step4"
+                                                data-value="step4"
+                                                onclick="divide(this)">상
+                                        </button>
+                                        <button type="button" class="btn-line type02 color05" data-step="step5"
+                                                data-value="step5"
+                                                onclick="divide(this)">최상
+                                        </button>
+                                    </div>
+                                </div>
+                                <div class="box">
+                                    <div class="title-wrap">
 											<span class="tit-text">난이도별 문제 수
-												<button type="button" class="btn-icon2 pop-btn" data-pop="que-range-pop"><i
-														class="setting"></i></button>
+												<button type="button" class="btn-icon2 pop-btn"
+                                                        data-pop="que-range-pop"><i
+                                                        class="setting" onclick="updatePopupDisplay()"></i></button>
 											</span>
-										</div>
-										<div class="range-wrap">
-											<span class="range color01" data-step="stap1">최하(n)</span>
-											<span class="range color02" data-step="stap2">하(n)</span>
-											<span class="range color03" data-step="stap3">중(n)</span>
-											<span class="range color04" data-step="stap4">상(n)</span>
-											<span class="range color05" data-step="stap5">최상(n)</span>
-										</div>
-									</div>
+                                    </div>
+                                    <div class="range-wrap">
+                                        <span id="lowest" class="range color01" data-step="step1">최하(n)</span>
+                                        <span id="low" class="range color02" data-step="step2">하(n)</span>
+                                        <span id="medium" class="range color03" data-step="step3">중(n)</span>
+                                        <span id="high" class="range color04" data-step="step4">상(n)</span>
+                                        <span id="highest" class="range color05" data-step="step5">최상(n)</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="bottom-box">
+                                <p class="total-num">총 <span id="total-count">30</span>문제</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="step-btn-wrap">
+            <button type="button" class="btn-step" id="prevPageBtn">출제 방법 선택</button>
+            <button type="button" class="btn-step next" data-pop="que-pop" onclick="submit()">STEP2 문항 편집</button>
+            <!-- 230629 pop-btn 추가-->
+        </div>
+    </div>
 
-								</div>
-								<div class="bottom-box">
-									<p class="total-num">총 <span>30</span>문제</p>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
+    <div class="dim"></div>
 
-			</div>
-			<div class="step-btn-wrap">
-				<button type="button" class="btn-step">출제 방법 선택</button>
-				<button type="button" class="btn-step next pop-btn" data-pop="que-pop">STEP2 문항 편집</button><!-- 230629 pop-btn 추가-->
-			</div>
+    <!-- 난이도 문제 수 설정 팝업 -->
+    <div class="pop-wrap range-type" data-pop="que-range-pop">
+        <div class="pop-inner">
+            <div class="pop-header">
+                <span>난이도별 문제 수 설정</span>
+                <button type="button" class="pop-close"></button>
+            </div>
+            <div class="pop-content">
+                <span class="txt">문제 수를 입력하여<br> 난이도별 문제 수를 조정하세요.</span>
+                <div class="range-wrap">
+                    <!-- S: 문제 수 맞지 않을 시 .fail 클래스 추가 -->
+                    <div class="range color01 count" data-step="step1" style="display:none;">
+                        <span class="color01">최하</span>
+                        <input type="number" class="lowestInput num">
+                    </div>
+                    <div class="range color02 count" data-step="step2" style="display:none;">
+                        <span class="color02">하</span>
+                        <input type="number" class="lowInput num">
+                    </div>
+                    <div class="range color03 count" data-step="step3" style="display:none;">
+                        <span class="color03">중</span>
+                        <input type="number" class="mediumInput num">
+                    </div>
+                    <div class="range color04 count" data-step="step4" style="display:none;">
+                        <span class="color04">상</span>
+                        <input type="number" class=" highInput num">
+                    </div>
+                    <div class="range color05 count" data-step="step5" style="display:none;">
+                        <span class="color05">최상</span>
+                        <input type="number" class="highestInput num">
+                    </div>
+                    <div class="range total">
+                        <span>합계</span>
+                        <span class="num">20</span>
+                    </div>
+                    <!-- E: 문제 수 맞지 않을 시 .fail 클래스 추가 -->
+                </div>
+            </div>
+            <div class="pop-footer">
+                <button onclick="updatePopupDisplay()">초기화</button>
+                <button id="popSave" class="disabled pop-close" onclick="updateLevelCount()">저장</button>
+            </div>
+        </div>
+    </div>
 
-
-		</div>
-		<div class="dim"></div>
-
-		<!-- 난이도 문제 수 설정 팝업 -->
-		<div class="pop-wrap range-type" data-pop="que-range-pop">
-			<div class="pop-inner">
-				<div class="pop-header">
-					<span>난이도별 문제 수 설정</span>
-					<button type="button" class="pop-close"></button>
-				</div>
-				<div class="pop-content">
-					<span class="txt">문제 수를 입력하여<br> 난이도별 문제 수를 조정하세요.</span>
-					<div class="range-wrap">
-						<!-- S: 문제 수 맞지 않을 시 .fail 클래스 추가 -->
-						<div class="range color01 fail">
-							<span class="color01">최하</span>
-							<input type="number">
-						</div>
-						<div class="range color02">
-							<span class="color02">하</span>
-							<input type="number">
-						</div>
-						<div class="range color03">
-							<span class="color03">중</span>
-							<input type="number">
-						</div>
-						<div class="range color04">
-							<span class="color04">상</span>
-							<input type="number">
-						</div>
-						<div class="range color05">
-							<span class="color05">최상</span>
-							<input type="number">
-						</div>
-						<div class="range total fail">
-							<span>합계</span>
-							<span class="num">20</span>
-						</div>
-						<!-- E: 문제 수 맞지 않을 시 .fail 클래스 추가 -->
-					</div>
-				</div>
-				<div class="pop-footer">
-					<button>초기화</button>
-					<button class="disabled">저장</button>
-				</div>
-			</div>
-		</div>
-
-		<!-- 문항 충족하지 않을 시 노출 팝업 -->
-		<div class="pop-wrap range-type02" data-pop="que-pop">
-			<div class="pop-inner">
-				<div class="pop-header">
-					<span>문항 구성 자동 변경</span>
-					<button type="button" class="pop-close"></button>
-				</div>
-				<div class="pop-content">
-					<span class="txt">사용자가 원하는 문항 구성을 할 수 없어<br>문항 구성이 자동으로 변경되었습니다.</span>
-					<div class="range-wrap">
-						<div class="range">
-							<span class="color01">최하</span>
-							<span class="num">2</span>
-						</div>
-						<div class="range">
-							<span class="color02">하</span>
-							<span class="num">5</span>
-						</div>
-						<div class="range">
-							<span class="color03">중</span>
-							<span class="num">6</span>
-						</div>
-						<div class="range">
-							<span class="color04">상</span>
-							<span class="num">5</span>
-						</div>
-						<div class="range">
-							<span class="color05">최상</span>
-							<span class="num">2</span>
-						</div>
-						<div class="range total">
-							<span>합계</span>
-							<span class="num">20</span>
-						</div>
-					</div>
-					<span class="txt">해당 문제 구성으로 출제하시겠습니까?</span>
-				</div>
-				<div class="pop-footer">
-					<button>취소</button>
-					<button class="pop-close">확인</button>
-				</div>
-			</div>
-		</div>
-
-		<!-- 문항 충족하지 않을 시 노출 팝업 -->
-
-		<script>
-			$(function () {
-				// depth
-				let depBtn = $('.dep-btn');
-
-				function depFunc() {
-					let _this = $(this);
-
-					if (!_this.hasClass('active')) {
-						_this.addClass('active');
-						_this.parents('.check-group').next('div').stop().slideUp('fast');
-
-					} else {
-						_this.removeClass('active');
-						_this.parents('.check-group').next('div').stop().slideDown('fast');
-					}
-
-					_this.parents('.check-group').toggleClass('on');
-				}
-
-				depBtn.on('click', depFunc);
-
-
-				// que-checkbox
-				let queChkAll = $('.que-allCheck');
-
-				function queCheckFunc() {
-					let _this = $(this);
-
-					if (_this.prop('checked')) {
-						_this.parents().next('ul').find('input[type=checkbox]').prop('checked', true);
-					} else {
-						_this.parents().next('ul').find('input[type=checkbox]').prop('checked', false);
-					}
-
-					if (_this.prop('checked') && _this.hasClass('depth01')) {
-						_this.parents('.check-group').next('div').find('input[type=checkbox]').prop('checked', true);
-					} else {
-						_this.parents('.check-group').next('div').find('input[type=checkbox]').prop('checked', false);
-					}
-
-					if (_this.prop('checked')) {
-						_this.parents('table').find('input[type=checkbox]').prop('checked', true);
-					} else {
-						_this.parents('table').find('input[type=checkbox]').prop('checked', false);
-					}
-
-				}
-
-				queChkAll.on('click', queCheckFunc);
-
-
-				$(".type-box .box .range").hide();
-				let stepBtn = $('.step-wrap .btn-line');
-
-				function stepFunc() {
-					let _this = $(this);
-					let stepData = _this.data('step');
-
-					_this.toggleClass('active');
-
-					if (_this.hasClass('active')) {
-						$(".range[data-step='" + stepData + "']").show();
-					} else {
-						$(".range[data-step='" + stepData + "']").hide();
-					}
-
-				}
-
-				stepBtn.on('click', stepFunc);
-			});
-		</script>
+    <!-- 문항 충족하지 않을 시 노출 팝업 -->
+    <div class="pop-wrap range-type02" data-pop="que-pop">
+        <div class="pop-inner">
+            <div class="pop-header">
+                <span>문항 구성 자동 변경</span>
+                <button type="button" class="pop-close"></button>
+            </div>
+            <div class="pop-content">
+                <span class="txt">사용자가 원하는 문항 구성을 할 수 없어<br>문항 구성이 자동으로 변경되었습니다.</span>
+                <div class="range-wrap">
+                    <div class="range">
+                        <span class="color01">최하</span>
+                        <span class="lowest num">2</span>
+                    </div>
+                    <div class="range">
+                        <span class="color02">하</span>
+                        <span class="low num">5</span>
+                    </div>
+                    <div class="range">
+                        <span class="color03">중</span>
+                        <span class="medium num">6</span>
+                    </div>
+                    <div class="range">
+                        <span class="color04">상</span>
+                        <span class="high num">5</span>
+                    </div>
+                    <div class="range">
+                        <span class="color05">최상</span>
+                        <span class="highest num">2</span>
+                    </div>
+                    <div class="range total">
+                        <span>합계</span>
+                        <span class="num">20</span>
+                    </div>
+                </div>
+                <span class="txt">해당 문제 구성으로 출제하시겠습니까?</span>
+            </div>
+            <div class="pop-footer">
+                <button>취소</button>
+                <button class="pop-close" id="watchJson">확인</button>
+            </div>
+        </div>
+    </div>
+</div>
 </body>
 
+<!-- 기능구현 -->
+<script>
 
+    // 1. 체크박스 전체 선택 되는 기능
+    $(document).ready(function () {
+        $('#chk01_00').change(function () {
+
+            let isChecked = $(this).prop('checked');
+
+            $('input[type="checkbox"]').prop('checked', isChecked);
+        });
+        // setTimeout(changeCount, 0);
+    })
+
+    let questionCountInput = document.getElementById("questionCount");
+    let txtElement = document.querySelector(".warn5");
+    let btns = document.querySelectorAll(".total-questions");
+    const popup = document.querySelector('.pop-wrap.range-type02');
+    const totalNumSpan = document.getElementById("total-count");
+    let count = 0;
+    const buttons = document.querySelectorAll('.step-wrap button');
+
+    buttons.forEach(function (button) {
+        if (button.classList.contains('active')) {
+            count++;
+        }
+    });
+
+    function divide(button) {
+        if ($(button).hasClass('active')) {
+            count--;
+        } else {
+            count++;
+        }
+        console.log(count);
+    }
+
+    // console.log('초기 카운트: ' + count);
+
+    btns.forEach(function (btn) {
+        btn.addEventListener("click", function () {
+            let value = btn.getAttribute("data-value");
+            questionCountInput.value = value;
+            updateStyles();
+            updateTotalNumDisplay(value);
+        });
+    });
+
+    questionCountInput.addEventListener("input", function () {
+        updateStyles();
+    });
+
+
+    // 체크박스에 체크 되어야지 버튼이 활성화 되도록 하기
+
+    function updateStyles() {
+        let inputValue = parseInt(questionCountInput.value);
+
+        if (isNaN(inputValue)) {
+            totalNumSpan.textContent = 0;
+        } else {
+            if (inputValue > 30) {
+                alert("문항은 최대 30문제 까지만 출제 가능합니다.");
+                questionCountInput.value = 30;
+            }
+
+            totalNumSpan.textContent = inputValue;
+
+            if (inputValue % 5 !== 0) {
+                txtElement.style.color = "red";
+                questionCountInput.style.borderColor = "red";
+                popup.style.display = 'none';
+            } else {
+                txtElement.style.color = "";
+                questionCountInput.style.borderColor = "";
+                updatePopupDisplay(inputValue);
+            }
+        }
+        syncButtonWithInput(inputValue);
+
+        // 팝업창 전체 숫자 업데이트하기
+        const totalCount = document.getElementById('total-count').textContent;
+        document.querySelector('.range.total span.num').textContent = totalCount;
+    }
+
+    function syncButtonWithInput(inputValue) {
+
+        btns.forEach(function (btn) {
+            btn.classList.remove("active");
+            if (btn.getAttribute("data-value") == inputValue) {
+                btn.classList.add("active");
+            }
+        });
+
+    }
+
+    window.onload = function () {
+        const countButton = document.getElementById('clicked');
+        const buttonClick = new Event('click');
+        countButton.dispatchEvent(buttonClick);
+    }
+
+    function changeCount() {
+        let totalCount = totalNumSpan.textContent;
+        let lastTotalCount = parseInt(totalCount.toString());
+
+        let divideCount = Math.trunc(lastTotalCount / count);
+        let restCount = lastTotalCount % count;
+
+        const rangeWrap = document.querySelector('.range-wrap');
+        let flexSpans = rangeWrap.querySelectorAll("span[style*='display: flex']");
+
+        flexSpans.forEach(function (span, index) {
+            if (span.textContent.includes("(")) {
+                const matches = span.textContent.match(/\(([^)]+)\)/);
+                if (matches) {
+                    const contentInsideParentheses = matches[1];
+                    let replacement;
+
+                    if (index === 0) {
+                        replacement = `${divideCount + restCount}`;
+                    } else {
+                        replacement = `${divideCount}`;
+                    }
+
+                    span.textContent = span.textContent.replace(`(${contentInsideParentheses})`, `(${replacement})`);
+
+                    // data-step 값을 변경
+                    span.setAttribute('data-step', replacement);
+                }
+            }
+        });
+    }
+
+    function updateTotalNumDisplay(value) {
+        totalNumSpan.textContent = value;
+        let divideCount = Math.trunc(value / count);
+        let restCount = value % count;
+
+        const rangeWrap = document.querySelector('.range-wrap');
+        let flexSpans = rangeWrap.querySelectorAll("span[style*='display: flex;']");
+
+        flexSpans.forEach(function (span, index) {
+            if (span.textContent.includes("(")) {
+                const matches = span.textContent.match(/\(([^)]+)\)/);
+                if (matches) {
+                    const contentInsideParentheses = matches[1];
+                    let replacement;
+
+                    if (index === 0) {
+                        replacement = `${divideCount + restCount}`;
+                    } else {
+                        replacement = `${divideCount}`;
+                    }
+
+                    span.textContent = span.textContent.replace(`(${contentInsideParentheses})`, `(${replacement})`);
+
+                    span.setAttribute('data-value', replacement);
+                }
+            }
+        });
+
+
+    }
+
+    // 팝업창 난이도별 숫자 업데이트 기능
+    function updatePopupDisplay() {
+
+        const totalCount = document.getElementById('total-count').textContent;
+
+        let lowest = document.getElementById('lowest').getAttribute('data-value');
+        document.querySelector('.lowestInput.num').value = lowest;
+
+        let low = document.getElementById('low').getAttribute('data-value');
+        document.querySelector('.lowInput.num').value = low;
+
+        let medium = document.getElementById('medium').getAttribute('data-value');
+        document.querySelector('.mediumInput.num').value = medium;
+
+        let high = document.getElementById('high').getAttribute('data-value');
+        document.querySelector('.highInput.num').value = high;
+
+        let highest = document.getElementById('highest').getAttribute('data-value');
+        document.querySelector('.highestInput.num').value = highest;
+
+        document.querySelector('.range.total span.num').textContent = totalCount;
+
+    }
+
+    // 팝업창에서 난이도 입력 동적으로 변경 기능을 추가해보자
+
+    const lowestInput = document.querySelector('.lowestInput');
+    const lowInput = document.querySelector('.lowInput');
+    const mediumInput = document.querySelector('.mediumInput');
+    const highInput = document.querySelector('.highInput');
+    const highestInput = document.querySelector('.highestInput');
+    const saveButton = document.getElementById('popSave');
+    const failDiv = document.querySelector('.range.total');
+
+    lowestInput.addEventListener('input', updateTotal);
+    lowInput.addEventListener('input', updateTotal);
+    mediumInput.addEventListener('input', updateTotal);
+    highInput.addEventListener('input', updateTotal);
+    highestInput.addEventListener('input', updateTotal);
+
+    function updateTotal() {
+        const lowest = parseInt(lowestInput.value) || 0;
+        const low = parseInt(lowInput.value) || 0;
+        const medium = parseInt(mediumInput.value) || 0;
+        const high = parseInt(highInput.value) || 0;
+        const highest = parseInt(highestInput.value) || 0;
+        const totalCountSum = lowest + low + medium + high + highest;
+
+        const totalSpan = document.querySelector('.range.total span.num');
+        totalSpan.textContent = totalCountSum;
+
+        const totalCount = document.getElementById('total-count').textContent;
+
+        if (totalCountSum != totalCount) {
+            saveButton.classList.add('disabled');
+            failDiv.classList.add('fail');
+        } else {
+            saveButton.classList.remove('disabled');
+            failDiv.classList.remove('fail');
+        }
+    }
+
+    // 팝업창에서 저장 누르면 난이도 재분배 기능
+    function updateLevelCount() {
+
+        const lowestInput = parseFloat(document.querySelector('.lowestInput').value);
+        const lowInput = parseFloat(document.querySelector('.lowInput').value);
+        const mediumInput = parseFloat(document.querySelector('.mediumInput').value);
+        const highInput = parseFloat(document.querySelector('.highInput').value);
+        const highestInput = parseFloat(document.querySelector('.highestInput').value);
+
+        const replaceNaNWithZero = (value) => (isNaN(value) ? 0 : value);
+
+        const replacedLowestInput = replaceNaNWithZero(lowestInput);
+        const replacedLowInput = replaceNaNWithZero(lowInput);
+        const replacedMediumInput = replaceNaNWithZero(mediumInput);
+        const replacedHighInput = replaceNaNWithZero(highInput);
+        const replacedHighestInput = replaceNaNWithZero(highestInput);
+
+        const lowestElement = document.getElementById('lowest');
+        lowestElement.textContent = `최하(${replacedLowestInput})`;
+        lowestElement.setAttribute('data-value', replacedLowestInput);
+
+        const lowElement = document.getElementById('low');
+        lowElement.textContent = `하(${replacedLowInput})`;
+        lowElement.setAttribute('data-value', replacedLowInput);
+
+        const mediumElement = document.getElementById('medium');
+        mediumElement.textContent = `중(${replacedMediumInput})`;
+        mediumElement.setAttribute('data-value', replacedMediumInput);
+
+        const highElement = document.getElementById('high');
+        highElement.textContent = `상(${replacedHighInput})`;
+        highElement.setAttribute('data-value', replacedHighInput);
+
+        const highestElement = document.getElementById('highest');
+        highestElement.textContent = `최상(${replacedHighestInput})`;
+        highestElement.setAttribute('data-value', replacedHighestInput);
+    }
+
+    const step2Button = document.querySelector('.btn-step.next');
+
+    step2Button.addEventListener('click', function () {
+        const inputValue = parseInt(questionCountInput.value);
+
+        if (inputValue % 5 !== 0) {
+            alert("문제 수는 5의 배수로 입력해주세요.");
+            questionCountInput.focus();
+        }
+    });
+
+    // 기존 코드
+    $(function () {
+        // depth
+        let depBtn = $('.dep-btn');
+
+        function depFunc() {
+            let _this = $(this);
+
+            if (!_this.hasClass('active')) {
+                _this.addClass('active');
+                _this.parents('.check-group').next('div').stop().slideUp('fast');
+            } else {
+                _this.removeClass('active');
+                _this.parents('.check-group').next('div').stop().slideDown('fast');
+            }
+
+            _this.parents('.check-group').toggleClass('on');
+        }
+
+        depBtn.on('click', depFunc);
+
+        // que-checkbox
+        let queChkAll = $('.que-allCheck');
+
+        function queCheckFunc() {
+            let _this = $(this);
+
+            if (_this.prop('checked')) {
+                _this.parents().next('ul').find('input[type=checkbox]').prop('checked', true);
+
+                // 체크되면 depFunc 함수를 호출하여 버튼을 클릭
+                depFunc.call(_this.parents('.check-group').find('.dep-btn'));
+            } else {
+                _this.parents().next('ul').find('input[type=checkbox]').prop('checked', false);
+
+                // 체크 해제되면 다시 depFunc 함수를 호출하여 버튼을 클릭
+                depFunc.call(_this.parents('.check-group').find('.dep-btn'));
+            }
+
+            if (_this.prop('checked') && _this.hasClass('depth01')) {
+                _this.parents('.check-group').next('div').find('input[type=checkbox]').prop('checked', true);
+            } else {
+                _this.parents('.check-group').next('div').find('input[type=checkbox]').prop('checked', false);
+            }
+
+            if (_this.prop('checked')) {
+                _this.parents('table').find('input[type=checkbox]').prop('checked', true);
+            } else {
+                _this.parents('table').find('input[type=checkbox]').prop('checked', false);
+            }
+
+        }
+
+        queChkAll.on('change', queCheckFunc);
+
+        $(".type-box .box .range").hide();
+        let stepBtn = $('.step-wrap .btn-line');
+
+        function stepFunc() {
+            let _this = $(this);
+            let stepData = _this.data('step');
+
+            _this.toggleClass('active');
+
+            if (_this.hasClass('active')) {
+                $(".range[data-step='" + stepData + "']").show();
+            } else {
+                $(".range[data-step='" + stepData + "']").hide();
+            }
+        }
+
+        stepBtn.on('click', stepFunc);
+    });
+
+
+    $(document).ready(function () {
+        let stepBtn = $('.step-wrap .btn-line.active');
+
+        stepBtn.each(function () {
+            let _this = $(this);
+            let stepData = _this.data('step');
+            _this.addClass('active');
+            $(".range[data-step='" + stepData + "']").show();
+        });
+    });
+
+    const submit = () => {
+
+        let subjectId = document.getElementById('subjectId').getAttribute("data-subjectId");
+
+        let lowest = document.getElementById('lowest').getAttribute('data-value');
+        let low = document.getElementById('low').getAttribute('data-value');
+        let medium = document.getElementById('medium').getAttribute('data-value');
+        let high = document.getElementById('high').getAttribute('data-value');
+        let highest = document.getElementById('highest').getAttribute('data-value');
+
+        console.log(lowest + " , " + low + " , " + medium + " , " + high + " , " + highest);
+
+        function replaceIfStepExists(value) {
+            if (value == null) {
+                return 0;
+            }
+            return value;
+        }
+
+        lowest = replaceIfStepExists(lowest);
+        low = replaceIfStepExists(low);
+        medium = replaceIfStepExists(medium);
+        high = replaceIfStepExists(high);
+        highest = replaceIfStepExists(highest);
+
+        const activeButtons = document.querySelectorAll('.btn-line.active.evaluation');
+
+        const activityCategoryList = [];
+
+        activeButtons.forEach(function (button) {
+            activityCategoryList.push(button.value);
+        });
+
+        const questionFormButtons = document.querySelectorAll('.btn-line.active.questionForm');
+
+        let concatenatedValues = "";
+
+        questionFormButtons.forEach(function (button) {
+            const buttonText = button.textContent;
+
+            if (buttonText.includes("객관식")) {
+                if (concatenatedValues) {
+                    concatenatedValues += ", ";
+                }
+                concatenatedValues += "multiple";
+            } else if (buttonText.includes("주관식")) {
+                if (concatenatedValues) {
+                    concatenatedValues += ", ";
+                }
+                concatenatedValues += "subjective";
+            }
+        });
+
+        // 단원 id에 해당하는 value값 가져오는걸 만들어보자
+
+        const topicChapterLists = [];
+
+        const selectedTopicChapters = document.querySelectorAll('.topicChapterId:checked');
+
+        selectedTopicChapters.forEach(function (input) {
+            const topicChapterValue = input.value;
+            topicChapterLists.push({"subject": subjectId, "topic": topicChapterValue});
+        });
+
+
+        const jsonData = {
+            "minorClassification": topicChapterLists.map(item => ({"subject": item.subject, "topic": item.topic})),
+            "levelCnt": [lowest, low, medium, high, highest],
+            "questionForm": concatenatedValues,
+            "activityCategoryList": activityCategoryList
+        };
+
+        console.log(jsonData);
+
+        const subjectName = document.getElementById('subjectId').textContent;
+
+        sessionStorage.setItem("subjectName", subjectName);
+
+        fetch('/item-img/chapter/item-list', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(jsonData)
+        })
+            .then(response => {
+                if (response.ok) {
+                    console.log("ok")
+                    return response.json();
+                } else {
+                    alert("더 많은 단원정보를 선택해 주세요!")
+                    throw new Error('Failed to send JSON data');
+                }
+            })
+        .then(data => {
+            window.location.href = data.url;
+        })
+
+    }
+
+
+    document.getElementById('watchJson').addEventListener('click', function () {
+
+    });
+
+    document.addEventListener('DOMContentLoaded', function() {
+        const prevPageBtn = document.getElementById("prevPageBtn");
+        if (prevPageBtn) {
+            prevPageBtn.addEventListener("click", function () {
+                    history.back();
+            });
+        }
+    });
+
+</script>
 </html>
