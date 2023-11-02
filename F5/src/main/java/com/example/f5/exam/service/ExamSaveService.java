@@ -154,7 +154,7 @@ public class ExamSaveService {
         Color subLineColor = new DeviceCmyk(0, 0, 0, 20);
         float subLineWidth = 1;
 
-
+        Color fontGray = new DeviceCmyk(0, 0, 0, 80);
 
         // 한글 폰트 처리
         PdfFont font = PdfFontFactory.createFont(DEST + "HYGothic-Medium-Regular.ttf", PdfFontFactory.EmbeddingStrategy.PREFER_NOT_EMBEDDED);
@@ -167,34 +167,18 @@ public class ExamSaveService {
         Footer footerHandler = new Footer(subLineColor, subLineWidth);
         pdf.addEventHandler(PdfDocumentEvent.END_PAGE, footerHandler);
 
-        // 왼쪽 텍스트 배치 위치 좌표
-        float x = 0;
-        float y = 250;
-
         // Body
         for (int i = 0; i < questionUrls.size(); i++) {
             int number = requestDTOS.getProcessedData().get(i).getNumber();
             String level = requestDTOS.getProcessedData().get(i).getDifficultyName();
             String type = requestDTOS.getProcessedData().get(i).getQuestionFormName();
 
-            if( i % 2 == 0){
-                x = 30;
-            }else{
-                x = 327.5F;
-            }
+            System.out.println("number : " + number);
 
             if(passageUrls.get(i).isEmpty() || passageUrls.get(i) == null){
-                addTextToPdf(document, "0"+number, font, mainLineColor, x, y, 14);
-                addTextToPdf(document, level, font, subLineColor, x + 30, y, 10);
-                addTextToPdf(document, type, font, subLineColor, x + 40, y, 10);
-
-                convertSvgToPdf(pdf, document, questionUrls.get(i), i);
+                convertSvgToPdf(pdf, document, questionUrls.get(i), i, number, font, level, type, mainLineColor, fontGray);
             }else{
-                addTextToPdf(document, "0"+number, font, mainLineColor, x, y, 14);
-                addTextToPdf(document, level, font, subLineColor, x + 30, y, 10);
-                addTextToPdf(document, type, font, subLineColor, x + 40, y, 10);
-
-                convertSvgToPassagePdf(pdf, document, passageUrls.get(i), questionUrls.get(i), i);
+                convertSvgToPassagePdf(pdf, document, passageUrls.get(i), questionUrls.get(i), i, number, font, level, type, mainLineColor, fontGray);
             }
 
         }
@@ -253,7 +237,7 @@ public class ExamSaveService {
         return DEST + "image_" + UUID.randomUUID() + ".png";
     }
 
-    private void convertSvgToPdf(PdfDocument pdf, Document document, String questionSvgUrl, int i) throws IOException {
+    private void convertSvgToPdf(PdfDocument pdf, Document document, String questionSvgUrl, int i, int number, PdfFont font, String level, String type, Color mainLineColor, Color fontGray) throws IOException {
         PdfPage page;
         if (i % 2 == 0) {
             page = pdf.addNewPage(A4);
@@ -290,15 +274,23 @@ public class ExamSaveService {
         // 질문 이미지를 PDF 캔버스에 그리기
         ISvgConverterProperties questionProperties = new SvgConverterProperties().setBaseUri("");
         if (i % 2 == 0) {
+            addTextToPdf(document, "0"+number, font, mainLineColor, leftX, leftY+370, 14);
+            addTextToPdf(document, level, font, fontGray, leftX + 30, leftY+370, 10);
+            addTextToPdf(document, type, font, fontGray, leftX + 50, leftY+370, 10);
+
             SvgConverter.drawOnCanvas(adjustedQuestionSvgInputStream, canvas, leftX, leftY, questionProperties);
         } else {
+            addTextToPdf(document, "0"+number, font, mainLineColor, rightX, rightY+370, 14);
+            addTextToPdf(document, level, font, fontGray, rightX + 30, rightY+370, 10);
+            addTextToPdf(document, type, font, fontGray, rightX + 50, rightY+370, 10);
+
             SvgConverter.drawOnCanvas(adjustedQuestionSvgInputStream, canvas, rightX, rightY, questionProperties);
         }
 
     }
 
 
-    private void convertSvgToPassagePdf(PdfDocument pdf, Document document, String passageSvgUrl, String questionSvgUrl, int i) throws IOException {
+    private void convertSvgToPassagePdf(PdfDocument pdf, Document document, String passageSvgUrl, String questionSvgUrl, int i, int number, PdfFont font, String level, String type, Color mainLineColor, Color fontGray) throws IOException {
         // Create a new A4-sized page
 //        document.add(new AreaBreak(AreaBreakType.NEXT_PAGE));
 
@@ -346,6 +338,9 @@ public class ExamSaveService {
             // 본문 이미지를 PDF 캔버스에 그리기
             SvgConverter.drawOnCanvas(adjustedPassageSvgInputStream, canvas, leftX, leftY, passageProperties);
 
+            addTextToPdf(document, "0"+number, font, mainLineColor, leftX, leftY+370, 14);
+            addTextToPdf(document, level, font, fontGray, leftX + 30, leftY+370, 10);
+            addTextToPdf(document, type, font, fontGray, leftX + 50, leftY+370, 10);
             // 질문 이미지를 PDF 캔버스에 그리기
             float leftYY = leftY - 100;
             ISvgConverterProperties questionProperties = new SvgConverterProperties().setBaseUri("");
@@ -354,6 +349,9 @@ public class ExamSaveService {
             // 본문 이미지를 PDF 캔버스에 그리기
             SvgConverter.drawOnCanvas(adjustedPassageSvgInputStream, canvas, rightX, rightY, passageProperties);
 
+            addTextToPdf(document, "0"+number, font, mainLineColor, rightX, rightY+370, 14);
+            addTextToPdf(document, level, font, fontGray, rightX + 30, rightY+370, 10);
+            addTextToPdf(document, type, font, fontGray, rightX + 50, rightY+370, 10);
             // 질문 이미지를 PDF 캔버스에 그리기
             float rightYY = rightY - 100;
             ISvgConverterProperties questionProperties = new SvgConverterProperties().setBaseUri("");
