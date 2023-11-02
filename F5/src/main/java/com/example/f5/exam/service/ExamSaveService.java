@@ -27,7 +27,6 @@ import com.itextpdf.svg.converter.SvgConverter;
 import com.itextpdf.svg.processors.ISvgConverterProperties;
 import com.itextpdf.svg.processors.impl.SvgConverterProperties;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.io.*;
@@ -44,7 +43,6 @@ import java.util.Collections;
 import java.util.List;
 import java.util.UUID;
 
-
 @Service
 @RequiredArgsConstructor
 public class ExamSaveService {
@@ -58,11 +56,6 @@ public class ExamSaveService {
     private String PDF_URL = "pdf_file";
 
     private String DEST;
-    @Value("${windows.file.pdfDir}")
-    private String widowsFileDir;
-
-    @Value("${linux.file.pdfDir}")
-    private String linuxFileDir;
 
     // 문제 테이블 저장
     public void questionSave(ExamSaveRequestDTO dtos) {
@@ -111,13 +104,7 @@ public class ExamSaveService {
     public void generatePdf(ExamSaveRequestDTO requestDTOS, String userId, String username) throws IOException {
 
         FileUrl fileUrl = new FileUrl();
-        DEST = fileUrl.selectUrl(widowsFileDir, linuxFileDir) + PDF_URL;
-        if (DEST.contains("C:")) {
-            DEST = DEST + "\\";
-
-        } else {
-            DEST = DEST + "/";
-        }
+        DEST = fileUrl.selectUrl() + PDF_URL;
 
         // DTO에서 지문, 문제 url 각 배열에 담기
         List<String> passageUrls = new ArrayList<>();
@@ -160,32 +147,13 @@ public class ExamSaveService {
 
         // Body
         for (int i = 0; i < passageUrls.size(); i++) {
-//            if(passageUrls.get(i).isEmpty() || passageUrls.get(i) == null){
-//
-//            }else{
-//
-//            }
             convertSvgToPdf(pdf, document, passageUrls.get(i), questionUrls.get(i));
         }
 
-//
         document.close();
         System.out.println("pdf create success!");
 
         String outputImgFile = setPngName();
-
-//        PDDocument doc = PDDocument.load(new File(pdfFilePath));
-//        PDFRenderer pdfRenderer = new PDFRenderer(doc);
-//
-//        // 첫 번째 페이지를 이미지로 렌더링
-//        PDPage firstPage = doc.getPage(0);
-//        BufferedImage image = pdfRenderer.renderImage(0);
-
-        // 이미지를 파일로 저장
-//        ImageIO.write(image, "PNG", new File(outputImgFile));
-
-//        doc.close();
-//        System.out.println("Image saved to " + outputImgFile);
 
     }
 
@@ -204,26 +172,14 @@ public class ExamSaveService {
     private String setPngName() {
 
         FileUrl fileUrl = new FileUrl();
-        DEST = fileUrl.selectUrl(widowsFileDir, linuxFileDir) + PDF_URL;
-        if (DEST.contains("C:")) {
-            DEST = DEST + "\\";
-
-        } else {
-            DEST = DEST + "/";
-        }
+        DEST = fileUrl.selectUrl() + PDF_URL;
 
         return DEST + "image_" + UUID.randomUUID() + ".png";
     }
 
     private void convertSvgToPdf(PdfDocument pdf, Document document, String passageSvgUrl, String questionSvgUrl) throws IOException {
-        // Create a new A4-sized page
-//        document.add(new AreaBreak(AreaBreakType.NEXT_PAGE));
-
         // Create a new page for drawing
         PdfPage page = pdf.addNewPage(PageSize.A4);
-
-        // Set page rotation (Portrait or Landscape)
-//        page.setRotation(90);
 
         // Get the PdfCanvas for drawing
         PdfCanvas canvas = new PdfCanvas(page);
@@ -266,22 +222,14 @@ public class ExamSaveService {
 
         inputStream.close();
 
-        // Adjust the width and height in the SVG content as needed
-//        return svgContent.toString()
-//                .replaceFirst("width=\"\\s+\"", "width=\"50%\"")
-//                .replaceFirst("height=\"\\s+\"", "height=\"auto\"");
-
         PageSize pageSize = PageSize.A4;
 
         // Calculate the width and height for the SVG based on the page size
         float width = pageSize.getWidth() / 2; // Adjust as needed
-//        float height = (width / pageWidth) * pageHeight;
 
         // Replace width and height in the SVG content
         return svgContent.toString()
                 .replaceAll("width=\"[0-9.]+\"", "width=\"" + width + "\"");
-//                .replaceAll("height=\"[0-9.]+\"", "height=\"" + height + "\"");
-
     }
 
 
@@ -344,13 +292,7 @@ public class ExamSaveService {
 //        String userId = "sky";
 
         FileUrl fileUrl = new FileUrl();
-        DEST = fileUrl.selectUrl(widowsFileDir, linuxFileDir) + PDF_URL;
-        if (DEST.contains("C:")) {
-            DEST = DEST + "\\";
-
-        } else {
-            DEST = DEST + "/";
-        }
+        DEST = fileUrl.selectUrl() + PDF_URL;
 
         if (requestDTOS != null) {
 

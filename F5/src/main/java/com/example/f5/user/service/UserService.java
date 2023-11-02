@@ -29,45 +29,6 @@ public class UserService {
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
 
-    private String fileDir;
-
-    @Value("${windows.file.dir}")
-    private String widowsFileDir;
-
-    @Value("${linux.file.dir}")
-    private String linuxFileDir;
-
-
-    /*파일 업로드*/
-    public void uploadFile(MultipartFile multipartFile) throws IOException {
-        String originalFilename = multipartFile.getOriginalFilename();
-        String storeFileName = extractExt(originalFilename);
-
-        multipartFile.transferTo(new File(getFullPath(storeFileName)));
-    }
-
-    private static String extractExt(String originalFilename) {
-        /*확장자명 추출*/
-        String ext = creatStoreFilename(originalFilename);
-        String uuid = UUID.randomUUID().toString();
-        return uuid + "." + ext;
-    }
-
-    private static String creatStoreFilename(String originalFilename) {
-        int pos = originalFilename.lastIndexOf(".");
-        return originalFilename.substring(pos + 1);
-    }
-
-    private String getFullPath(String fileName) {
-
-        FileUrl fileUrl = new FileUrl();
-
-        fileDir = fileUrl.selectUrl(widowsFileDir, linuxFileDir);
-
-        System.out.println(fileDir);
-
-        return fileDir + fileName;
-    }
 
     /*회원가입*/
     public ResponseEntity<String> register(UserDto.RegisterResponseDto form) {

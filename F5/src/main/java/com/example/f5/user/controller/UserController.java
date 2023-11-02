@@ -3,6 +3,7 @@ package com.example.f5.user.controller;
 import ch.qos.logback.core.model.Model;
 import com.example.f5.user.dto.UserDto;
 import com.example.f5.user.service.UserService;
+import com.example.f5.util.FileUpload;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
@@ -20,6 +21,7 @@ import java.util.Map;
 public class UserController {
 
     private final UserService userService;
+    private final FileUpload fileUpload;
 
     /*로그인 폼*/
     @GetMapping("/login")
@@ -38,7 +40,7 @@ public class UserController {
     public String registerUser(@Valid @ModelAttribute UserDto.RegisterResponseDto form) throws IOException {
         System.out.println(form.getAcademyLogo());
         /*파일 업로드*/
-        userService.uploadFile(form.getAcademyLogo());
+        fileUpload.uploadFile(form.getAcademyLogo(), "F5ImgFile");
         /*회원가입*/
         userService.register(form);
         return "redirect:/login";
