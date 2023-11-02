@@ -13,7 +13,7 @@ public class FileUrl {
         if (osName.contains("win")) {
             fileDir = "C:\\";
         } else if (osName.contains("nux") || osName.contains("mac") || osName.contains("nix")) {
-            fileDir = "/Users/kim/";
+            fileDir = "/home/ec2-user/";
         }
 
         return fileDir;
