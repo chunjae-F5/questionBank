@@ -26,7 +26,7 @@
                 <li>STEP 2 문항 편집</li>
                 <li>STEP 3 시험지 저장</li>
             </ul>
-            <button type="button" class="del-btn" onclick="window.location.href='/'"></button>
+            <button type="button" class="del-btn"></button>
         </div>
         <div class="pop-content">
             <div class="view-box">
@@ -53,7 +53,7 @@
                                             th:with="_=${thUtils.reset()}, unitCounter=${_}">
                                             <div class="check-group title">
                                                 <div class="title-chk">
-                                                    <input type="checkbox"
+                                                    <input type="checkbox" onclick="getCheck()"
                                                            th:id="${thUtils.getNextId(itemStat.index + 1)}"
                                                            class="que-allCheck depth01"
                                                            th:value="${item.largeChapterId}">
@@ -67,7 +67,7 @@
                                             <div class="depth02">
                                                 <div th:each="mediumItem : ${item.mediumChapters}">
                                                     <div class="check-group">
-                                                        <input type="checkbox"
+                                                        <input type="checkbox" onclick="getCheck()"
                                                                th:id="${thUtils.getNextId(itemStat.index + 1)}"
                                                                class="que-allCheck depth01"
                                                                th:value="${mediumItem.mediumChapterId}">
@@ -80,7 +80,7 @@
                                                     <div class="depth03">
                                                         <div th:each="smallItem : ${mediumItem.smallChapters}">
                                                             <div class="check-group">
-                                                                <input type="checkbox"
+                                                                <input type="checkbox" onclick="getCheck()"
                                                                        th:id="${thUtils.getNextId(itemStat.index + 1)}"
                                                                        class="que-allCheck depth01"
                                                                        th:value="${smallItem.smallChapterId}">
@@ -93,7 +93,7 @@
                                                             <div class="depth04">
                                                                 <div th:each="topicItem : ${smallItem.topicChapters}">
                                                                     <div class="check-group">
-                                                                        <input type="checkbox"
+                                                                        <input type="checkbox" onclick="getCheck()"
                                                                                th:id="${thUtils.getNextId(itemStat.index + 1)}"
                                                                                class="topicChapterId"
                                                                                th:value="${topicItem.topicChapterId}">
@@ -688,8 +688,13 @@
             if (_this.prop('checked')) {
                 _this.parents().next('ul').find('input[type=checkbox]').prop('checked', true);
 
+                // 체크되면 depFunc 함수를 호출하여 버튼을 클릭
+                depFunc.call(_this.parents('.check-group').find('.dep-btn'));
             } else {
                 _this.parents().next('ul').find('input[type=checkbox]').prop('checked', false);
+
+                // 체크 해제되면 다시 depFunc 함수를 호출하여 버튼을 클릭
+                depFunc.call(_this.parents('.check-group').find('.dep-btn'));
             }
 
             if (_this.prop('checked') && _this.hasClass('depth01')) {
