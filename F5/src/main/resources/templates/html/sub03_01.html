@@ -37,7 +37,6 @@
             const itemId = itemElement.getAttribute("item-id");
             array.push(itemId);
         }
-        console.log(array);
 
         const itemIdArrayJSON = JSON.stringify(array);
 
@@ -151,13 +150,11 @@
                                                 <div class="que-badge-group">
                                                     <span class="que-badge a yellow" th:text="${item.difficultyName}"></span> <!--난이도 -->
                                                     <span class="que-badge b gray" th:text="${item.questionFormName}"></span> <!--객/주-->
-                                                    <!--<span class="que-badge gray" th:text="${item.itemId}">문제 ID : </span> &lt;!&ndash;객/주&ndash;&gt;-->
                                                 </div>
                                             </div>
                                             <div class="btn-wrap">
                                                 <button type="button" class="btn-error pop-btn" data-pop="error-report-pop"></button>
                                                 <button type="button" class="btn-delete" th:attr="data-item-id=${item.itemId}" onclick="moveSortGroupToTarget(this); countQuestionFrom(); countDifficulty()"></button>
-
                                             </div>
                                         </div>
                                         <div class="view-que view-queT">
@@ -299,8 +296,6 @@
 
                                             <script>
                                                 $(function () {
-
-
                                                     let _leg = $('.view-queT').length;
                                                     let arr = [];
 
@@ -414,6 +409,7 @@
                             <div class="view-que-list scroll-inner contents" id="targetDiv">
                                 <div class="cnt-top">
                             </div>
+
                             <script th:inline="javascript">
                                 function moveSortGroupToTarget(button) {
                                     const itemId = button.getAttribute("data-item-id");
@@ -426,8 +422,14 @@
                                         if (similarButton) {
                                             similarButton.classList.remove('btn-similar-que');
                                             similarButton.classList.add('btn-add');
+                                            similarButton.setAttribute('data-item-id', itemId);
                                             similarButton.innerHTML = '<i class="add-type02"></i> 추가';
                                         }
+
+                                        similarButton.addEventListener('click', function() {
+                                            moveSortGroupToSource(this, itemId);
+                                        });
+
                                         const deleteButton = sortGroups.querySelector('.btn-delete');
                                         if (deleteButton) {
                                             deleteButton.style.display = 'none'; // '삭제' 버튼 숨기기
