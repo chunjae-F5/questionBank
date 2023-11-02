@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="ko">
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
 
 <head>
 	<meta charset="UTF-8">
@@ -8,38 +8,58 @@
 	<title>T셀파 문제은행</title>
 	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@8/swiper-bundle.min.css" />
 	<link rel="stylesheet" href="https://code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css">
-	<link rel="stylesheet" href="../../static/css/font.css">
-	<link rel="stylesheet" href="../../static/css/reset.css">
-	<link rel="stylesheet" href="../../static/css/common.css">
+    <link rel="stylesheet" th:href="@{/css/font.css}">
+    <link rel="stylesheet" th:href="@{/css/reset.css}">
+    <link rel="stylesheet" th:href="@{/css/common.css}">
 	<script src="https://code.jquery.com/jquery-1.12.4.min.js"
 		integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ=" crossorigin="anonymous"></script>
 	<script src="https://code.jquery.com/ui/1.13.1/jquery-ui.js"></script>
 	<script src="https://cdn.jsdelivr.net/npm/swiper@8/swiper-bundle.min.js"></script>
-	<script src="../../static/js/common.js"></script>
+    <script th:src="@{/js/common.js}"></script>
 </head>
 
 <body>
-	<div id="wrap" class="full-pop-que">
-		<div class="full-pop-wrap">
-			<div class="pop-header">
-				<!-- <ul class="title">
-					<li>STEP 1 단원선택</li>
-					<li>STEP 2 문항편집</li>
-					<li class="active">STEP 3 시험지 저장</li>
-				</ul>
-				<button type="button" class="del-btn"></button> -->
-			</div>
+	<div id="loadingDiv" class="full-pop-que" th:fragment="loadingFrag" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background-color:rgba(255,255,255,0.7); z-index:9999;">
+		<script>
+			function showLoading() {
+				document.getElementById('loadingDiv').style.display = 'block';
+			}
+
+			function hideLoading() {
+				document.getElementById('loadingDiv').style.display = 'none';
+			}
+
+			$(document).ready(function() {
+				hideLoading();
+			});
+
+			$.ajax({
+				url: "/loading",
+				type: "GET",
+				beforeSend: showLoading, // AJAX 호출 시작 전 로딩 표시
+				complete: hideLoading,   // AJAX 호출 완료 후 로딩 숨김
+				success: function(response) {
+					// 성공 시 처리
+				},
+				error: function(error) {
+					// 실패 시 처리
+				}
+			});
+		</script>
+
+		<div class="full-pop-wrap" style="position:absolute; top:50%; left:50%; transform:translate(-50%, -50%);">
 			<div class="pop-content">
 				<div class="loading-cnt">
-					<img src="../../static/images/loading_icon.gif" alt="로딩중">
+					<img th:src="@{/images/loading_icon.gif}" alt="로딩중">
 					<div class="txt-box">
-						<span class="tit">LOADING<br>잠시만 기다려주세요.</span> 
+						<span class="tit">LOADING<br>잠시만 기다려주세요.</span>
 						<span class="txt">이 화면이 지속되면 페이지를 <em>새로고침</em> 해 주세요.</span>
 					</div>
 				</div>
 			</div>
 		</div>
 		<div class="dim"></div>
+	</div>
 </body>
 
 

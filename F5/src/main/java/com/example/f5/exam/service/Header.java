@@ -18,6 +18,7 @@ import com.itextpdf.layout.element.Paragraph;
 import com.itextpdf.layout.properties.TextAlignment;
 import org.springframework.beans.factory.annotation.Value;
 
+import java.awt.*;
 import java.io.IOException;
 
 public class Header implements IEventHandler {
@@ -67,14 +68,10 @@ public class Header implements IEventHandler {
         PdfFont font;
         try {
             FileUrl fileUrl = new FileUrl();
-            DEST = fileUrl.selectUrl(widowsFileDir, linuxFileDir) + PDF_URL;
-            if (DEST.contains("C:")) {
-                DEST = DEST + "\\";
-            } else {
-                DEST = DEST + "/";
-            }
+            DEST = fileUrl.selectUrl() + PDF_URL;
 
-            font = PdfFontFactory.createFont(DEST + "HYGothic-Medium-Regular.ttf", PdfFontFactory.EmbeddingStrategy.FORCE_EMBEDDED);
+            font = PdfFontFactory.createFont(DEST + "HYGothic-Medium-Regular.ttf", PdfFontFactory.EmbeddingStrategy.PREFER_NOT_EMBEDDED);
+
         } catch (IOException e) {
             throw new RuntimeException(e);
         }

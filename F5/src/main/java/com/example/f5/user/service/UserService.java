@@ -30,54 +30,6 @@ public class UserService {
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
 
-    private String DEST;
-
-    private String User_URL = "F5ImgFile";
-
-    @Value("${windows.file.dir}")
-    private String widowsFileDir;
-
-    @Value("${linux.file.dir}")
-    private String linuxFileDir;
-
-
-    /*파일 업로드*/
-    public void uploadFile(MultipartFile multipartFile) throws IOException {
-        String originalFilename = multipartFile.getOriginalFilename();
-        String storeFileName = extractExt(originalFilename);
-
-        multipartFile.transferTo(new File(getFullPath(storeFileName)));
-    }
-
-    private static String extractExt(String originalFilename) {
-        /*확장자명 추출*/
-        String ext = creatStoreFilename(originalFilename);
-        String uuid = UUID.randomUUID().toString();
-        return uuid + "." + ext;
-    }
-
-    private static String creatStoreFilename(String originalFilename) {
-        int pos = originalFilename.lastIndexOf(".");
-        return originalFilename.substring(pos + 1);
-    }
-
-    private String getFullPath(String fileName) {
-
-        FileUrl fileUrl = new FileUrl();
-        DEST = fileUrl.selectUrl(widowsFileDir, linuxFileDir) + User_URL;
-        if (DEST.contains("C:")) {
-            DEST = DEST + "\\";
-
-        } else {
-            DEST = DEST + "/";
-        }
-
-
-        System.out.println(DEST);
-
-        return DEST + fileName;
-    }
-
     /*회원가입*/
     public ResponseEntity<String> register(UserDto.RegisterResponseDto form) {
         ResponseEntity<String> result = saveUser(form);
@@ -127,7 +79,7 @@ public class UserService {
             session.setMaxInactiveInterval(1800);
             return ResponseEntity.ok().body("");
         }
-        return ResponseEntity.status(400).body("아이디 비밀번호가 일치하지 않음.");
+        return ResponseEntity.status(401).body("아이디 비밀번호가 일치하지 않음.");
     }
 
     public boolean checkIdDuplicated(String userId) {

@@ -25,11 +25,18 @@ public class Report extends BaseTimeEntity {
     @Comment(value = "첨부 파일")
     private String file;
 
-    @Column(name = "user_name", nullable = false)
-    @Comment(value = "신고자 이름")
-    private String userName;
+    @Column(name = "user_id", nullable = false)
+    @Comment(value = "신고자 아이디")
+    private String userId;
 
     @Column(name = "delete_yn", nullable = false)
     @Comment(value = "삭제여부")
     private boolean deletedYN;
+
+    public Report(String type, String content, String file, String userId) {
+        this.type = type;
+        this.content = content;
+        this.file = file;
+        this.userId = userId;
+    }
 }

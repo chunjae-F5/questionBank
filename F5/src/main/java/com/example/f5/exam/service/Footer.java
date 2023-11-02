@@ -15,8 +15,6 @@ import com.itextpdf.kernel.pdf.xobject.PdfFormXObject;
 import com.itextpdf.layout.Canvas;
 import com.itextpdf.layout.element.Image;
 import com.itextpdf.layout.element.Paragraph;
-import com.itextpdf.layout.element.TabStop;
-import com.itextpdf.layout.properties.TabAlignment;
 import com.itextpdf.layout.properties.TextAlignment;
 import org.springframework.beans.factory.annotation.Value;
 
@@ -52,13 +50,7 @@ public class Footer implements IEventHandler {
         this.subLineWidth = subLineWidth;
 
         FileUrl fileUrl = new FileUrl();
-        DEST = fileUrl.selectUrl(widowsFileDir, linuxFileDir) + PDF_URL;
-        if (DEST.contains("C:")) {
-            DEST = DEST + "\\";
-
-        } else {
-            DEST = DEST + "/";
-        }
+        DEST = fileUrl.selectUrl() + PDF_URL;
 
         try {
             logo = new Image(ImageDataFactory.create(DEST + "f5.png"));
@@ -93,13 +85,7 @@ public class Footer implements IEventHandler {
         try {
 
             FileUrl fileUrl = new FileUrl();
-            DEST = fileUrl.selectUrl(widowsFileDir, linuxFileDir) + PDF_URL;
-            if (DEST.contains("C:")) {
-                DEST = DEST + "\\";
-
-            } else {
-                DEST = DEST + "/";
-            }
+            DEST = fileUrl.selectUrl() + PDF_URL;
 
             Image logoImage = new Image(ImageDataFactory.create(DEST + "f5.png"));
             logoImage.scaleToFit(logoWidth, logoHeight);
