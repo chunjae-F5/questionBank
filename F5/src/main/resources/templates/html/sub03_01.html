@@ -183,7 +183,6 @@
                                                       th:text="${item.difficultyName}"></span> <!--난이도 -->
                                                 <span class="que-badge b gray"
                                                       th:text="${item.questionFormName}"></span> <!--객/주-->
-                                                <!--<span class="que-badge gray" th:text="${item.itemId}">문제 ID : </span> &lt;!&ndash;객/주&ndash;&gt;-->
                                             </div>
                                         </div>
                                         <div class="btn-wrap">
@@ -280,7 +279,6 @@
 
                                 return counts;
                             }
-
                             countDifficulty();
                         </script>
                     </div>
@@ -344,8 +342,6 @@
 
                                             <script>
                                                 $(function () {
-
-
                                                     let _leg = $('.view-queT').length;
                                                     let arr = [];
 
@@ -379,9 +375,7 @@
                                                                 _this.addClass('active');
                                                                 $('.view-que-box').removeClass('active');
                                                                 $('.view-que-box').eq(_idx).addClass('active');
-                                                            }
-                                                            ;
-
+                                                            };
                                                         })
                                                     }
                                                 })
@@ -460,29 +454,35 @@
 
                             <div class="view-que-list scroll-inner contents" id="targetDiv">
                                 <div class="cnt-top">
-                                </div>
-                                <script th:inline="javascript">
-                                    function moveSortGroupToTarget(button) {
-                                        const itemId = button.getAttribute("data-item-id");
-                                        const dataSummaryIdToMove = itemId;
-                                        const sortGroups = document.querySelector('.sort-group[data-item-id="' + itemId + '"]');
-                                        const targetDiv = document.getElementById("targetDiv");
+                            </div>
+                            <script th:inline="javascript">
+                                function moveSortGroupToTarget(button) {
+                                    const itemId = button.getAttribute("data-item-id");
+                                    const dataSummaryIdToMove = itemId;
+                                    const sortGroups = document.querySelector('.sort-group[data-item-id="' + itemId + '"]');
+                                    const targetDiv = document.getElementById("targetDiv");
 
-                                        if (sortGroups) {
-                                            const similarButton = sortGroups.querySelector('.btn-similar-que');
-                                            if (similarButton) {
-                                                similarButton.classList.remove('btn-similar-que');
-                                                similarButton.classList.add('btn-add');
-                                                similarButton.innerHTML = '<i class="add-type02"></i> 추가';
-                                            }
-                                            const deleteButton = sortGroups.querySelector('.btn-delete');
-                                            if (deleteButton) {
-                                                deleteButton.style.display = 'none'; // '삭제' 버튼 숨기기
-                                            }
-                                            targetDiv.appendChild(sortGroups);
-                                            const cols = document.querySelectorAll('.col.sortable');
-                                            for (const col of cols) {
-                                                const summaryId = col.getAttribute('data-item-id');
+                                    if (sortGroups) {
+                                        const similarButton = sortGroups.querySelector('.btn-similar-que');
+                                        if (similarButton) {
+                                            similarButton.classList.remove('btn-similar-que');
+                                            similarButton.classList.add('btn-add');
+                                            similarButton.setAttribute('data-item-id', itemId);
+                                            similarButton.innerHTML = '<i class="add-type02"></i> 추가';
+                                        }
+
+                                        similarButton.addEventListener('click', function() {
+                                            moveSortGroupToSource(this, itemId);
+                                        });
+
+                                        const deleteButton = sortGroups.querySelector('.btn-delete');
+                                        if (deleteButton) {
+                                            deleteButton.style.display = 'none'; // '삭제' 버튼 숨기기
+                                        }
+                                        targetDiv.appendChild(sortGroups);
+                                        const cols = document.querySelectorAll('.col.sortable');
+                                        for (const col of cols) {
+                                            const summaryId = col.getAttribute('data-item-id');
 
                                                 if (summaryId === dataSummaryIdToMove) {
                                                     col.parentNode.removeChild(col);

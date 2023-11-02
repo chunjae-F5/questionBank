@@ -1,6 +1,8 @@
 // 난이도 선택 옵션 요소 가져오기
 const difficultySelect = document.getElementById('difficulty');
 let currentItemId; // 현재 선택된 itemId를 저장할 변수
+let add_count = 1;
+
 // 문항의 유사 문항 버튼 클릭 이벤트 리스너
 document.querySelectorAll('.similar-items-button').forEach(button => {
     button.addEventListener('click', async () => {
@@ -15,11 +17,13 @@ document.querySelectorAll('.similar-items-button').forEach(button => {
         await updateSimilarItems();
     });
 });
+
 // 난이도 선택 옵션 변경 시 호출되는 함수
 difficultySelect.addEventListener('change', async() => {
     // 현재 itemId와 난이도에 따라 유사 문항을 가져오고 표시
     await updateSimilarItems();
 });
+
 // 함수로 난이도와 itemId에 따라 유사 문항을 가져오고 표시
 async function updateSimilarItems() {
     const selectedDifficulty = difficultySelect.options[difficultySelect.selectedIndex].getAttribute('data-difficulty');
@@ -156,7 +160,7 @@ function displaySimilarItems(similarItems, selectedDifficulty) {
                 queBottomDiv.className = 'que-bottom';
                 queBottomDiv.innerHTML = `
                     <div class="btn-wrap">
-                        <button type="button" class="btn-default btn-add" data-item-id=${item.itemId} onclick="moveSortGroupToSource(this, '${item.itemId}'); countDifficulty(); countQuestionFrom()" ><i class="add-type02"></i> 추가</button>
+                        <button type="button" class="btn-default btn-add" data-item-id=${item.itemId} onclick="moveSortGroupToSource(this, '${item.itemId}');" ><i class="add-type02"></i> 추가</button>
                     </div>
                 `;
 
@@ -197,70 +201,71 @@ function displaySimilarItems(similarItems, selectedDifficulty) {
     }
 }
 
-// '유사 문제' 버튼 클릭 이벤트 리스너 추가
-// document.querySelectorAll('.btn-similar-que').forEach(button => {
-//     button.addEventListener('click', async () => {
-//         // 해당 '유사 문제' 버튼의 itemId를 가져옵니다.
-//         const itemId = button.getAttribute('data-itemid');
-//
-//         // '유사 문제' 버튼을 클릭하면 해당 itemId의 유사 문제를 오른쪽 패널에 표시
-//         await fetchAndDisplaySimilarItems(itemId);
-//     });
-// });
-// // '유사 문제'를 불러와서 오른쪽 패널에 표시하는 함수입니다.
-// async function fetchAndDisplaySimilarItems(itemId) {
-//     // 현재 선택된 난이도를 가져오거나 기본 난이도 설정
-//     const selectedDifficulty = difficultySelect.options[difficultySelect.selectedIndex].getAttribute('data-difficulty') || '전체';
-//
-//     // 해당 itemId와 난이도에 따라 유사 문항을 가져오고 표시
-//     const similarItems = await fetchSimilarItems(itemId);
-//     displaySimilarItems(similarItems, selectedDifficulty);
-//     // 문항을 추가한 후 스크롤을 맨 위로 이동
-//     const similarItemsElement = document.getElementById('similar-items');
-//     similarItemsElement.scrollTop = 0;
-// }
-//
+// 삭제 버튼 클릭 시, 삭제문항으로 이동
+function moveSortGroupToAddDel(button, itemId) {
+    // 클릭한 '삭제' 버튼의 부모 요소인 .sort-group을 찾음
+    const sortGroupElement = button.closest('.sort-group');
+
+    if (sortGroupElement) {
+        const addButton = document.createElement('button');
+        addButton.type = 'button';
+        addButton.className = 'btn-default btn-add';
+        addButton.setAttribute('data-item-id', itemId);
+        addButton.innerHTML = '<i class="add-type02"></i> 추가';
+
+        addButton.addEventListener('click', function() {
+            moveSortGroupToSource(this, itemId);
+        });
+
+        sortGroupElement.querySelector('.que-bottom').appendChild(addButton);
+
+        const deleteButton = sortGroupElement.querySelector('.btn-delete');
+        if (deleteButton) {
+            deleteButton.remove();
+        }
+
+        sortGroupElement.remove();
+
+        const deletePanel = document.getElementById('targetDiv');
+        deletePanel.appendChild(sortGroupElement);
+    }
+}
 
 // 추가 버튼 클릭 시, 왼쪽으로 문항 이동
 function moveSortGroupToSource(button, itemId) {
-    // 클릭한 '추가' 버튼의 부모 요소인 .sort-group을 찾습니다.
+    // 클릭한 '추가' 버튼의 부모 요소인 .sort-group을 찾음
     const sortGroupElement = button.closest('.sort-group');
-    console.log("sortGroupElement" + sortGroupElement);
-
-    let add_count = 1;
-
-    const addnum = "추가 문제" + add_count;
-    console.log("addnum" + addnum);
-    add_count++;
+    const addnum = "추가 문제 " + add_count;
 
     if (sortGroupElement) {
-        // 복제할 .sort-group 요소를 만듭니다.
+        // 복제할 .sort-group 요소를 만듦
         const clonedSortGroup = sortGroupElement.cloneNode(true);
+        const btnWrap = clonedSortGroup.querySelector('.btn-wrap');
+
+        if (btnWrap) {
+            // 'btn-wrap' 안에 버튼을 추가
+            btnWrap.innerHTML += `
+                <button type="button" class="btn-delete" data-item-id=${itemId} onclick="moveSortGroupToAddDel(this, '${itemId}');"></button>
+            `;
+        }
 
         const numSpan = clonedSortGroup.querySelector('.num');
         if (numSpan) {
             numSpan.textContent = addnum;
         }
 
-        // '추가' 버튼을 '유사문제' 버튼으로 변경
-        const similarAddButton = clonedSortGroup.querySelector('.btn-add');
-        if (similarAddButton) {
-            similarAddButton.classList.remove('btn-add');
-            similarAddButton.removeAttribute('data-item-id');
-            similarAddButton.removeAttribute('onclick');
-            similarAddButton.classList.add('similar-items-button');
-            similarAddButton.setAttribute('data-itemid', itemId);
-
-            similarAddButton.innerHTML = `<i class="similar"></i> 유사 문제`;
+        // '추가' 버튼 제거
+        const addButton = clonedSortGroup.querySelector('.btn-add');
+        if (addButton) {
+            addButton.remove();
         }
 
-        console.log("itemId" + itemId);
-
-        // 이제 왼쪽 패널에 유사 문항을 추가합니다.
+        // 왼쪽 패널에 유사 문항을 추가
         const leftPanel = document.getElementById('simQueAdd');
         leftPanel.appendChild(clonedSortGroup);
 
-        console.log("leftPanel" + leftPanel);
+        sortGroupElement.remove();
+        add_count++;
     }
 }
 
