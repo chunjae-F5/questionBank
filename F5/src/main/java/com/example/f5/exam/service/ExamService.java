@@ -46,6 +46,7 @@ public class ExamService {
                 responseDto.setExplainUrl(itemObject.get("explainUrl").getAsString());
 
                 if (itemObject.get("passageUrl") != null && !itemObject.get("passageUrl").isJsonNull()) {
+                    responseDto.setPassageId(Integer.parseInt(itemObject.get("passageId").getAsString()));
                     responseDto.setPassageUrl(itemObject.get("passageUrl").getAsString());
                 }
 
