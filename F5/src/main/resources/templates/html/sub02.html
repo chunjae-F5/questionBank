@@ -192,7 +192,7 @@
                                     <div class="step-wrap">
                                         <button type="button" class="btn-line type02 color01" data-step="step1"
                                                 data-value="step1"
-                                                onclick="divide(this)">최하
+                                                onclick="divide(this)" style="display:none;">최하
                                         </button>
                                         <button type="button" class="btn-line type02 color02 active" data-step="step2"
                                                 data-value="step2"
@@ -208,7 +208,7 @@
                                         </button>
                                         <button type="button" class="btn-line type02 color05" data-step="step5"
                                                 data-value="step5"
-                                                onclick="divide(this)">최상
+                                                onclick="divide(this)" style="display:none;">최상
                                         </button>
                                     </div>
                                 </div>
@@ -372,6 +372,11 @@
             count++;
         }
         console.log(count);
+
+        const countButton = document.getElementById('clicked');
+        const buttonClick = new Event('click');
+        countButton.dispatchEvent(buttonClick);
+
     }
 
     // console.log('초기 카운트: ' + count);
