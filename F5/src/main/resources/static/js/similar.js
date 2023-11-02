@@ -207,10 +207,12 @@ function moveSortGroupToAddDel(button, itemId) {
     const sortGroupElement = button.closest('.sort-group');
 
     if (sortGroupElement) {
+        sortGroupElement.setAttribute('item-id', itemId);
+
         const addButton = document.createElement('button');
         addButton.type = 'button';
         addButton.className = 'btn-default btn-add';
-        addButton.setAttribute('data-item-id', itemId);
+        //addButton.setAttribute('data-item-id', itemId);
         addButton.innerHTML = '<i class="add-type02"></i> 추가';
 
         addButton.addEventListener('click', function() {
@@ -240,6 +242,7 @@ function moveSortGroupToSource(button, itemId) {
     const addnum = "추가 문제 " + add_count;
 
     if (sortGroupElement) {
+        sortGroupElement.setAttribute('item-id', itemId);
         // 복제할 .sort-group 요소를 만듦
         const clonedSortGroup = sortGroupElement.cloneNode(true);
         const btnWrap = clonedSortGroup.querySelector('.btn-wrap');
