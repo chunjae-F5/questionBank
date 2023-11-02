@@ -157,6 +157,7 @@
 				};
 				processedData.push(processedItem);
 			});
+			const subjectName = sessionStorage.getItem("subjectName");
 
 			const requestBody = JSON.stringify({
 				"processedData":processedData,
@@ -165,7 +166,8 @@
 				"mediumCnt":mediumCnt,
 				"lowCnt":lowCnt,
 				"choiceCnt":choiceCnt,
-				"shortCnt":shortCnt
+				"shortCnt":shortCnt,
+				"subjectName":subjectName
 			});
 			console.log(requestBody);
 
