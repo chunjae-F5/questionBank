@@ -342,7 +342,7 @@ public class ExamSaveService {
             addTextToPdf(document, level, font, fontGray, leftX + 30, leftY+370, 10);
             addTextToPdf(document, type, font, fontGray, leftX + 50, leftY+370, 10);
             // 질문 이미지를 PDF 캔버스에 그리기
-            float leftYY = leftY - 100;
+            float leftYY = leftY - 200;
             ISvgConverterProperties questionProperties = new SvgConverterProperties().setBaseUri("");
             SvgConverter.drawOnCanvas(adjustedQuestionSvgInputStream, canvas, leftX, leftYY, questionProperties);
         }else{
@@ -353,7 +353,7 @@ public class ExamSaveService {
             addTextToPdf(document, level, font, fontGray, rightX + 30, rightY+370, 10);
             addTextToPdf(document, type, font, fontGray, rightX + 50, rightY+370, 10);
             // 질문 이미지를 PDF 캔버스에 그리기
-            float rightYY = rightY - 100;
+            float rightYY = rightY - 200;
             ISvgConverterProperties questionProperties = new SvgConverterProperties().setBaseUri("");
             SvgConverter.drawOnCanvas(adjustedQuestionSvgInputStream, canvas, rightX, rightYY, questionProperties);
         }
@@ -380,7 +380,7 @@ public class ExamSaveService {
         // SVG 콘텐츠에서 너비와 높이 조정 (필요한대로)
         PageSize pageSize = A4;
         float width = pageSize.getWidth() / 2;
-        float height = pageSize.getHeight() / 2;
+        float height = pageSize.getHeight() - 250;
 
         // SVG 콘텐츠의 너비 속성 조정
         return svgContent.toString()
