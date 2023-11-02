@@ -29,14 +29,8 @@ import com.itextpdf.svg.converter.SvgConverter;
 import com.itextpdf.svg.processors.ISvgConverterProperties;
 import com.itextpdf.svg.processors.impl.SvgConverterProperties;
 import lombok.RequiredArgsConstructor;
-import org.apache.pdfbox.pdmodel.PDDocument;
-import org.apache.pdfbox.pdmodel.PDPage;
-import org.apache.pdfbox.rendering.PDFRenderer;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
-import javax.imageio.ImageIO;
-import java.awt.image.BufferedImage;
 import java.io.*;
 import java.net.URI;
 import java.net.URL;
@@ -46,11 +40,11 @@ import java.net.http.HttpResponse;
 import java.nio.charset.StandardCharsets;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
-
+import java.util.UUID;
 import static com.itextpdf.kernel.geom.PageSize.A4;
-
 
 @Service
 @RequiredArgsConstructor
@@ -65,11 +59,6 @@ public class ExamSaveService {
     private String PDF_URL = "pdf_file";
 
     private String DEST;
-    @Value("${windows.file.pdfDir}")
-    private String widowsFileDir;
-
-    @Value("${linux.file.pdfDir}")
-    private String linuxFileDir;
 
     // 문제 테이블 저장
     public void questionSave(ExamSaveRequestDTO dtos) {
@@ -118,13 +107,7 @@ public class ExamSaveService {
     public void generatePdf(ExamSaveRequestDTO requestDTOS, String userId, String username) throws IOException {
 
         FileUrl fileUrl = new FileUrl();
-        DEST = fileUrl.selectUrl(widowsFileDir, linuxFileDir) + PDF_URL;
-        if (DEST.contains("C:")) {
-            DEST = DEST + "\\";
-
-        } else {
-            DEST = DEST + "/";
-        }
+        DEST = fileUrl.selectUrl() + PDF_URL;
 
         // DTO에서 지문, 문제 url 각 배열에 담기
         List<String> passageUrls = new ArrayList<>();
@@ -180,26 +163,12 @@ public class ExamSaveService {
             }else{
                 convertSvgToPassagePdf(pdf, document, passageUrls.get(i), questionUrls.get(i), i, number, font, level, type, mainLineColor, fontGray);
             }
-
         }
 
         document.close();
         System.out.println("pdf create success!");
 
         String outputImgFile = setPngName();
-
-        PDDocument doc = PDDocument.load(new File(pdfFilePath));
-        PDFRenderer pdfRenderer = new PDFRenderer(doc);
-
-        // 첫 번째 페이지를 이미지로 렌더링
-        PDPage firstPage = doc.getPage(0);
-        BufferedImage image = pdfRenderer.renderImage(0);
-
-        // 이미지를 파일로 저장
-        ImageIO.write(image, "PNG", new File(outputImgFile));
-
-        doc.close();
-        System.out.println("Image saved to " + outputImgFile);
 
     }
 
@@ -226,13 +195,7 @@ public class ExamSaveService {
     private String setPngName() {
 
         FileUrl fileUrl = new FileUrl();
-        DEST = fileUrl.selectUrl(widowsFileDir, linuxFileDir) + PDF_URL;
-        if (DEST.contains("C:")) {
-            DEST = DEST + "\\";
-
-        } else {
-            DEST = DEST + "/";
-        }
+        DEST = fileUrl.selectUrl() + PDF_URL;
 
         return DEST + "image_" + UUID.randomUUID() + ".png";
     }
@@ -386,7 +349,6 @@ public class ExamSaveService {
         return svgContent.toString()
                 .replaceAll("width=\"[0-9.]+\"", "width=\"" + width + "\"")
                 .replaceAll("height=\"[0-9.]+\"", "height=\"" + height + "\"");
-
     }
 
 
@@ -449,13 +411,7 @@ public class ExamSaveService {
 //        String userId = "sky";
 
         FileUrl fileUrl = new FileUrl();
-        DEST = fileUrl.selectUrl(widowsFileDir, linuxFileDir) + PDF_URL;
-        if (DEST.contains("C:")) {
-            DEST = DEST + "\\";
-
-        } else {
-            DEST = DEST + "/";
-        }
+        DEST = fileUrl.selectUrl() + PDF_URL;
 
         if (requestDTOS != null) {
 

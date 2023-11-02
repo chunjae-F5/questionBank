@@ -1,19 +1,22 @@
 package com.example.f5.util;
 
-import lombok.AllArgsConstructor;
+import org.springframework.stereotype.Component;
 
-@AllArgsConstructor
+@Component
 public class FileUrl {
 
-    public String selectUrl(String windows, String linux) {
+    public String widowsFileDir = "C:\\";
+    public String linuxFileDir = "/home/ec2-user/";
+
+    public String selectUrl() {
 
         String fileDir = "";
         String osName = System.getProperty("os.name").toLowerCase();
 
         if (osName.contains("win")) {
-            fileDir = "C:\\";
+            fileDir = widowsFileDir;
         } else if (osName.contains("nux") || osName.contains("mac") || osName.contains("nix")) {
-            fileDir = "/home/ec2-user/";
+            fileDir = linuxFileDir;
         }
 
         return fileDir;

@@ -48,63 +48,59 @@
                                         <label for="chk01_00">전체선택</label>
                                     </div>
                                     <ul>
-                                        <li th:each="item, itemStat : ${itemList.chapters}">
-                                            <!-- 대단원 -->
-                                            <div class="check-group title on">
-                                                <!--check-group 클래스가 생성 되었을 때-->
-                                                <div class="title-chk"><input type="checkbox"
-                                                                              class="que-allCheck depth01 largeChapterId checkbox"
-                                                                              th:id="${'chk01_' + itemStat}"
-                                                                              th:value="${item.largeChapterId}"
-                                                                              onclick="getCheck()">
-                                                    <label th:for="${'chk01_' + itemStat}">
+                                        <!-- 대단원 -->
+                                        <li th:each="item, itemStat : ${itemList.chapters}"
+                                            th:with="_=${thUtils.reset()}, unitCounter=${_}">
+                                            <div class="check-group title">
+                                                <div class="title-chk">
+                                                    <input type="checkbox" onclick="getCheck()"
+                                                           th:id="${thUtils.getNextId(itemStat.index + 1)}"
+                                                           class="que-allCheck depth01"
+                                                           th:value="${item.largeChapterId}">
+                                                    <label th:for="${thUtils.getId(itemStat.index + 1)}">
                                                         <button type="button" class="dep-btn active"
                                                                 th:text="${item.largeChapterName}"></button>
                                                     </label>
                                                 </div>
                                             </div>
+                                            <!-- 중단원 -->
                                             <div class="depth02">
-                                                <!-- 중단원 -->
-                                                <div th:each="mediumItem, mediumItemStat : ${item.mediumChapters}">
-                                                    <div class="check-group on">
-                                                        <input type="checkbox"
-                                                               class="que-allCheck depth01 mediumChapterId checkbox"
-                                                               th:id="${'chk02_' + mediumItemStat}"
-                                                               th:value="${mediumItem.mediumChapterId}"
-                                                               onclick="getCheck()">
-
-                                                        <label th:for="${'chk02_' + mediumItemStat}">
-                                                            <button type="button" class="dep-btn"
+                                                <div th:each="mediumItem : ${item.mediumChapters}">
+                                                    <div class="check-group">
+                                                        <input type="checkbox" onclick="getCheck()"
+                                                               th:id="${thUtils.getNextId(itemStat.index + 1)}"
+                                                               class="que-allCheck depth01"
+                                                               th:value="${mediumItem.mediumChapterId}">
+                                                        <label th:for="${thUtils.getId(itemStat.index + 1)}">
+                                                            <button type="button" class="dep-btn active"
                                                                     th:text="${mediumItem.mediumChapterName}"></button>
                                                         </label>
                                                     </div>
-                                                    <div class="depth03" style="display: block">
-                                                        <!--소단원-->
-                                                        <div th:each="smallItem, smallItemStat : ${mediumItem.smallChapters}">
-                                                            <div class="check-group on">
-                                                                <input type="checkbox"
-                                                                       class="que-allCheck depth01 smallChapterId checkbox"
-                                                                       th:id="${'chk03_' + smallItemStat}"
-                                                                       th:value="${smallItem.smallChapterId}"
-                                                                       onclick="getCheck()">
-
-                                                                <label th:for="${'chk03_' + smallItemStat}">
-                                                                    <button type="button" class="dep-btn"
+                                                    <!-- 소단원 -->
+                                                    <div class="depth03">
+                                                        <div th:each="smallItem : ${mediumItem.smallChapters}">
+                                                            <div class="check-group">
+                                                                <input type="checkbox" onclick="getCheck()"
+                                                                       th:id="${thUtils.getNextId(itemStat.index + 1)}"
+                                                                       class="que-allCheck depth01"
+                                                                       th:value="${smallItem.smallChapterId}">
+                                                                <label th:for="${thUtils.getId(itemStat.index + 1)}">
+                                                                    <button type="button" class="dep-btn active"
                                                                             th:text="${smallItem.smallChapterName}"></button>
                                                                 </label>
                                                             </div>
-                                                            <div class="depth04" style="display: block">
-                                                                <!-- 토픽 -->
-                                                                <div th:each="topicItem, topicItemStat : ${smallItem.topicChapters}"
-                                                                     class="check-group on">
-                                                                    <input type="checkbox"
-                                                                           th:id="${'chk04_' + topicItemStat}"
-                                                                           class="topicChapterId checkbox"
-                                                                           th:value="${topicItem.topicChapterId}"
-                                                                           onclick="getCheck()">
-                                                                    <label th:for="${'chk04_' + topicItemStat}">
-                                                                        <span th:text="${topicItem.topicChapterName}"></span>
-                                                                    </label>
+                                                            <!-- 토픽 -->
+                                                            <div class="depth04">
+                                                                <div th:each="topicItem : ${smallItem.topicChapters}">
+                                                                    <div class="check-group">
+                                                                        <input type="checkbox" onclick="getCheck()"
+                                                                               th:id="${thUtils.getNextId(itemStat.index + 1)}"
+                                                                               class="topicChapterId"
+                                                                               th:value="${topicItem.topicChapterId}">
+                                                                        <label th:for="${thUtils.getId(itemStat.index + 1)}">
+                                                                            <span th:text="${topicItem.topicChapterName}"></span>
+                                                                        </label>
+                                                                    </div>
                                                                 </div>
                                                             </div>
                                                         </div>

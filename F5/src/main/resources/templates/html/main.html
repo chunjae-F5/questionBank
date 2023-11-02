@@ -15,6 +15,9 @@
           integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
 </head>
+<link rel="stylesheet" th:href="@{/css/font.css}">
+<link rel="stylesheet" th:href="@{/css/reset.css}">
+<link rel="stylesheet" th:href="@{/css/common.css}">
 <style>
     #nav-list div {
         display: inline-block;
@@ -68,61 +71,11 @@
     a {
         text-decoration: none;
     }
-
-    .quickmenu {
-        position: absolute;
-        width: 90px;
-        top: 50%;
-        margin-top: -50px;
-        right: 10px;
-        background: #fff;
-    }
-
-    .quickmenu ul {
-        position: relative;
-        float: left;
-        width: 100%;
-        display: inline-block;
-        *display: inline;
-        border: 1px solid #ddd;
-    }
-
-    .quickmenu ul li {
-        float: left;
-        width: 100%;
-        border-bottom: 1px solid #ddd;
-        text-align: center;
-        display: inline-block;
-        *display: inline;
-    }
-
-    .quickmenu ul li a {
-        position: relative;
-        float: left;
-        width: 100%;
-        height: 30px;
-        line-height: 30px;
-        text-align: center;
-        color: #999;
-        font-size: 9.5pt;
-    }
-
-    .quickmenu ul li a:hover {
-        color: #000;
-    }
-
-    .quickmenu ul li:last-child {
-        border-bottom: 0;
-    }
-
-    .content {
-        position: relative;
-        min-height: 1000px;
-    }
 </style>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
         crossorigin="anonymous"></script>
+<script th:src="@{/js/common.js}"></script>
 <script>
     $(document).ready(function() {
         $("#quickmenuContainer").load("quickmenu.html", function() {
@@ -133,9 +86,9 @@
 <body class="p-3 m-0 border-0 bd-example m-0 border-0 bd-example-row">
 <div class="container text-center">
     <div class="row" id="header-row">
-        <div class="col"><a href="/">초등</a></div>
+        <div class="col"><a onclick="onDeveloping(); return false;">초등</a></div>
         <div class="col"><a href="/">중등</a></div>
-        <div class="col"><a href="/">고등</a></div>
+        <div class="col"><a onclick="onDeveloping(); return false;">고등</a></div>
         <div class="col"><a href="/exam-archive/list">시험지 보관함</a></div>
     </div>
 
@@ -147,12 +100,12 @@
                 <img th:src="${item.imgUrl}" class="card-img-top" th:alt="${item.name}" style="width: 200px;">
                 <div class="card-body">
                     <h5 class="card-title" th:text="${item.name + '(' + item.writer + ')'}"></h5>
-                    <a href="#" class="btn btn-primary" th:text="${item.curriculum}"></a></br></br>
+                    <span th:text="${item.curriculum}"></span></br></br>
                     <button th:data-itemId="${item.itemId}" onclick="submitItemId(this)" class="btn btn-primary"><i
                             class="bi bi-journal-text"></i> 시험지 만들기
                     </button>
                     </br>
-                    <a href="#" class="btn btn-primary"><i class="bi bi-download"></i> 평가자료 다운</a>
+                    <a onclick="onDeveloping(); return false;" class="btn btn-primary"><i class="bi bi-download"></i> 평가자료 다운</a>
                 </div>
             </div>
         </div>
@@ -160,5 +113,6 @@
 </div>
 
 <div th:insert="html/quickmenu.html :: quickmenuFrag"></div>
+<div th:insert="html/loading.html :: loadingFrag"></div>
 </body>
 </html>

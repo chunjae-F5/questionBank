@@ -8,13 +8,15 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
     <link rel="stylesheet" th:href="@{/css/login.css}">
     <link rel="stylesheet" th:href="@{/css/font.css}">
+    <link rel="stylesheet" th:href="@{/css/common.css}">
+    <script th:src="@{/js/common.js}"></script>
 </head>
 <body>
 <div class="login">
     <!--  헤더  -->
     <div class="login_header">
         <h1 class="brand">
-            <a href="/static">
+            <a href="/">
                 <span>T_셀파</span>
             </a>
         </h1>
@@ -41,13 +43,9 @@
                     <label for="floatingPassword">비밀번호</label>
                 </div>
                 <div class="form_check">
-                    <div class="custom-control custom-checkbox">
-                        <input type="checkbox" class="custom-control-input" id="rememberUserId">
-                        <label class="custom-control-label" for="rememberUserId">아이디 저장</label>
-                    </div>
                     <ul class="util_link">
-                        <li><a href="form_find_id.html?tab=id">아이디 찾기</a></li>
-                        <li><a href="form_find_id.html?tab=pw">비밀번호 찾기</a></li>
+                        <li><a onclick="onDeveloping(); return false;">아이디 찾기</a></li>
+                        <li><a onclick="onDeveloping(); return false;">비밀번호 찾기</a></li>
                         <li><a href="/register">회원가입</a></li>
                     </ul>
                 </div>
@@ -126,10 +124,10 @@
             .then(response => {
                 if (response.ok) {
                     window.location.href = '/';
-                }else if (response.status === 400) {
-                    alert("비밀번호가 일치하지 않습니다.");
-                }else if (response.status === 500) {
+                }else if (response.status === 405) {
                     alert("아이디가 존재하지 않습니다.");
+                }else if (response.status === 401) {
+                    alert("비밀번호가 일치하지 않습니다.");
                 }
             })
             .then(data => {

@@ -2,6 +2,7 @@ package com.example.f5.exam.controller;
 
 import com.example.f5.exam.dto.ExamDto;
 import com.example.f5.exam.service.ExamService;
+import com.example.f5.util.ThymeleafUtils;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
@@ -34,10 +35,6 @@ public class ExamController {
     public String red(HttpSession session, Model model) {
         List<ExamDto.itemInfoResponse> itemList = (List<ExamDto.itemInfoResponse>) session.getAttribute("itemList");
         model.addAttribute("itemList", itemList);
-
-        /*if (itemList.get(0).getPassageUrl() != null) {
-        return "html/sub03_01_01";
-        }*/
         return "html/sub03_01";
     }
 
@@ -48,6 +45,7 @@ public class ExamController {
         List<String> evaluationList = examService.getEvaluation(itemId);
         model.addAttribute("itemList", itemList);
         model.addAttribute("evaluationList", evaluationList);
+        model.addAttribute("thUtils", new ThymeleafUtils());
         return "html/sub02";
     }
 

@@ -426,3 +426,7 @@ $(function () {
         $(this).find("i").removeClass("hover");
     });
 });
+
+function onDeveloping() {
+    alert("준비중인 기능입니다.");
+}
