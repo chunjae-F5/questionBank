@@ -192,23 +192,23 @@
                                     <div class="step-wrap">
                                         <button type="button" class="btn-line type02 color01" data-step="step1"
                                                 data-value="step1"
-                                                onclick="divide(this)" style="display:none;">최하
+                                                onclick="divide(this); buttonClick(this)" style="display:none;">최하
                                         </button>
                                         <button type="button" class="btn-line type02 color02 active" data-step="step2"
                                                 data-value="step2"
-                                                onclick="divide(this)">하
+                                                onclick="divide(this); buttonClick(this)">하
                                         </button>
                                         <button type="button" class="btn-line type02 color03 active" data-step="step3"
                                                 data-value="step3"
-                                                onclick="divide(this)">중
+                                                onclick="divide(this); buttonClick(this)">중
                                         </button>
                                         <button type="button" class="btn-line type02 color04 active" data-step="step4"
                                                 data-value="step4"
-                                                onclick="divide(this)">상
+                                                onclick="divide(this); buttonClick(this)">상
                                         </button>
                                         <button type="button" class="btn-line type02 color05" data-step="step5"
                                                 data-value="step5"
-                                                onclick="divide(this)" style="display:none;">최상
+                                                onclick="divide(this); buttonClick(this)" style="display:none;">최상
                                         </button>
                                     </div>
                                 </div>
@@ -373,11 +373,17 @@
         }
         console.log(count);
 
-        const countButton = document.getElementById('clicked');
+        setTimeout(buttonClick, 0);
+
+    }
+
+    function buttonClick(){
+        const countButton = document.querySelector('.total-questions.active');
         const buttonClick = new Event('click');
         countButton.dispatchEvent(buttonClick);
 
     }
+
 
     // console.log('초기 카운트: ' + count);
 
@@ -803,7 +809,6 @@
         })
 
     }
-
 
     document.getElementById('watchJson').addEventListener('click', function () {
 
