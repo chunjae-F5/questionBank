@@ -68,7 +68,14 @@ public class Header implements IEventHandler {
         PdfFont font;
         try {
             FileUrl fileUrl = new FileUrl();
-            DEST = fileUrl.selectUrl() + PDF_URL;
+            DEST = fileUrl.selectUrl(widowsFileDir, linuxFileDir) + PDF_URL;
+
+            if (DEST.contains("C:")) {
+                DEST = DEST + "\\";
+
+            } else {
+                DEST = DEST + "/";
+            }
 
             font = PdfFontFactory.createFont(DEST + "HYGothic-Medium-Regular.ttf", PdfFontFactory.EmbeddingStrategy.PREFER_NOT_EMBEDDED);
 

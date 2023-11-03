@@ -13,7 +13,21 @@ public class FileUrl {
         if (osName.contains("win")) {
             fileDir = "C:\\";
         } else if (osName.contains("nux") || osName.contains("mac") || osName.contains("nix")) {
-            fileDir = "/home/ec2-user/";
+            fileDir = "/Users/kim/";
+        }
+
+        return fileDir;
+    }
+
+    public String selectUrl() {
+
+        String fileDir = "";
+        String osName = System.getProperty("os.name").toLowerCase();
+
+        if (osName.contains("win")) {
+            fileDir = "C:\\";
+        } else if (osName.contains("nux") || osName.contains("mac") || osName.contains("nix")) {
+            fileDir = "/Users/kim/";
         }
 
         return fileDir;
