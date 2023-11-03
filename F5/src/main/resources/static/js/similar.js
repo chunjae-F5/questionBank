@@ -8,7 +8,9 @@ document.querySelectorAll('.similar-items-button').forEach(button => {
     button.addEventListener('click', async () => {
         currentItemId = button.getAttribute('data-itemid');
         const quenum = button.getAttribute('data-quenum');
-
+        button.addEventListener('click', function() {
+             countQuestionFrom(); countDifficulty();
+        });
         // 결과를 표시할 요소를 찾음
         const quenumDisplay = document.getElementById('quenum-display');
         // quenum 값을 결과를 표시하는 요소에 추가
@@ -111,8 +113,8 @@ function displaySimilarItems(similarItems, selectedDifficulty) {
                 titleDiv.innerHTML = `
                     <span class="num">${count}</span>
                     <div class="que-badge-group">
-                        <span class="que-badge ${getDifficultyColorClass(item.difficultyName)}">${item.difficultyName}</span>
-                        <span class="que-badge gray">${badgeText}</span>
+                        <span class="que-badge a ${getDifficultyColorClass(item.difficultyName)}">${item.difficultyName}</span>
+                        <span class="que-badge b gray">${badgeText}</span>
                     </div>
                 `;
 
@@ -160,7 +162,7 @@ function displaySimilarItems(similarItems, selectedDifficulty) {
                 queBottomDiv.className = 'que-bottom';
                 queBottomDiv.innerHTML = `
                     <div class="btn-wrap">
-                        <button type="button" class="btn-default btn-add" data-item-id=${item.itemId} onclick="moveSortGroupToSource(this, '${item.itemId}');" ><i class="add-type02"></i> 추가</button>
+                        <button type="button" class="btn-default btn-add" data-item-id=${item.itemId} onclick="moveSortGroupToSource(this, '${item.itemId}');countQuestionFrom(); countDifficulty()" ><i class="add-type02"></i> 추가</button>
                     </div>
                 `;
 
@@ -212,12 +214,14 @@ function moveSortGroupToAddDel(button, itemId) {
         const addButton = document.createElement('button');
         addButton.type = 'button';
         addButton.className = 'btn-default btn-add';
-        //addButton.setAttribute('data-item-id', itemId);
-        addButton.innerHTML = '<i class="add-type02"></i> 추가';
-
+        addButton.setAttribute('data-item-id', itemId);
+      //  addButton.setAttribute('onclick', "moveSortGroupToSource(this, itemId); countQuestionFrom(); countDifficulty()");
         addButton.addEventListener('click', function() {
-            moveSortGroupToSource(this, itemId);
+            moveSortGroupToSource(this, itemId); countQuestionFrom(); countDifficulty();
         });
+        addButton.innerHTML = '<i class="add-type02"></i> 추가 ';
+
+
 
         sortGroupElement.querySelector('.que-bottom').appendChild(addButton);
 
@@ -237,6 +241,7 @@ function moveSortGroupToAddDel(button, itemId) {
 function moveSortGroupToSource(button, itemId) {
     // 클릭한 '추가' 버튼의 부모 요소인 .sort-group을 찾음
     const sortGroupElement = button.closest('.sort-group');
+
     const addnum = "추가 문제 " + add_count;
 
     if (sortGroupElement) {
@@ -245,10 +250,12 @@ function moveSortGroupToSource(button, itemId) {
         const clonedSortGroup = sortGroupElement.cloneNode(true);
         const btnWrap = clonedSortGroup.querySelector('.btn-wrap');
 
+
+
         if (btnWrap) {
             // 'btn-wrap' 안에 버튼을 추가
             btnWrap.innerHTML += `
-                <button type="button" class="btn-delete" data-item-id=${itemId} onclick="moveSortGroupToAddDel(this, '${itemId}');"></button>
+                <button type="button" class="btn-delete" data-item-id=${itemId} onclick="moveSortGroupToAddDel(this, '${itemId}');countQuestionFrom(); countDifficulty()"></button>
             `;
         }
 

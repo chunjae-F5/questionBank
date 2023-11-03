@@ -112,7 +112,7 @@
                     <div class="paper-info">
                         <span id="subjectName"></span>
                     </div>
-                    <button class="btn-default btn-research" id="refreshButton"><i class="research"></i>재검색</button>
+                    <button class="btn-default btn-research" id="refreshButton"><i class="research"></i>초기화</button>
                     <button class="btn-default pop-btn" data-pop="que-scope-pop">출제범위</button>
                 </div>
                 <script>
@@ -248,7 +248,7 @@
                                     <span class="num" id="diff-high">0</span>
                                 </div>
                             </div>
-                            <p class="total-num" id="diff-total">총 <span></span>문제</p>
+                            <p class="total-num" > 총 <span id="diff-total"></span> 문제</p>
                         </div>
                         <script th:inline="javascript">
                             function countDifficulty() {
@@ -256,7 +256,8 @@
                                 const counts = {
                                     '상': 0,
                                     '중': 0,
-                                    '하': 0
+                                    '하': 0,
+                                    '토탈':0
                                 };
 
                                 for (const divElement of divElements) {
@@ -271,11 +272,13 @@
                                         } else if (difficultyName === '하') {
                                             counts['하']++;
                                         }
+                                        counts['토탈']++;
                                     });
                                 }
                                 document.getElementById('diff-high').textContent = counts['상'];
                                 document.getElementById('diff-medium').textContent = counts['중'];
                                 document.getElementById('diff-low').textContent = counts['하'];
+                                document.getElementById('diff-total').textContent = counts['토탈'];
 
                                 return counts;
                             }
@@ -470,11 +473,12 @@
                                             similarButton.classList.remove('btn-similar-que');
                                             similarButton.classList.add('btn-add');
                                             similarButton.setAttribute('data-item-id', itemId);
+
                                             similarButton.innerHTML = '<i class="add-type02"></i> 추가';
                                         }
 
                                         similarButton.addEventListener('click', function() {
-                                            moveSortGroupToSource(this, itemId);
+                                            moveSortGroupToSource(this, itemId);countQuestionFrom(); countDifficulty()
                                         });
 
                                         const deleteButton = sortGroups.querySelector('.btn-delete');
