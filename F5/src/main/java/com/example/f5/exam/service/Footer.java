@@ -50,7 +50,14 @@ public class Footer implements IEventHandler {
         this.subLineWidth = subLineWidth;
 
         FileUrl fileUrl = new FileUrl();
-        DEST = fileUrl.selectUrl() + PDF_URL;
+        DEST = fileUrl.selectUrl(widowsFileDir, linuxFileDir) + PDF_URL;
+
+        if (DEST.contains("C:")) {
+            DEST = DEST + "\\";
+
+        } else {
+            DEST = DEST + "/";
+        }
 
         try {
             logo = new Image(ImageDataFactory.create(DEST + "f5.png"));
@@ -85,7 +92,14 @@ public class Footer implements IEventHandler {
         try {
 
             FileUrl fileUrl = new FileUrl();
-            DEST = fileUrl.selectUrl() + PDF_URL;
+            DEST = fileUrl.selectUrl(widowsFileDir, linuxFileDir) + PDF_URL;
+
+            if (DEST.contains("C:")) {
+                DEST = DEST + "\\";
+
+            } else {
+                DEST = DEST + "/";
+            }
 
             Image logoImage = new Image(ImageDataFactory.create(DEST + "f5.png"));
             logoImage.scaleToFit(logoWidth, logoHeight);
