@@ -191,7 +191,6 @@
                                             <button type="button" class="btn-delete"
                                                     th:attr="data-item-id=${item.itemId}"
                                                     onclick="moveSortGroupToTarget(this); countQuestionFrom(); countDifficulty()"></button>
-
                                         </div>
                                     </div>
                                     <div class="view-que view-queT">
@@ -228,7 +227,6 @@
                                     <div class="que-info-last" th:text="${item.chapterName}">
                                         <!-- 대중소토픽 -->
                                     </div>
-
                                 </div>
                             </div>
                             <br>
@@ -425,7 +423,6 @@
 
                                                 return counts;
                                             }
-
                                             countQuestionFrom();
                                         </script>
                                     </div>
@@ -466,14 +463,11 @@
                                     const targetDiv = document.getElementById("targetDiv");
 
                                     if (sortGroups) {
-
-
                                         const similarButton = sortGroups.querySelector('.btn-similar-que');
                                         if (similarButton) {
                                             similarButton.classList.remove('btn-similar-que');
                                             similarButton.classList.add('btn-add');
                                             similarButton.setAttribute('data-item-id', itemId);
-
                                             similarButton.innerHTML = '<i class="add-type02"></i> 추가';
                                         }
 
@@ -483,9 +477,10 @@
 
                                         const deleteButton = sortGroups.querySelector('.btn-delete');
                                         if (deleteButton) {
-                                            deleteButton.style.display = 'none'; // '삭제' 버튼 숨기기
+                                            deleteButton.remove();
                                         }
                                         targetDiv.appendChild(sortGroups);
+
                                         const cols = document.querySelectorAll('.col.sortable');
                                         for (const col of cols) {
                                             const summaryId = col.getAttribute('data-item-id');

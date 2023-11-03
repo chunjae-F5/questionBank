@@ -215,13 +215,10 @@ function moveSortGroupToAddDel(button, itemId) {
         addButton.type = 'button';
         addButton.className = 'btn-default btn-add';
         addButton.setAttribute('data-item-id', itemId);
-      //  addButton.setAttribute('onclick', "moveSortGroupToSource(this, itemId); countQuestionFrom(); countDifficulty()");
         addButton.addEventListener('click', function() {
             moveSortGroupToSource(this, itemId); countQuestionFrom(); countDifficulty();
         });
         addButton.innerHTML = '<i class="add-type02"></i> 추가 ';
-
-
 
         sortGroupElement.querySelector('.que-bottom').appendChild(addButton);
 
@@ -249,8 +246,6 @@ function moveSortGroupToSource(button, itemId) {
         // 복제할 .sort-group 요소를 만듦
         const clonedSortGroup = sortGroupElement.cloneNode(true);
         const btnWrap = clonedSortGroup.querySelector('.btn-wrap');
-
-
 
         if (btnWrap) {
             // 'btn-wrap' 안에 버튼을 추가
