@@ -446,6 +446,7 @@
             if (inputValue > 30) {
                 alert("문항은 최대 30문제 까지만 출제 가능합니다.");
                 questionCountInput.value = 30;
+                inputValue = 30;
             }
 
             totalNumSpan.textContent = inputValue;
@@ -602,9 +603,11 @@
 
         if (totalCountSum != totalCount) {
             saveButton.classList.add('disabled');
+            saveButton.setAttribute('disabled', 'disabled');
             failDiv.classList.add('fail');
         } else {
             saveButton.classList.remove('disabled');
+            saveButton.removeAttribute('disabled');
             failDiv.classList.remove('fail');
         }
     }
@@ -647,16 +650,7 @@
         highestElement.setAttribute('data-value', replacedHighestInput);
     }
 
-    const step2Button = document.querySelector('.btn-step.next');
 
-    step2Button.addEventListener('click', function () {
-        const inputValue = parseInt(questionCountInput.value);
-
-        if (inputValue % 5 !== 0) {
-            alert("문제 수는 5의 배수로 입력해주세요.");
-            questionCountInput.focus();
-        }
-    });
 
     // 기존 코드
     $(function () {
@@ -819,6 +813,17 @@
         console.log(jsonData);
 
         const subjectName = document.getElementById('subjectId').textContent;
+
+        const step2Button = document.querySelector('.btn-step.next');
+
+        step2Button.addEventListener('click', function () {
+            const inputValue = parseInt(questionCountInput.value);
+
+            if (inputValue % 5 !== 0) {
+                alert("문제 수는 5의 배수로 입력해주세요.");
+                questionCountInput.focus();
+            }
+        });
 
         sessionStorage.setItem("subjectName", subjectName);
 
