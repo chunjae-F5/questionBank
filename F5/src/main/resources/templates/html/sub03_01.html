@@ -112,22 +112,16 @@
                     <div class="paper-info">
                         <span id="subjectName"></span>
                     </div>
-                    <button class="btn-default btn-research" id="refreshButton"><i class="research"></i>초기화</button>
-                    <button class="btn-default pop-btn" data-pop="que-scope-pop">출제범위</button>
-                </div>
-                <script>
-                    const refreshButton = document.getElementById('refreshButton');
 
-                    refreshButton.addEventListener('click', function () {
-                        location.reload(); // 현재 페이지를 새로고침
-                    });
-                </script>
+                </div>
+
                 <div class="view-bottom type01">
                     <div class="cnt-box">
                         <div class="cnt-top">
                             <span class="title">문제 목록</span>
                             <div class="right-area">
                                 <div class="select-wrap">
+
                                     <button type="button" class="select-btn">보기 유형 선택</button>
                                     <ul class="select-list" style="display: none;">
                                         <li>
@@ -146,19 +140,15 @@
                                     </ul>
                                 </div>
                                 <div class="select-wrap">
-                                    <button type="button" class="select-btn">사용자 정렬</button>
-                                    <ul class="select-list">
-                                        <li>
-                                            <a href="javascript:;">단원순</a>
-                                        </li>
-                                        <li>
-                                            <a href="javascript:;">난이도순</a>
-                                        </li>
-                                        <li>
-                                            <a href="javascript:;">문제 형태순</a>
-                                        </li>
-                                    </ul>
+                                    <button class="btn-default btn-research" id="refreshButton"><i class="research"></i>초기화</button>
                                 </div>
+                                <script>
+                                    const refreshButton = document.getElementById('refreshButton');
+
+                                    refreshButton.addEventListener('click', function () {
+                                        location.reload(); // 현재 페이지를 새로고침
+                                    });
+                                </script>
                             </div>
                         </div>
 
