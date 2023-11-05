@@ -12,6 +12,8 @@ import com.itextpdf.kernel.pdf.canvas.parser.data.IEventData;
 import com.itextpdf.kernel.pdf.canvas.parser.data.ImageRenderInfo;
 import com.itextpdf.kernel.pdf.canvas.parser.listener.IEventListener;
 import com.itextpdf.kernel.pdf.xobject.PdfImageXObject;
+import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.io.File;
@@ -28,14 +30,19 @@ import java.util.Set;
 import java.util.UUID;
 
 @Service
+@RequiredArgsConstructor
 public class ExamArchiveService {
 
     private final ArchiveSaveRepository archiveSaveRepository;
-    public static final String DEST = "D:\\pdf_file\\";
+    private String PDF_URL = "pdf_file";
 
-    public ExamArchiveService(ArchiveSaveRepository archiveSaveRepository) {
-        this.archiveSaveRepository = archiveSaveRepository;
-    }
+    private String DEST;
+    @Value("${windows.file.pdfDir}")
+    private String widowsFileDir;
+
+    @Value("${linux.file.pdfDir}")
+    private String linuxFileDir;
+
 
     public List<ExamArchiveListDTO> archiveList(String userId) {
 
@@ -48,57 +55,5 @@ public class ExamArchiveService {
         Optional<Archive> archive = archiveSaveRepository.findById(idx);
         return archive;
     }
-
-//    public String convertPdfToImage(Long idx) throws IOException {
-//        Optional<Archive> archive = loadPdfFromDatabase(idx);
-//        String pdfName = archive.get().getName();
-//        String pdfUrl = archive.get().getQuestion();
-//        System.out.println(pdfUrl);
-//
-//        try (PdfDocument pdfDocument = new PdfDocument(new PdfReader(pdfUrl), new PdfWriter(pdfName))) {
-////            IEventListener listener = new ImageSavingListener(pdfUrl);
-//            IEventListener listener = new ImageSavingListener();
-//            PdfCanvasProcessor processor = new PdfCanvasProcessor(listener);
-//            for (int page = 1; page <= pdfDocument.getNumberOfPages(); page++) {
-//                processor.processPageContent(pdfDocument.getPage(page));
-//            }
-//        }
-//
-//        // 이미지가 저장된 경로를 반환합니다.
-//        return pdfUrl;
-//    }
-//
-//    private static class ImageSavingListener implements IEventListener {
-////        private String pdfUrl;
-////        public ImageSavingListener(String pdfUrl) {
-////            this.pdfUrl = pdfUrl;
-////        }
-//
-//        @Override
-//        public void eventOccurred(IEventData data, EventType type) {
-//            if (type == EventType.RENDER_IMAGE) {
-//                ImageRenderInfo imageInfo = (ImageRenderInfo) data;
-//                PdfImageXObject imageObject = imageInfo.getImage();
-//                try {
-//                    // 이미지를 파일로 저장하는 로직
-//                    String imageFileName = "image_" + UUID.randomUUID() + ".jpg";
-//                    String imagePath = Paths.get(DEST, imageFileName).toString();
-//
-//                    File imageFile = new File(imagePath);
-//                    try (FileOutputStream fos = new FileOutputStream(imageFile)) {
-//                        fos.write(imageObject.getImageBytes());
-//                    }
-//                } catch (IOException e) {
-//                    e.printStackTrace();
-//                }
-//            }
-//        }
-//
-//        @Override
-//        public Set<EventType> getSupportedEvents() {
-//            return null;
-//        }
-//
-//    }
 
 }

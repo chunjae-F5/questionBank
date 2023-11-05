@@ -32,7 +32,7 @@
 			<div class="pop-content">
 				<div class="view-box save-complete">
 					<div class="btn-wrap">
-						<button class="btn-default"><a href="javascript:;">처음으로</a></button>
+						<button class="btn-default" id="moveFirstPageButton">처음으로</button>
 					</div>
 
 					<div class="save-wrap">
@@ -52,6 +52,15 @@
 		<div class="dim"></div>
 	</div>
 </body>
-
+<script>
+	document.addEventListener('DOMContentLoaded', function () {
+		const moveFirstPageButton = document.getElementById("moveFirstPageButton");
+		if (moveFirstPageButton) {
+			moveFirstPageButton.addEventListener("click", function () {
+				location.href = "/";
+			});
+		}
+	});
+</script>
 
 </html>

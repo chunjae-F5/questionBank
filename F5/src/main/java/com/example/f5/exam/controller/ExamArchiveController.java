@@ -1,9 +1,12 @@
 package com.example.f5.exam.controller;
 
+import com.amazonaws.services.s3.AmazonS3;
 import com.example.f5.exam.dto.ExamArchiveListDTO;
 import com.example.f5.exam.entity.Archive;
 import com.example.f5.exam.service.ExamArchiveService;
 import com.google.gson.Gson;
+import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.FileSystemResource;
 import org.springframework.core.io.Resource;
 import org.springframework.http.HttpHeaders;
@@ -21,13 +24,15 @@ import java.util.List;
 import java.util.Optional;
 
 @Controller
+@RequiredArgsConstructor
 public class ExamArchiveController {
 
     private final ExamArchiveService examArchiveService;
+    private final AmazonS3 s3Client;
 
-    public ExamArchiveController(ExamArchiveService examArchiveService) {
-        this.examArchiveService = examArchiveService;
-    }
+    @Value("${application.bucket.name}")
+    private String bucketName;
+
 
     @GetMapping("/exam-archive/list")
     public String getExamArchivePage(Model model, @SessionAttribute(name = "userId", required = false) String userId) {
@@ -65,31 +70,16 @@ public class ExamArchiveController {
 
     @GetMapping("/exam-archive/preview")
     @ResponseBody
-    public ResponseEntity<String> previewPdf(@RequestParam int idx) {
+    public ResponseEntity<String> previewPng(@RequestParam int idx){
         Optional<Archive> previewPng = examArchiveService.loadArchiveFromDatabase(Long.valueOf(idx));
 
-        String preveiwUrl = previewPng.get().getPreviewImg();
-        String path = preveiwUrl.replace("\\", "\\\\");
-        String jsonFilePath = "\"" + path + "\"";
-//        return ResponseEntity.ok().body(jsonFilePath);
+        String imgName = previewPng.get().getPreviewImg();
+//        String url = s3Client.getUrl(bucketName, imgName);
+//        String urltext = ""+url;
 
-        String remoteUrl = "https://drive.google.com/file/d/1Ktb17suT1Cif0znm7CFKKWDO_9NLRNHI/view?usp=sharing";
-
-        // 파일 식별자 추출
-        String fileId = remoteUrl.substring(remoteUrl.indexOf("/file/d/") + 8);
-        fileId = fileId.substring(0, fileId.indexOf("/view"));
-
-        // 새로운 다운로드 가능한 URL 생성
-        String downloadUrl = "https://drive.google.com/uc?id=" + fileId;
-
-        System.out.println(fileId);
-
-        // JSON 객체를 JSON 문자열로 변환
-        Gson gson = new Gson();
-        String json = gson.toJson(downloadUrl);
-
-        System.out.println(json);
-        return ResponseEntity.ok().body(json);
+        System.out.println(imgName);
+        return ResponseEntity.ok().body(imgName);
     }
+
 
 }

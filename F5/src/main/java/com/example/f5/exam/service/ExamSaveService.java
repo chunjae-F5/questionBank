@@ -1,5 +1,8 @@
 package com.example.f5.exam.service;
 
+import com.amazonaws.services.s3.AmazonS3;
+import com.amazonaws.services.s3.model.ObjectMetadata;
+import com.amazonaws.services.s3.model.PutObjectRequest;
 import com.example.f5.exam.dto.ExamSaveListDTO;
 import com.example.f5.exam.dto.ExamSaveListRequestDTO;
 import com.example.f5.exam.dto.ExamSaveRequestDTO;
@@ -36,6 +39,7 @@ import lombok.RequiredArgsConstructor;
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.pdmodel.PDPage;
 import org.apache.pdfbox.rendering.PDFRenderer;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.stereotype.Service;
@@ -64,9 +68,16 @@ public class ExamSaveService {
     private final ExamSaveRepository examSaveRepository;
     private final ArchiveSaveRepository archiveSaveRepository;
 
+    @Value("${application.bucket.name}")
+    private String bucketName;
+
+    @Autowired
+    private AmazonS3 s3Client;
+
     private final Gson gson;
 
     private String PDF_URL = "pdf_file";
+    private String uploadedFileName;
 
     private String DEST;
     @Value("${windows.file.pdfDir}")
@@ -189,7 +200,7 @@ public class ExamSaveService {
         document.close();
         System.out.println("pdf create success!");
 
-        String outputImgFile = setPngName();
+//        String outputImgFile = setPngName();
 
         PDDocument doc = PDDocument.load(new File(pdfFilePath));
         PDFRenderer pdfRenderer = new PDFRenderer(doc);
@@ -198,12 +209,29 @@ public class ExamSaveService {
         PDPage firstPage = doc.getPage(0);
         BufferedImage image = pdfRenderer.renderImage(0);
 
-        // 이미지를 파일로 저장
-        ImageIO.write(image, "PNG", new File(outputImgFile));
+        String imageFileName = "preview_" + UUID.randomUUID() + ".png";
+        uploadedFileName = uploadImageToS3(image, imageFileName);
+
+        System.out.println(uploadedFileName);
 
         doc.close();
-        System.out.println("Image saved to " + outputImgFile);
 
+    }
+
+    // S3 preview image 저장하기
+    public String uploadImageToS3(BufferedImage image, String fileName) throws IOException {
+        ByteArrayOutputStream os = new ByteArrayOutputStream();
+        ImageIO.write(image, "PNG", os);
+        byte[] imageBytes = os.toByteArray();
+
+        ObjectMetadata metadata = new ObjectMetadata();
+        metadata.setContentType("image/png");
+
+        ByteArrayInputStream imageStream = new ByteArrayInputStream(imageBytes);
+
+        s3Client.putObject(new PutObjectRequest(bucketName, fileName, imageStream, metadata));
+
+        return fileName;
     }
 
     // 텍스트 추가 메서드
@@ -224,20 +252,6 @@ public class ExamSaveService {
         String extension = ".pdf";
 
         return pdfName + extension;
-    }
-
-    private String setPngName() {
-
-        FileUrl fileUrl = new FileUrl();
-        DEST = fileUrl.selectUrl(widowsFileDir, linuxFileDir) + PDF_URL;
-        if (DEST.contains("C:")) {
-            DEST = DEST + "\\";
-
-        } else {
-            DEST = DEST + "/";
-        }
-
-        return DEST + "image_" + UUID.randomUUID() + ".png";
     }
 
     private void convertSvgToPdf(PdfDocument pdf, Document document, String questionSvgUrl, int i, int number, PdfFont font, String level, String type, Color mainLineColor, Color fontGray) throws IOException {
@@ -447,7 +461,6 @@ public class ExamSaveService {
 
     // 보관함 DB 저장
     public void archiveSave(ExamSaveRequestDTO requestDTOS, String userId) {
-//        String userId = "sky";
 
         FileUrl fileUrl = new FileUrl();
         DEST = fileUrl.selectUrl(widowsFileDir, linuxFileDir) + PDF_URL;
@@ -468,7 +481,7 @@ public class ExamSaveService {
             archive.setName(requestDTOS.getExamName());
             archive.setTotal(requestDTOS.getShortAnswer() + requestDTOS.getChoiceAnswer());
             archive.setQuestion(setPdfName(DEST, requestDTOS.getExamName(), userId));
-            archive.setPreviewImg(setPngName());
+            archive.setPreviewImg(uploadedFileName);
             archiveSaveRepository.save(archive);
         }
 
