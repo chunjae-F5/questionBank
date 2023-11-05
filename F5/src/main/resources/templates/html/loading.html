@@ -34,8 +34,8 @@
 			});
 
 			$.ajax({
-				url: "/loading",
-				type: "GET",
+				url: "/exam-save/save",
+				type: "POST",
 				beforeSend: showLoading, // AJAX 호출 시작 전 로딩 표시
 				complete: hideLoading,   // AJAX 호출 완료 후 로딩 숨김
 				success: function(response) {

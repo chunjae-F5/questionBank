@@ -297,12 +297,10 @@
             <button type="button" class="del-btn"></button>
         </div>
         <div class="pop-content">
-            <div class="view-box">
+            <div class="view-box save-complete">
                 <div class="view-top">
                     <div class="paper-info">
                         <span id="subjectName"></span>
-                        <!--						<span>수학 1</span>-->
-                        <!--						이준열(2015)-->
                     </div>
                     <div class="btn-wrap">
                         <button class="btn-default" id="moveFirstPageButton">처음으로</button>
@@ -386,6 +384,7 @@
 
     </div>
     <div class="dim"></div>
+    <div th:insert="html/loading.html :: loadingFrag"></div>
 </div>
 </body>
 </html>

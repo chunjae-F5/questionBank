@@ -39,4 +39,8 @@ public class Report extends BaseTimeEntity {
         this.file = file;
         this.userId = userId;
     }
+
+    public Report() {
+
+    }
 }
